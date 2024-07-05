@@ -29,7 +29,6 @@ axiosClient.interceptors.request.use(
 axiosClient.interceptors.response.use(
   function (response) {
     const data = response;
-    console.log('Resp >> ', data);
     return data;
   },
   function (error: AxiosError) {

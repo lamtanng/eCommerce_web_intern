@@ -12,7 +12,6 @@ export default function useAxiosRefresh() {
     const requestInterceptor = axiosRefresh.interceptors.request.use(
       (config) => {
         config.headers.Authorization = `Bearer ${auth.accessToken}`;
-        console.log('Req >> ', config.headers['Authorization']);
         return config;
       },
       (error: AxiosError) => Promise.reject(error)
@@ -22,13 +21,7 @@ export default function useAxiosRefresh() {
       (response) => response,
       async (error: AxiosError) => {
         const prevRequest = error?.config;
-        console.log(
-          'Test: ',
-          error?.response?.status === 401 &&
-            error.response?.statusText === 'Unauthorized' &&
-            prevRequest !== undefined
-        );
-
+      
         if (
           error?.response?.status === 401 &&
           error.response?.statusText === 'Unauthorized' &&

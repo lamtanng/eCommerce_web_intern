@@ -1,5 +1,6 @@
 export default interface ButtonProps {
-  text: string;
+  text?: string;
   variant?: 'text' | 'outlined' | 'contained';
   type?: HTMLButtonElement['type'];
+  isDirty?: boolean;
 }

@@ -7,7 +7,8 @@ import { usePrevLocation } from '../../hooks/usePrevLocation';
 import LoginProps from '../../types/login.type';
 import { decodeToken } from '../../ultils/decodToken';
 import { displayError } from '../../ultils/displayToast';
-import { loginSchema } from './Login.constant';
+import { loginSchema } from './Login.constants';
+import AuthProps from '../../types/auth.type';
 
 const useLogin = () => {
   const { setAuth } = useAuth();
@@ -28,7 +29,9 @@ const useLogin = () => {
   const verifyAccount = async (account: LoginProps) => {
     const response = await login(account);
     let decodedToken = decodeToken(response.data.accessToken);
-    setAuth({ ...response.data, ...decodedToken });
+    let authData: AuthProps = { ...response.data, ...decodedToken };
+    localStorage.setItem('auth', JSON.stringify(authData));
+    setAuth(authData);
     toPrevLocation();
   };
 

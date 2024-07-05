@@ -1,12 +1,11 @@
 import * as yup from 'yup';
 import AuthProps from '../../types/auth.type';
 import LoginProps from '../../types/login.type';
-
-const isRequiredMsg = (name: string) => `${name} is required`;
+import { getRequiredMsg } from '../../ultils/getRequiredMsg';
 
 const loginSchema: yup.ObjectSchema<LoginProps> = yup.object({
-  email: yup.string().email().required(isRequiredMsg('Email')),
-  password: yup.string().required(isRequiredMsg('Email')),
+  email: yup.string().email().required(getRequiredMsg('Email')),
+  password: yup.string().required(getRequiredMsg('Email')),
 });
 
 const loginRespDefault: AuthProps = {

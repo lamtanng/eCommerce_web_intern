@@ -1,10 +1,11 @@
 import { axiosClient } from '../apis/axios';
+import AuthProps from '../types/auth.type';
 import LoginResponseProps from '../types/loginResponse.type';
 import RefreshTokenProps from '../types/refreshToken.type';
 import { decodeToken } from '../ultils/decodToken';
 import useAuth from './useAuth';
 
-function reLogin(data: RefreshTokenProps) {
+export function reLogin(data: RefreshTokenProps) {
   const url = '/refresh';
   return axiosClient.post<LoginResponseProps>(url, data, {
     headers: {
@@ -18,11 +19,10 @@ const useRefreshToken = () => {
 
   const refresh = async () => {
     const response = await reLogin({ refreshToken: auth.refreshToken });
-    console.log('refresh >> ', response.data);
     let decodedToken = decodeToken(response.data.accessToken);
+    let authData: AuthProps = { ...response.data, ...decodedToken };
+    localStorage.setItem('auth', JSON.stringify(authData));
     setAuth(() => ({ ...response.data, ...decodedToken }));
-    console.log('new Auth >> ', auth);
-
     return response.data;
   };
 

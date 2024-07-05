@@ -2,3 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  :root {
+    --page-gutter-lg: 10rem;
+    --header: 56px;
+  }
+}

@@ -1,13 +1,20 @@
 import { Outlet } from 'react-router-dom';
-import Header from './components/layouts/Header';
-import Footer from './components/layouts/Footer';
+import { Bounce, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function App() {
   return (
-    <div className='text-base max-w-screen-xl mx-auto'>
-      <Header />
+    <div className='max-w-screen-2xl mx-auto text-base overflow-hidden'>
+      <ToastContainer
+        position='top-right'
+        transition={Bounce}
+        autoClose={2000}
+        draggable={true}
+        theme='colored'
+        hideProgressBar={true}
+        toastClassName='!font-sans !rounded-md'
+      />
       <Outlet />
-      <Footer />
     </div>
   );
 }

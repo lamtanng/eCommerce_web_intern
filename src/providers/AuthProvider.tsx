@@ -1,6 +1,6 @@
 import { ReactNode, createContext, useState } from 'react';
-import { loginRespDefault } from '../pages/Login/constants/loginRespDefault';
 import AuthProps from '../types/auth.type';
+import { loginRespDefault } from '../pages/Login/Login.constants';
 
 const AuthContext = createContext(
   {} as {
@@ -9,9 +9,12 @@ const AuthContext = createContext(
   }
 );
 
-export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [auth, setAuth] = useState<AuthProps>(loginRespDefault);
+const authData = localStorage.getItem('auth')
+  ? JSON.parse(localStorage.getItem('auth') as string)
+  : loginRespDefault;
 
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
+  const [auth, setAuth] = useState<AuthProps>(authData);
   return <AuthContext.Provider value={{ auth, setAuth }}>{children}</AuthContext.Provider>;
 };
 

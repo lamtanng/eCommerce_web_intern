@@ -1,6 +1,4 @@
 import { Link } from '@mui/material';
-import { Bounce, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import Logo from '../../assets/react.svg';
 import LoginForm from './components/LoginForm/LoginForm';
 
@@ -26,15 +24,6 @@ function Login() {
           <LoginForm />
         </div>
         <div className='w-full h-screen min-w-basis-1/2 bg-blue-500'></div>
-        <ToastContainer
-          position='top-right'
-          transition={Bounce}
-          autoClose={2000}
-          draggable={true}
-          theme='colored'
-          hideProgressBar={true}
-          toastClassName='!font-sans !rounded-md'
-        />
       </div>
     </>
   );
