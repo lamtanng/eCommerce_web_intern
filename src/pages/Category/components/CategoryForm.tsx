@@ -8,7 +8,6 @@ import { useCategoryForm } from '../useCategoryTable';
 
 export default function CategoryForm({ handleSubmit, defaultValues }: CategoryFormProps) {
   const { form, handleResetFields } = useCategoryForm({ defaultValues });
-  console.log('form');
   return (
     <>
       <FormProvider {...form}>

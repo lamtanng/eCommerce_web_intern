@@ -1,6 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { ProductProps } from '../../types/product.type';
+import { remove } from 'lodash';
+import { RejectedAction } from '../../types/actionState.type';
 import { LoadingProps } from '../../types/loading.type';
+import { ProductProps } from '../../types/product.type';
+import { displayError, displaySuccess } from '../../ultils/displayToast';
 import {
   createProduct,
   fetchProductList,
@@ -9,10 +12,7 @@ import {
   removeProduct,
   updateProduct,
 } from '../actions/product.actions';
-import { RejectedAction } from '../../types/actionState.type';
 import { RootState } from '../store';
-import { displayError, displaySuccess } from '../../ultils/displayToast';
-import { concat, remove } from 'lodash';
 
 export interface ProductSliceProps {
   productList: ProductProps[];

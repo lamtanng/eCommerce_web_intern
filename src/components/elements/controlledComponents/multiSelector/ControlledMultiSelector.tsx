@@ -22,6 +22,7 @@ const MenuProps = {
 
 interface ControlledSelectorProps<FormValues extends FieldValues> extends ControlledInputProps<FormValues> {
   data: MultiSelectData[];
+  multiple?: boolean;
 }
 
 export function ControlledMultiSelector<FormValues extends FieldValues>({
@@ -29,6 +30,7 @@ export function ControlledMultiSelector<FormValues extends FieldValues>({
   control,
   data,
   label,
+  multiple = false,
 }: ControlledSelectorProps<FormValues>) {
   return (
     <Controller
@@ -40,7 +42,7 @@ export function ControlledMultiSelector<FormValues extends FieldValues>({
           <Select
             labelId="multi-label"
             id="multi"
-            multiple
+            multiple={multiple}
             value={value ? value : []}
             onChange={onChange}
             input={<OutlinedInput id="select-multiple-chip" label="Chip" />}

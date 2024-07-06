@@ -13,7 +13,6 @@ import Home from '../pages/Home/Home';
 import { LoginRoutes } from '../pages/Login/Login.routes';
 import { CategoryRoutes } from '../pages/Category/Category.routes';
 import { ProductRoutes } from '../pages/Product/Product.routes';
-import { PurchaseRoutes } from '../pages/Purchase/Purchase.routes';
 
 const routes = createBrowserRouter([
   {
@@ -48,7 +47,7 @@ const routes = createBrowserRouter([
         children: [
           { path: dashboardFeature.path, element: <>Dashboard</> },
           ProductRoutes,
-          PurchaseRoutes,
+          { path: purchaseFeature.path, element: <div>Admin Purchases</div> },
           CategoryRoutes,
         ],
       },
