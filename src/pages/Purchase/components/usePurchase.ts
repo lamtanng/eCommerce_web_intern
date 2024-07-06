@@ -2,7 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { fetchProductList } from '../../../redux/actions/product.actions';
-import { createPurchase } from '../../../redux/actions/purchase.action';
+import { createPurchase, updatePurchase } from '../../../redux/actions/purchase.action';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { productSelector } from '../../../redux/slices/product.slice';
 import { PurchaseFormSchemaProps } from '../../../types/purchase.type';
@@ -33,11 +33,10 @@ export const usePurchaseForm = ({ defaultValues, action }: PurchaseFormProps) =>
     action === 'UPDATE' ? handleUpdatePurchase(data) : handleCreatePurchase(data);
   };
   const handleUpdatePurchase = async (data: PurchaseFormSchemaProps) => {
-    console.log(data);
+    dispatch(updatePurchase(data));
   };
 
   const handleCreatePurchase = async (data: PurchaseFormSchemaProps) => {
-    console.log(data);
     dispatch(createPurchase(data));
   };
 

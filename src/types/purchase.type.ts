@@ -8,12 +8,11 @@ interface PurchaseProps {
   reviewComment: string;
   createdAt: string;
 }
-
 interface PurchaseGetRequestParams extends Partial<Pick<PurchaseProps, 'userId' | 'productId'>> {
   page?: number;
   offset?: number;
 }
+interface PurchaseReviewFormSchemaProps extends Partial<Pick<PurchaseProps, 'id' | 'reviewNote' | 'reviewComment'>> {}
+interface PurchaseFormSchemaProps extends Pick<PurchaseProps, 'id' | 'productId' | 'amount'> {}
 
-type PurchaseFormSchemaProps = Pick<PurchaseProps, 'id' | 'productId' | 'amount'>;
-
-export type { PurchaseProps, PurchaseFormSchemaProps, PurchaseGetRequestParams };
+export type { PurchaseProps, PurchaseFormSchemaProps, PurchaseGetRequestParams, PurchaseReviewFormSchemaProps };

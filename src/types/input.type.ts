@@ -1,5 +1,5 @@
 import { HTMLInputTypeAttribute } from 'react';
-import { Control, FieldPath, FieldValues, Path, UseFormUnregister } from 'react-hook-form';
+import { Control, FieldPath, FieldValues, Path } from 'react-hook-form';
 
 export interface InputProps<T extends FieldValues> {
   name: Path<T>;

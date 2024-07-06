@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { purchaseApi } from '../../apis/purchase.api';
-import { PurchaseFormSchemaProps, PurchaseGetRequestParams } from '../../types/purchase.type';
+import { PurchaseFormSchemaProps, PurchaseGetRequestParams, PurchaseProps } from '../../types/purchase.type';
 
 const fetchPurchaseList = createAsyncThunk('purchase/fetchPurchaseList', async (params?: PurchaseGetRequestParams) => {
   const response = await purchaseApi.getAll(params);
@@ -14,5 +14,9 @@ const updatePurchase = createAsyncThunk('purchase/updatePurchase', async (params
   const response = await purchaseApi.update(params);
   return response.data;
 });
+const removePurchase = createAsyncThunk('purchase/removePurchase', async (id: PurchaseProps['id']) => {
+  const response = await purchaseApi.remove(id);
+  return response.data;
+});
 
-export { fetchPurchaseList, createPurchase, updatePurchase };
+export { fetchPurchaseList, createPurchase, updatePurchase, removePurchase };

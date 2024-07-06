@@ -2,6 +2,7 @@ import * as yup from 'yup';
 import { PurchaseFormSchemaProps, PurchaseProps } from '../../types/purchase.type';
 import { getRequiredMsg } from '../../ultils/getRequiredMsg';
 import { createColumnHelper } from '@tanstack/react-table';
+import PurchaseTableAction from './components/Table/PurchaseTableAction';
 
 const purchaseSchema: yup.ObjectSchema<PurchaseFormSchemaProps> = yup.object({
   id: yup.string(),
@@ -48,13 +49,13 @@ const purchaseFormColumns = [
     accessorKey: 'createdAt',
     header: 'Created At',
   },
-  //   columnHelper.display({
-  //     id: 'actions',
-  //     header: 'Actions',
-  //     cell: ({ row }) => {
-  //       return <ProductTableAction row={row} />;
-  //     },
-  //   }),
+  columnHelper.display({
+    id: 'actions',
+    header: 'Actions',
+    cell: ({ row }) => {
+      return <PurchaseTableAction row={row} />;
+    },
+  }),
 ];
 
 export { purchaseSchema, purchaseDefault, purchaseFormColumns };
