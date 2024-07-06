@@ -5,20 +5,15 @@ interface ResetButtonProps extends ButtonProps {
   onReset?: () => void;
 }
 
-export default function ResetButton({
-  text = 'Reset',
-  variant = 'outlined',
-  onReset,
-  isDirty = true,
-}: ResetButtonProps) {
+export default function ResetButton({ text = 'Reset', variant = 'outlined', onReset, isDirty }: ResetButtonProps) {
   return (
     <LoadingButton
       variant={variant}
-      type='submit'
-      size='large'
+      type="submit"
+      size="large"
       fullWidth
       disabled={isDirty ? false : true}
-      loadingPosition='start'
+      loadingPosition="start"
       onClick={onReset}
     >
       <span>{text}</span>

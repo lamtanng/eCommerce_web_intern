@@ -1,18 +1,19 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import axios, { AxiosError } from 'axios';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { login } from '../../apis/login.api';
-import useAuth from '../../hooks/useAuth';
 import { usePrevLocation } from '../../hooks/usePrevLocation';
+import { useAppDispatch } from '../../redux/hooks';
 import LoginProps from '../../types/login.type';
-import { decodeToken } from '../../ultils/decodToken';
+import { setStoredAuth } from '../../ultils/authToken';
 import { displayError } from '../../ultils/displayToast';
 import { loginSchema } from './Login.constants';
-import AuthProps from '../../types/auth.type';
 
 const useLogin = () => {
-  const { setAuth } = useAuth();
   const { toPrevLocation } = usePrevLocation();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const form = useForm<LoginProps>({
     resolver: yupResolver(loginSchema),
@@ -28,10 +29,7 @@ const useLogin = () => {
 
   const verifyAccount = async (account: LoginProps) => {
     const response = await login(account);
-    let decodedToken = decodeToken(response.data.accessToken);
-    let authData: AuthProps = { ...response.data, ...decodedToken };
-    localStorage.setItem('auth', JSON.stringify(authData));
-    setAuth(authData);
+    setStoredAuth(response.data);
     toPrevLocation();
   };
 

@@ -1,7 +1,7 @@
 import { FieldValues, useFormContext } from 'react-hook-form';
 import { TextField } from '@mui/material';
-import InputProps from '../../../types/input.type';
 import { ReactNode } from 'react';
+import { InputProps } from '../../../types/input.type';
 
 export default function FormContextInput<T extends FieldValues>({
   name,

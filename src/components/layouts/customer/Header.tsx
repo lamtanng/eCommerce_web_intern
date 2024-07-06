@@ -1,11 +1,18 @@
 import { AppBar, Box, Button, MenuItem, Stack } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 import Logo from '../../../assets/react.svg';
-import useAuth from '../../../hooks/useAuth';
+import { getStoredAuth, removeAuth } from '../../../ultils/authToken';
+import { logout } from '../../../apis/login.api';
+import { usePrevLocation } from '../../../hooks/usePrevLocation';
 
 export default function Header() {
-  const { auth } = useAuth();
-
+  const auth = getStoredAuth();
+  const { toPrevLocation } = usePrevLocation();
+  const doLogout = async () => {
+    const resp = await logout(auth.refreshToken);
+    removeAuth();
+    toPrevLocation();
+  };
   return (
     <AppBar position='fixed' className='px-page_gutter_lg bg-white h-header_height'>
       <Stack direction='row' spacing={10} justifyContent='space-between' alignItems='center'>
@@ -32,7 +39,7 @@ export default function Header() {
           </Stack>
         ) : (
           <Stack direction='row' spacing={4}>
-            <Button variant='text' size='small'>
+            <Button variant='text' size='small' onClick={doLogout}>
               Sign out
             </Button>
           </Stack>

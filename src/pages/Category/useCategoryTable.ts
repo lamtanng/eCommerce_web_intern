@@ -1,17 +1,14 @@
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
 import debounce from 'lodash/debounce';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { SubmitHandler } from 'react-hook-form';
-import {
-  createCategory,
-  deleteCategory,
-  fetchCategory,
-  updateCategory,
-} from '../../redux/actions/category.actions';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { createCategory, deleteCategory, fetchCategory, updateCategory } from '../../redux/actions/category.actions';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { categorySelector } from '../../redux/slices/category.slice';
 import { CategoryParams, CategoryProps } from '../../types/category.type';
-import { CategorySchemaProps, columnDefs, getDefaultParams } from './Category.constants';
+import { categorySchema, columnDefs, getCategoryParams } from './Category.constants';
+import { CategorySchemaProps } from './Category.types';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 export function useCategoryTable() {
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -25,7 +22,7 @@ export function useCategoryTable() {
   });
 
   useEffect(() => {
-    let params: CategoryParams = getDefaultParams(searchQuery);
+    let params: CategoryParams = getCategoryParams(searchQuery);
     dispatch(fetchCategory(params));
   }, [searchQuery]);
 
@@ -57,4 +54,17 @@ export function useCategoryTable() {
     loading,
     error,
   };
+}
+
+export function useCategoryForm({ defaultValues }: { defaultValues: CategorySchemaProps | undefined }) {
+  const form = useForm<CategorySchemaProps>({
+    resolver: yupResolver(categorySchema),
+    defaultValues,
+  });
+  const handleResetFields = () => {
+    form.reset(defaultValues);
+  };
+
+  useMemo(() => form, []);
+  return { form, handleResetFields };
 }

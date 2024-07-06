@@ -4,6 +4,7 @@ import RequiredAuth from '../components/layouts/RequiredAuth';
 import {
   adminPath,
   categoryFeature,
+  dashboardFeature,
   productFeature,
   purchaseFeature,
 } from '../constants/adminFeatures';
@@ -11,6 +12,7 @@ import { default as Category, default as Products } from '../pages/Category/Catg
 import Home from '../pages/Home/Home';
 import { LoginRoutes } from '../pages/Login/Login.routes';
 import { CategoryRoutes } from '../pages/Category/Category.routes';
+import { ProductRoutes } from '../pages/Product/Product.routes';
 
 const routes = createBrowserRouter([
   {
@@ -21,9 +23,9 @@ const routes = createBrowserRouter([
 
       {
         path: '/',
-        element: <RequiredAuth allowedRoles={['USER', 'ADMIN']} />,
+        element: <RequiredAuth allowedRoles={['USER']} />,
         children: [
-          { path: '/purchase', element: <Home /> },
+          { path: '/', element: <Home /> },
           { path: '/products', element: <div>Product page</div> },
         ],
       },
@@ -43,7 +45,8 @@ const routes = createBrowserRouter([
         path: adminPath,
         element: <RequiredAuth allowedRoles={['ADMIN']} />,
         children: [
-          { path: productFeature.path, element: <Products /> },
+          { path: dashboardFeature.path, element: <>Dashboard</> },
+          ProductRoutes,
           { path: purchaseFeature.path, element: <div>Admin Purchases</div> },
           CategoryRoutes,
         ],

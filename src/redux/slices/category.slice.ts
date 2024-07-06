@@ -35,7 +35,7 @@ const categorySlice = createSlice({
       })
       .addCase(createCategory.fulfilled, (state, action) => {
         state.loading = 'succeeded';
-        state.categoryList.push(action.payload.data);
+        state.categoryList.unshift(action.payload.data);
         displaySuccess('Category created successfully');
       })
       .addCase(deleteCategory.fulfilled, (state, action) => {

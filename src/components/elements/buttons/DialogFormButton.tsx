@@ -1,9 +1,10 @@
+import BorderColorRoundedIcon from '@mui/icons-material/BorderColorRounded';
 import { Button, Dialog, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import { ReactNode, useState } from 'react';
 import { SlideUpTransition } from '../transition/SlideUpTransition';
 
 export interface DialogFormButtonProps {
-  dialogButton: ReactNode | string;
+  dialogButton?: ReactNode | string;
   title?: string;
   variant?: 'text' | 'contained' | 'outlined';
   description?: string;
@@ -11,9 +12,9 @@ export interface DialogFormButtonProps {
 }
 
 export default function DialogFormButton({
-  dialogButton = 'Dialog',
+  dialogButton = <BorderColorRoundedIcon />,
   title,
-  variant = 'contained',
+  variant = 'text',
   description,
   children = null,
 }: DialogFormButtonProps) {
@@ -34,12 +35,14 @@ export default function DialogFormButton({
         TransitionComponent={SlideUpTransition}
         keepMounted
         onClose={handleClose}
-        maxWidth='xl'
-        aria-describedby='alert-dialog-slide-description'
+        fullWidth
+        maxWidth="sm"
+        aria-describedby="alert-dialog-slide-description"
+        className="w-56"
       >
         <DialogTitle>{title}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id='alert-dialog-slide-description'>{description}</DialogContentText>
+        <DialogContent className="w-56">
+          <DialogContentText id="alert-dialog-slide-description">{description}</DialogContentText>
           {children}
         </DialogContent>
       </Dialog>

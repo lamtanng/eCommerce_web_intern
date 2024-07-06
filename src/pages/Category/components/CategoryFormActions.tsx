@@ -8,6 +8,8 @@ import CategoryForm from './CategoryForm';
 
 function ActionColumn({ row }: { row: Row<CategoryProps> }) {
   const { handleDeleteCategory, handleUpdateCategory } = useCategoryTable();
+  
+
   return (
     <>
       <ConfirmButton onConfirm={() => handleDeleteCategory(row.original.id)} />

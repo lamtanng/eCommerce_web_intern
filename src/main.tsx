@@ -12,12 +12,12 @@ import routes from './routes/index.tsx';
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <Provider store={store}>
-      <AuthProvider>
+      {/* <AuthProvider> */}
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <RouterProvider router={routes} />
         </ThemeProvider>
-      </AuthProvider>
+      {/* </AuthProvider> */}
     </Provider>
   </React.StrictMode>
 );

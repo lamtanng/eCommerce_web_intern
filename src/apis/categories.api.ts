@@ -1,11 +1,11 @@
-import { CategorySchemaProps } from '../pages/Category/Category.constants';
+import { CategorySchemaProps } from '../pages/Category/Category.types';
 import { CategoryParams, CategoryProps } from '../types/category.type';
 import { axiosClient } from './axios';
 import { axiosRefresh } from './axiosRefresh';
 
-function getAll(params: CategoryParams) {
+function getAll(params?: CategoryParams) {
   const url = '/category';
-  return axiosClient.get<CategoryProps>(url, { params });
+  return axiosClient.get<CategoryProps[]>(url, { params });
 }
 
 function create(data: CategorySchemaProps) {

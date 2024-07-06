@@ -3,6 +3,11 @@ export interface FeaturesProps {
   path: string;
 }
 const adminPath = '/admin';
+
+const dashboardFeature: FeaturesProps = {
+  title: 'Dashboard',
+  path: `${adminPath}/dashboard`,
+};
 const purchaseFeature: FeaturesProps = {
   title: 'Purchase',
   path: `${adminPath}/purchases`,
@@ -16,7 +21,12 @@ const categoryFeature: FeaturesProps = {
   path: `${adminPath}/categories`,
 };
 
-const adminFeatures: FeaturesProps[] = [purchaseFeature, productFeature, categoryFeature];
+const adminFeatures: FeaturesProps[] = [
+  dashboardFeature,
+  purchaseFeature,
+  productFeature,
+  categoryFeature,
+];
 
 export {
   adminPath,
@@ -24,4 +34,5 @@ export {
   purchaseFeature,
   categoryFeature,
   adminFeatures,
+  dashboardFeature,
 };

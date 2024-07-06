@@ -9,8 +9,8 @@ const categorySchema: yup.ObjectSchema<CategorySchemaProps> = yup.object({
   name: yup.string().required(getRequiredMsg('Name')),
 });
 
-const getDefaultParams = (searchQuery: string): CategoryParams => ({
-  categoryName: searchQuery,
+const getCategoryParams = (cateName?: string): CategoryParams => ({
+  categoryName: cateName ?? '',
   page: 1,
   offset: 5,
 });
@@ -34,5 +34,4 @@ const columnDefs = [
   }),
 ];
 
-export { categorySchema, columnDefs, getDefaultParams };
-
+export { categorySchema, columnDefs, getCategoryParams };
