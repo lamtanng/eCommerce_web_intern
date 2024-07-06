@@ -32,12 +32,12 @@ const purchaseSlice = createSlice({
       .addCase(createPurchase.fulfilled, (state, action) => {
         state.loading = 'succeeded';
         state.purchaseList.push(action.payload);
-        displaySuccess('Purchase updated successfully');
+        displaySuccess('Purchase create successfully');
       })
       .addCase(updatePurchase.fulfilled, (state, action) => {
         state.loading = 'succeeded';
         state.purchaseList = state.purchaseList.map((purchase) =>
-          purchase.id === action.payload.id ? action.payload.id : purchase,
+          purchase.id === action.payload.id ? action.payload : purchase,
         );
         displaySuccess('Purchase updated successfully');
       })
