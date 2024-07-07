@@ -3,11 +3,12 @@ import { memo } from 'react';
 import ResetButton from '../../../../components/elements/buttons/ResetButton';
 import SubmitButton from '../../../../components/elements/buttons/SubmitButton';
 import ControlledInput from '../../../../components/elements/controlledComponents/ControlledInput';
-import { ControlledMultiSelector } from '../../../../components/elements/controlledComponents/multiSelector/ControlledMultiSelector';
+import { ControlledSelector } from '../../../../components/elements/controlledComponents/ControlledSelector/ControlledSelector';
+import { PurchaseFormSchema } from '../../../../types/purchase.type';
 import { PurchaseFormProps } from '../../Purchase.type';
-import { usePurchaseForm } from '../usePurchase';
+import { usePurchaseForm } from '../../usePurchase';
 
-function PurchaseForm({ defaultValues, action }: PurchaseFormProps) {
+function PurchaseForm({ defaultValues, action }: PurchaseFormProps<PurchaseFormSchema>) {
   const { handleSubmit, onSubmit, control, isSubmitting, isDirty, onReset, productData } = usePurchaseForm({
     defaultValues,
     action,
@@ -17,13 +18,7 @@ function PurchaseForm({ defaultValues, action }: PurchaseFormProps) {
       <form onSubmit={handleSubmit(onSubmit)} className="form !gap-2">
         {action === 'UPDATE' && <ControlledInput name="id" control={control} label="ID" disabled={true} />}
         <ControlledInput name="amount" control={control} label="Amount" />
-        <ControlledMultiSelector
-          name="productId"
-          control={control}
-          data={productData}
-          label="Product"
-          multiple={false}
-        />
+        <ControlledSelector name="productId" control={control} data={productData} label="Product" multiple={false} />
         <Stack width="100%" direction="row" alignItems="center" justifyContent="space-between" spacing="150px">
           <ResetButton onReset={onReset} isDirty={isDirty} />
           <SubmitButton isSubmitting={isSubmitting} isDirty={isDirty} />

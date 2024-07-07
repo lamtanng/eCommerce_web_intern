@@ -1,8 +1,8 @@
 import { TableBody, TableCell, TableRow } from '@mui/material';
 import { flexRender, RowData } from '@tanstack/react-table';
-import { TableProps } from '../../../types/table.type';
+import { ReactTableProps } from './ReactTable.type';
 
-interface ReactTableBodyProps<TData extends RowData> extends TableProps<TData> {}
+interface ReactTableBodyProps<TData extends RowData> extends ReactTableProps<TData> {}
 
 function ReactTableBody<TData extends RowData>({ table }: ReactTableBodyProps<TData>) {
   return (
@@ -10,9 +10,7 @@ function ReactTableBody<TData extends RowData>({ table }: ReactTableBodyProps<TD
       {table.getRowModel().rows.map((row) => (
         <TableRow key={row.id}>
           {row.getVisibleCells().map((cell) => (
-            <TableCell key={cell.id}>
-              {flexRender(cell.column.columnDef.cell, cell.getContext())}
-            </TableCell>  
+            <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
           ))}
         </TableRow>
       ))}

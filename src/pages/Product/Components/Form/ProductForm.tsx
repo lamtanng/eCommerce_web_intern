@@ -1,13 +1,14 @@
 import { Stack } from '@mui/material';
 import { memo } from 'react';
-import ControlledInput from '../../../../components/elements/controlledComponents/ControlledInput';
 import ResetButton from '../../../../components/elements/buttons/ResetButton';
 import SubmitButton from '../../../../components/elements/buttons/SubmitButton';
-import { ControlledMultiSelector } from '../../../../components/elements/controlledComponents/multiSelector/ControlledMultiSelector';
-import { useProductForm } from '../../useProduct';
+import ControlledInput from '../../../../components/elements/controlledComponents/ControlledInput';
 import { ProductFormProps } from '../../Product.type';
+import { useProductForm } from '../../useProduct';
+import { ControlledSelector } from '../../../../components/elements/controlledComponents/ControlledSelector/ControlledSelector';
+import { ProductFormSchema } from '../../../../types/product.type';
 
-function ProductForm({ defaultValues, action }: ProductFormProps) {
+function ProductForm({ defaultValues, action }: ProductFormProps<ProductFormSchema>) {
   const { handleSubmit, onSubmit, control, isSubmitting, cateSelectData, isDirty, onReset } = useProductForm({
     defaultValues,
     action,
@@ -19,7 +20,7 @@ function ProductForm({ defaultValues, action }: ProductFormProps) {
         {action === 'UPDATE' && <ControlledInput name="id" control={control} label="ID" disabled={true} />}
         <ControlledInput name="name" control={control} label="Name" />
         <ControlledInput name="basePrice" control={control} label="Price" />
-        <ControlledMultiSelector
+        <ControlledSelector
           name="categories"
           control={control}
           data={cateSelectData}

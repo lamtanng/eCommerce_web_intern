@@ -1,9 +1,7 @@
-import { SubmitHandler } from "react-hook-form";
-import { CategoryProps } from "../../types/category.type";
+import { CategoryProps } from '../../types/category.type';
+import { FormProps } from '../../types/form.type';
+import { TableProps } from '../../types/table.type';
 
-export type CategorySchemaProps = Pick<CategoryProps, 'name'>;
-
-export interface CategoryFormProps {
-    handleSubmit: SubmitHandler<CategorySchemaProps>;
-    defaultValues?: CategorySchemaProps;
-  }
+export type CategorySchema = Pick<CategoryProps, 'name'>;
+export interface CategoryFormProps<TSchema> extends FormProps<TSchema> {}
+export interface CategoryTableProps extends TableProps {}

@@ -1,9 +1,9 @@
 import { TableCell, TableHead, TableRow } from '@mui/material';
 import { flexRender, RowData } from '@tanstack/react-table';
-import { TableProps } from '../../../types/table.type';
 import { memo } from 'react';
+import { ReactTableProps } from './ReactTable.type';
 
-interface ReactTableHeaderProps<TData extends RowData> extends TableProps<TData> {}
+interface ReactTableHeaderProps<TData extends RowData> extends ReactTableProps<TData> {}
 
 function ReactTableHeader<TData extends RowData>({ table }: ReactTableHeaderProps<TData>) {
   return (
@@ -12,9 +12,7 @@ function ReactTableHeader<TData extends RowData>({ table }: ReactTableHeaderProp
         <TableRow key={headerGroup.id}>
           {headerGroup.headers.map((header) => (
             <TableCell key={header.id}>
-              {header.placeholderId
-                ? null
-                : flexRender(header.column.columnDef.header, header.getContext())}
+              {header.placeholderId ? null : flexRender(header.column.columnDef.header, header.getContext())}
             </TableCell>
           ))}
         </TableRow>

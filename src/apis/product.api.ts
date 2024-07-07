@@ -1,45 +1,45 @@
 import { omit } from 'lodash';
 import {
   GetAllProductParams,
-  ProductFormSchemaProps,
+  ProductFormSchema,
   ProductProps,
   UploadImageRequestProps,
 } from '../types/product.type';
-import { axiosRefresh } from './axiosRefresh';
+import { axiosPrivate } from './axiosPrivate';
 
 function getAll(params?: GetAllProductParams) {
   const url = '/product';
-  return axiosRefresh.get<ProductProps[]>(url, { params });
+  return axiosPrivate.get<ProductProps[]>(url, { params });
 }
 
 function getById(id: ProductProps['id']) {
   const url = `/product/id/${id}`;
-  return axiosRefresh.get<ProductProps>(url);
+  return axiosPrivate.get<ProductProps>(url);
 }
 
 function getByURL(urlName: ProductProps['urlName']) {
   const url = `/product/${urlName}`;
-  return axiosRefresh.get<ProductProps>(url);
+  return axiosPrivate.get<ProductProps>(url);
 }
 
-function create(data: ProductFormSchemaProps) {
+function create(data: ProductFormSchema) {
   const url = '/product';
-  return axiosRefresh.post<ProductProps>(url, data);
+  return axiosPrivate.post<ProductProps>(url, data);
 }
 
 function remove(id: ProductProps['id']) {
   const url = `/product/${id}`;
-  return axiosRefresh.delete(url);
+  return axiosPrivate.delete(url);
 }
 
-function update(data: ProductFormSchemaProps) {
+function update(data: ProductFormSchema) {
   const url = `/product/${data.id}`;
-  return axiosRefresh.patch<ProductFormSchemaProps>(url, { ...omit(data, 'id') });
+  return axiosPrivate.patch<ProductFormSchema>(url, { ...omit(data, 'id') });
 }
 
 function uploadImage({ id, file }: UploadImageRequestProps) {
   const url = `/product/picture/${id}`;
-  return axiosRefresh.patch<ProductFormSchemaProps>(url, { file });
+  return axiosPrivate.patch<ProductFormSchema>(url, { file });
 }
 
 export const productApi = { getAll, create, remove, update, getById, getByURL, uploadImage };

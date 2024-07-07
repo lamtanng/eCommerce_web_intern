@@ -1,13 +1,13 @@
 import { Stack } from '@mui/material';
-import useDebounce from '../../hooks/useDebounce';
-import SearchBar from '../../components/elements/searchBar/SearchBar';
 import DialogFormButton from '../../components/elements/buttons/DialogFormButton';
-import PurchaseTable from './components/Table/PurchaseTable';
+import SearchBar from '../../components/elements/searchBar/SearchBar';
+import useDebounce from '../../hooks/useDebounce';
 import PurchaseForm from './components/Form/PurchaseForm';
+import PurchaseTable from './components/Table/PurchaseTable';
 import { purchaseDefault } from './Purchase.constants';
 
 export default function Product() {
-  const { handleDebouncedSearch, searchQuery } = useDebounce(800);
+  const { handleDebouncedSearch, searchQuery } = useDebounce();
   return (
     <>
       <Stack spacing={2} direction="row" justifyContent="flex-end">
@@ -16,7 +16,7 @@ export default function Product() {
           <PurchaseForm defaultValues={purchaseDefault} action="CREATE" />
         </DialogFormButton>
       </Stack>
-      <PurchaseTable />
+      <PurchaseTable searchQuery={searchQuery} />
     </>
   );
 }

@@ -7,13 +7,13 @@ const headers = {
   'Content-Type': 'application/json',
 };
 
-export const axiosRefresh = axios.create({
+export const axiosPrivate = axios.create({
   baseURL,
   timeout,
   headers,
 });
 
-axiosRefresh.interceptors.request.use(
+axiosPrivate.interceptors.request.use(
   (config) => {
     const auth = getStoredAuth();
     config.headers['Authorization'] = `Bearer ${auth?.accessToken}`;
@@ -22,7 +22,7 @@ axiosRefresh.interceptors.request.use(
   (error: AxiosError) => Promise.reject(error),
 );
 
-axiosRefresh.interceptors.response.use(
+axiosPrivate.interceptors.response.use(
   (response) => {
     return response;
   },
@@ -32,7 +32,7 @@ axiosRefresh.interceptors.response.use(
     if (error?.response?.status === 401 && error.response?.statusText === 'Unauthorized' && prevRequest !== undefined) {
       const newReq = await refresh();
       prevRequest.headers.Authorization = `Bearer ${newReq.accessToken}`;
-      return axiosRefresh(prevRequest);
+      return axiosPrivate(prevRequest);
     }
     return Promise.reject(error.response?.data);
   },

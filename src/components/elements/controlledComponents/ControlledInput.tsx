@@ -1,7 +1,6 @@
 import { TextField } from '@mui/material';
-import { Controller, FieldValues, useWatch } from 'react-hook-form';
+import { Controller, FieldValues } from 'react-hook-form';
 import { ControlledInputProps } from '../../../types/input.type';
-import { useEffect } from 'react';
 
 export default function ControlledInput<FormValues extends FieldValues>({
   name,

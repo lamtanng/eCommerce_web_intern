@@ -1,6 +1,6 @@
 import { CategoryProps } from './category.type';
 
-type ProductFormSchemaProps = Omit<ProductProps, 'urlName' | 'picture' | 'createdAt'>;
+type ProductFormSchema = Omit<ProductProps, 'urlName' | 'picture' | 'createdAt'>;
 interface ProductProps {
   id?: string;
   name: string;
@@ -11,7 +11,7 @@ interface ProductProps {
   stock?: number | undefined;
   description?: string | undefined;
   createdAt?: string | undefined;
-  categories?: CategoryProps['id'][] | undefined;
+  categories?: { name: CategoryProps['name'] }[];
 }
 interface GetAllProductParams {
   productName?: string;
@@ -23,4 +23,4 @@ interface UploadImageRequestProps {
   file: string;
 }
 
-export type { ProductProps, UploadImageRequestProps, ProductFormSchemaProps, GetAllProductParams };
+export type { GetAllProductParams, ProductFormSchema, ProductProps, UploadImageRequestProps };

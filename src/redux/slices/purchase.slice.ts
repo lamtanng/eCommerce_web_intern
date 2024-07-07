@@ -1,7 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { LoadingProps } from '../../types/loading.type';
 import { PurchaseProps } from '../../types/purchase.type';
-import { createPurchase, fetchPurchaseList, removePurchase, updatePurchase } from '../actions/purchase.action';
+import {
+  createPurchase,
+  fetchPurchaseList,
+  fetchPurchasesWithAdmin,
+  getPurchaseById,
+  removePurchase,
+  reviewPurchase,
+  updatePurchase,
+} from '../actions/purchase.action';
 import { RejectedAction } from '../../types/actionState.type';
 import { displayError, displaySuccess } from '../../ultils/displayToast';
 import { RootState } from '../store';
@@ -29,12 +37,27 @@ const purchaseSlice = createSlice({
         state.loading = 'succeeded';
         state.purchaseList = action.payload;
       })
+      .addCase(fetchPurchasesWithAdmin.fulfilled, (state, action) => {
+        state.loading = 'succeeded';
+        state.purchaseList = action.payload;
+      })
+      .addCase(getPurchaseById.fulfilled, (state, action) => {
+        state.loading = 'succeeded';
+        state.purchaseList = [action.payload];
+      })
       .addCase(createPurchase.fulfilled, (state, action) => {
         state.loading = 'succeeded';
         state.purchaseList.push(action.payload);
         displaySuccess('Purchase create successfully');
       })
       .addCase(updatePurchase.fulfilled, (state, action) => {
+        state.loading = 'succeeded';
+        state.purchaseList = state.purchaseList.map((purchase) =>
+          purchase.id === action.payload.id ? action.payload : purchase,
+        );
+        displaySuccess('Purchase updated successfully');
+      })
+      .addCase(reviewPurchase.fulfilled, (state, action) => {
         state.loading = 'succeeded';
         state.purchaseList = state.purchaseList.map((purchase) =>
           purchase.id === action.payload.id ? action.payload : purchase,

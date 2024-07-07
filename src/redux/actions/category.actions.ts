@@ -2,7 +2,7 @@ import { AsyncThunk, createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosResponse } from 'axios';
 import { CategoryParams, CategoryProps } from '../../types/category.type';
 import { categoryApi } from '../../apis/categories.api';
-import { CategorySchemaProps } from '../../pages/Category/Category.types';
+import { CategorySchema } from '../../pages/Category/Category.types';
 
 const fetchCategory: AsyncThunk<AxiosResponse<CategoryProps, any>, CategoryParams, {}> = createAsyncThunk(
   'category/fetchCategory',
@@ -12,7 +12,7 @@ const fetchCategory: AsyncThunk<AxiosResponse<CategoryProps, any>, CategoryParam
   },
 );
 
-const createCategory = createAsyncThunk('category/createCategory', async (data: CategorySchemaProps) => {
+const createCategory = createAsyncThunk('category/createCategory', async (data: CategorySchema) => {
   const resp = await categoryApi.create(data);
   return resp;
 });

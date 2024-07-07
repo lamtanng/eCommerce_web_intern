@@ -1,5 +1,5 @@
 import { map } from 'lodash';
-import { MultiSelectData } from '../types/selector.type';
+import { SelectData } from '../types/selector.type';
 
 /**
  * @description Convert data to multi select data
@@ -13,7 +13,7 @@ const convertToSelectData = ({
   data: any[];
   valueField: string;
   nameField: string;
-}): MultiSelectData[] =>
+}): SelectData[] =>
   map(data, (item) => ({
     value: item[valueField],
     name: item[nameField],

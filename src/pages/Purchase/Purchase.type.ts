@@ -1,7 +1,6 @@
-import { FormActions } from '../../types/formActions.type';
-import { PurchaseFormSchemaProps } from '../../types/purchase.type';
+import { FormProps } from '../../types/form.type';
+import { TableProps } from '../../types/table.type';
 
-export interface PurchaseFormProps {
-  defaultValues: PurchaseFormSchemaProps;
-  action: FormActions;
-}
+export interface PurchaseFormProps<TSchema> extends FormProps<TSchema> {}
+export interface PurchaseReviewFormProps<TSchema> extends Pick<FormProps<TSchema>, 'defaultValues'> {}
+export interface PurchaseTableProps extends TableProps {}

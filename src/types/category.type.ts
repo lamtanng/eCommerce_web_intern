@@ -1,5 +1,4 @@
-interface CategoryParams extends GetAllCategoryParams{
-}
+interface CategoryParams extends GetAllCategoryParams {}
 interface GetAllCategoryParams {
   categoryName?: string;
   page?: number;
@@ -7,9 +6,8 @@ interface GetAllCategoryParams {
 }
 
 interface CategoryProps {
-  id: string;
+  id?: string;
   name: string;
 }
-
 
 export type { CategoryParams, CategoryProps };

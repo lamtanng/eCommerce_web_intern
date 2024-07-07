@@ -1,5 +1,3 @@
-import { RowData, Table } from '@tanstack/react-table';
-
-export interface TableProps<TData extends RowData> {
-  table: Table<TData>;
+export interface TableProps {
+  searchQuery: string | undefined;
 }

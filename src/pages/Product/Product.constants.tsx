@@ -1,7 +1,8 @@
-import * as yup from 'yup';
-import { getRequiredMsg } from '../../ultils/getRequiredMsg';
 import { createColumnHelper } from '@tanstack/react-table';
-import { ProductFormSchemaProps, ProductProps } from '../../types/product.type';
+import * as yup from 'yup';
+import { ProductFormSchema, ProductProps } from '../../types/product.type';
+import { formatDate } from '../../ultils/formatDate';
+import { getRequiredMsg } from '../../ultils/getRequiredMsg';
 import ProductTableAction from './Components/Table/ProductTableAction';
 
 const getProductParams = (searchQuery: string | undefined) => ({
@@ -10,7 +11,7 @@ const getProductParams = (searchQuery: string | undefined) => ({
   offset: 5,
 });
 
-const productSchema: yup.ObjectSchema<ProductFormSchemaProps> = yup.object({
+const productSchema: yup.ObjectSchema<ProductFormSchema> = yup.object({
   id: yup.string(),
   name: yup.string().required(getRequiredMsg('Name')),
   basePrice: yup.number().required(getRequiredMsg('Price')),
@@ -20,7 +21,7 @@ const productSchema: yup.ObjectSchema<ProductFormSchemaProps> = yup.object({
   description: yup.string(),
 });
 
-const productDefaultValue: ProductFormSchemaProps = {
+const productDefaultValue: ProductFormSchema = {
   id: '',
   name: '',
   basePrice: 0,
@@ -56,14 +57,15 @@ const columnDefs = [
     accessorKey: 'stock',
     header: 'Stock',
   },
-  {
-    accessorKey: 'createdAt',
+  columnHelper.accessor((row) => row.createdAt, {
+    id: 'createdAt',
     header: 'Created At',
-  },
+    cell: ({ row }) => `${formatDate(row.original.createdAt)}`,
+  }),
   columnHelper.accessor((row) => row.categories, {
     id: 'categories',
     header: 'Categories',
-    cell: ({ row }) => `${row.original.categories?.map((cate) => cate.name).join(', ')}`,
+    cell: ({ row }) => `${row.original.categories?.map(({ name }) => name).join(', ')}`,
   }),
   columnHelper.display({
     id: 'actions',
@@ -74,4 +76,5 @@ const columnDefs = [
   }),
 ];
 
-export { productSchema, columnDefs, productDefaultValue, getProductParams };
+export { columnDefs, getProductParams, productDefaultValue, productSchema };
+

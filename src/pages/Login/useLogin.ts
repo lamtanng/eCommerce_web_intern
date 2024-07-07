@@ -1,10 +1,8 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import axios, { AxiosError } from 'axios';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-import { login } from '../../apis/login.api';
+import { login } from '../../apis/auth.api';
 import { usePrevLocation } from '../../hooks/usePrevLocation';
-import { useAppDispatch } from '../../redux/hooks';
 import LoginProps from '../../types/login.type';
 import { setStoredAuth } from '../../ultils/authToken';
 import { displayError } from '../../ultils/displayToast';
@@ -12,10 +10,11 @@ import { loginSchema } from './Login.constants';
 
 const useLogin = () => {
   const { toPrevLocation } = usePrevLocation();
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-
-  const form = useForm<LoginProps>({
+  const {
+    handleSubmit,
+    control,
+    formState: { isSubmitting, isDirty },
+  } = useForm<LoginProps>({
     resolver: yupResolver(loginSchema),
   });
 
@@ -35,7 +34,10 @@ const useLogin = () => {
 
   return {
     handleLogin,
-    form,
+    control,
+    handleSubmit,
+    isSubmitting,
+    isDirty,
   };
 };
 

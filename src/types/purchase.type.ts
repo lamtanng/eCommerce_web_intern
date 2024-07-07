@@ -12,7 +12,7 @@ interface PurchaseGetRequestParams extends Partial<Pick<PurchaseProps, 'userId' 
   page?: number;
   offset?: number;
 }
-interface PurchaseReviewFormSchemaProps extends Partial<Pick<PurchaseProps, 'id' | 'reviewNote' | 'reviewComment'>> {}
-interface PurchaseFormSchemaProps extends Pick<PurchaseProps, 'id' | 'productId' | 'amount'> {}
+interface PurchaseReviewFormSchema extends Partial<Pick<PurchaseProps, 'id' | 'reviewNote' | 'reviewComment'>> {}
+interface PurchaseFormSchema extends Pick<PurchaseProps, 'id' | 'productId' | 'amount'> {}
 
-export type { PurchaseProps, PurchaseFormSchemaProps, PurchaseGetRequestParams, PurchaseReviewFormSchemaProps };
+export type { PurchaseProps, PurchaseFormSchema, PurchaseGetRequestParams, PurchaseReviewFormSchema };

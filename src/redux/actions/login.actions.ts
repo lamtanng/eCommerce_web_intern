@@ -1,5 +1,5 @@
 import { AsyncThunk, createAsyncThunk } from '@reduxjs/toolkit';
-import { login, logout } from '../../apis/login.api';
+import { login, logout } from '../../apis/auth.api';
 import LoginProps from '../../types/login.type';
 import LoginResponseProps from '../../types/loginResponse.type';
 
@@ -8,9 +8,7 @@ const loginRequest: AsyncThunk<LoginResponseProps, LoginProps, {}> = createAsync
   async (data: LoginProps) => {
     const resp = await login(data);
     return resp;
-  }
+  },
 );
-
-
 
 export { loginRequest };

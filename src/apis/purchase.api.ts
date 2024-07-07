@@ -1,45 +1,45 @@
 import { omit } from 'lodash';
 import {
-  PurchaseFormSchemaProps,
+  PurchaseFormSchema,
   PurchaseGetRequestParams,
   PurchaseProps,
-  PurchaseReviewFormSchemaProps,
+  PurchaseReviewFormSchema,
 } from '../types/purchase.type';
-import { axiosRefresh } from './axiosRefresh';
+import { axiosPrivate } from './axiosPrivate';
 
 function getAll(params?: PurchaseGetRequestParams) {
   const url = '/purchase';
-  return axiosRefresh.get<PurchaseProps[]>(url, { params });
+  return axiosPrivate.get<PurchaseProps[]>(url, { params });
 }
 
 function getAllWithAdmin(params?: PurchaseGetRequestParams) {
   const url = `/purchase/admin`;
-  return axiosRefresh.get<PurchaseProps[]>(url, { params });
+  return axiosPrivate.get<PurchaseProps[]>(url, { params });
 }
 
 function getById(id: PurchaseProps['id']) {
   const url = `/purchase/${id}`;
-  return axiosRefresh.get<PurchaseProps>(url);
+  return axiosPrivate.get<PurchaseProps>(url);
 }
 
-function create(data: PurchaseFormSchemaProps) {
+function create(data: PurchaseFormSchema) {
   const url = '/purchase';
-  return axiosRefresh.post<PurchaseProps>(url, { ...omit(data, 'id') });
+  return axiosPrivate.post<PurchaseProps>(url, { ...omit(data, 'id') });
 }
 
 function remove(id: PurchaseProps['id']) {
   const url = `/purchase/${id}`;
-  return axiosRefresh.delete(url);
+  return axiosPrivate.delete(url);
 }
 
-function update(data: PurchaseFormSchemaProps) {
+function update(data: PurchaseFormSchema) {
   const url = `/purchase/${data.id}`;
-  return axiosRefresh.patch<PurchaseProps>(url, { ...omit(data, 'id') });
+  return axiosPrivate.patch<PurchaseProps>(url, { ...omit(data, 'id') });
 }
 
-function review(data: PurchaseReviewFormSchemaProps) {
+function review(data: PurchaseReviewFormSchema) {
   const url = `/purchase/review/${data.id}`;
-  return axiosRefresh.patch<PurchaseProps>(url, { ...omit(data, 'id') });
+  return axiosPrivate.patch<PurchaseProps>(url, { ...omit(data, 'id') });
 }
 
 export const purchaseApi = { getAll, create, update, remove, getAllWithAdmin, getById, review };

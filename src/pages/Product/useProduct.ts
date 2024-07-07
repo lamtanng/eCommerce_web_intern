@@ -7,14 +7,14 @@ import { createProduct, fetchProductList, updateProduct } from '../../redux/acti
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { categorySelector } from '../../redux/slices/category.slice';
 import { productSelector } from '../../redux/slices/product.slice';
-import { ProductFormSchemaProps, ProductProps } from '../../types/product.type';
-import { MultiSelectData } from '../../types/selector.type';
+import { ProductFormSchema, ProductProps } from '../../types/product.type';
+import { SelectData } from '../../types/selector.type';
 import convertToSelectData from '../../ultils/convertToSelectData';
 import { getCategoryParams } from '../Category/Category.constants';
 import { columnDefs, getProductParams, productSchema } from './Product.constants';
 import { ProductFormProps, ProductTableProps } from './Product.type';
 
-export function useProductForm({ defaultValues, action }: ProductFormProps) {
+export function useProductForm({ defaultValues, action }: ProductFormProps<ProductFormSchema>) {
   const dispatch = useAppDispatch();
   const { categoryList, loading, error } = useAppSelector(categorySelector);
 
@@ -23,7 +23,7 @@ export function useProductForm({ defaultValues, action }: ProductFormProps) {
     handleSubmit,
     reset,
     formState: { isSubmitting, isDirty },
-  } = useForm<ProductFormSchemaProps>({
+  } = useForm<ProductFormSchema>({
     resolver: yupResolver(productSchema),
     defaultValues,
     shouldUnregister: true,
@@ -34,21 +34,23 @@ export function useProductForm({ defaultValues, action }: ProductFormProps) {
     dispatch(fetchCategory(params));
   }, []);
 
-  const onSubmit = async (data: ProductFormSchemaProps) => {
+  const onSubmit = async (data: ProductFormSchema) => {
     action === 'UPDATE' ? handleUpdateProduct(data) : handleCreateProduct(data);
   };
 
-  const handleUpdateProduct = async (data: ProductFormSchemaProps) => {
-    dispatch(updateProduct(data));
+  const handleUpdateProduct = async (data: ProductFormSchema) => {
+    // dispatch(updateProduct(data));
+    console.log(data);
   };
 
-  const handleCreateProduct = async (data: ProductFormSchemaProps) => {
+  const handleCreateProduct = async (data: ProductFormSchema) => {
     dispatch(createProduct(data));
+    console.log(data);
   };
 
   const onReset = () => reset(defaultValues);
 
-  const cateSelectData: MultiSelectData[] = convertToSelectData({
+  const cateSelectData: SelectData[] = convertToSelectData({
     data: categoryList,
     valueField: 'id',
     nameField: 'name',

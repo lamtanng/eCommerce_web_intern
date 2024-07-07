@@ -1,24 +1,15 @@
-import { Paper, Stack, Table, TableContainer } from '@mui/material';
-import CreateCategoryButton from '../../../components/elements/buttons/DialogFormButton';
-import SearchBar from '../../../components/elements/searchBar/SearchBar';
-import { useCategoryTable } from '../useCategoryTable';
-import CategoryForm from './CategoryForm';
-import ReactTableHeader from '../../../components/elements/reactTable/ReactTableHeader';
+import { Paper, Table, TableContainer } from '@mui/material';
 import ReactTableBody from '../../../components/elements/reactTable/ReactTableBody';
+import ReactTableHeader from '../../../components/elements/reactTable/ReactTableHeader';
+import { CategoryTableProps } from '../Category.types';
+import { useCategoryTable } from '../useCategory';
 
-function CategoryTable() {
-  const { categoryTable, handleSearch, handleCreateCategory } = useCategoryTable();
+function CategoryTable({ searchQuery = undefined }: CategoryTableProps) {
+  const { categoryTable } = useCategoryTable({ searchQuery });
   return (
     <>
-      <Stack spacing={2} direction='row' justifyContent='flex-end'>
-        <SearchBar onSearch={handleSearch} />
-        <CreateCategoryButton dialogButton='Create category'>
-          <CategoryForm handleSubmit={handleCreateCategory} />
-        </CreateCategoryButton>
-      </Stack>
-
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <ReactTableHeader table={categoryTable} />
           <ReactTableBody table={categoryTable} />
         </Table>

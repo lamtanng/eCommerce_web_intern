@@ -11,11 +11,7 @@ const axiosClient = axios.create({
   timeout,
   headers,
 });
-const axiosRefresh = axios.create({
-  baseURL,
-  timeout,
-  headers,
-});
+
 
 axiosClient.interceptors.request.use(
   function (config) {
@@ -37,4 +33,4 @@ axiosClient.interceptors.response.use(
   }
 );
 
-export { axiosClient, axiosRefresh };
+export { axiosClient };

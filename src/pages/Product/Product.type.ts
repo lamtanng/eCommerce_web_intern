@@ -1,11 +1,5 @@
-import { FormActions } from '../../types/formActions.type';
-import { ProductFormSchemaProps } from '../../types/product.type';
+import { FormProps } from '../../types/form.type';
+import { TableProps } from '../../types/table.type';
 
-export interface ProductTableProps {
-  searchQuery?: string | undefined;
-}
-
-export interface ProductFormProps {
-  defaultValues: ProductFormSchemaProps;
-  action: FormActions;
-}
+export interface ProductTableProps extends TableProps {}
+export interface ProductFormProps<TSchema> extends FormProps<TSchema> {}

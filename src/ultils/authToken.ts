@@ -1,4 +1,4 @@
-import { refreshToken } from '../apis/login.api';
+import { refreshToken } from '../apis/auth.api';
 import AuthProps from '../types/auth.type';
 import LoginResponseProps from '../types/loginResponse.type';
 import { decodeToken } from './decodToken';

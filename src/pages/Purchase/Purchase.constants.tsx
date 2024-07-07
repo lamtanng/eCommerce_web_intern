@@ -1,19 +1,38 @@
-import * as yup from 'yup';
-import { PurchaseFormSchemaProps, PurchaseProps } from '../../types/purchase.type';
-import { getRequiredMsg } from '../../ultils/getRequiredMsg';
 import { createColumnHelper } from '@tanstack/react-table';
+import * as yup from 'yup';
+import {
+  PurchaseFormSchema,
+  PurchaseGetRequestParams,
+  PurchaseProps,
+  PurchaseReviewFormSchema,
+} from '../../types/purchase.type';
+import { formatDate } from '../../ultils/formatDate';
+import { getRequiredMsg } from '../../ultils/getRequiredMsg';
 import PurchaseTableAction from './components/Table/PurchaseTableAction';
 
-const purchaseSchema: yup.ObjectSchema<PurchaseFormSchemaProps> = yup.object({
+const purchaseSchema: yup.ObjectSchema<PurchaseFormSchema> = yup.object({
   id: yup.string(),
   productId: yup.string().required(getRequiredMsg('Product')),
   amount: yup.number().required(getRequiredMsg('Product')).min(1, 'Amount must be greater than 0'),
 });
 
-const purchaseDefault: PurchaseFormSchemaProps = {
+const reviewSchema: yup.ObjectSchema<PurchaseReviewFormSchema> = yup.object({
+  id: yup.string(),
+  reviewComment: yup.string().required(getRequiredMsg('Comment')),
+  reviewNote: yup.number().required(getRequiredMsg('Rating')),
+});
+
+const purchaseDefault: PurchaseFormSchema = {
   productId: '',
   amount: 0,
 };
+
+const getPurchaseParmas = (searchQuery?: string | undefined): PurchaseGetRequestParams => ({
+  productId: searchQuery ?? undefined,
+  userId: undefined,
+  page: 1,
+  offset: 5,
+});
 
 const columnHelper = createColumnHelper<PurchaseProps>();
 const purchaseFormColumns = [
@@ -45,10 +64,11 @@ const purchaseFormColumns = [
     accessorKey: 'reviewComment',
     header: 'Comment',
   },
-  {
-    accessorKey: 'createdAt',
+  columnHelper.accessor((row) => row.createdAt, {
+    id: 'createdAt',
     header: 'Created At',
-  },
+    cell: ({ row }) => `${formatDate(row.original.createdAt)}`,
+  }),
   columnHelper.display({
     id: 'actions',
     header: 'Actions',
@@ -58,4 +78,5 @@ const purchaseFormColumns = [
   }),
 ];
 
-export { purchaseSchema, purchaseDefault, purchaseFormColumns };
+export { getPurchaseParmas, purchaseDefault, purchaseFormColumns, purchaseSchema, reviewSchema };
+
