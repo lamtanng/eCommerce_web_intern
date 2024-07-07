@@ -5,7 +5,7 @@ import { createCategory, deleteCategory, fetchCategory, updateCategory } from '.
 import { RejectedAction } from '../../types/actionState.type';
 import { CategoryProps } from '../../types/category.type';
 import { displaySuccess } from '../../ultils/displayToast';
-import { getCreateSuccessMsg, getRemovedSuccessMsg, getUpdateSuccessMsg } from '../../ultils/getRequiredMsg';
+import { getCreateSuccessMsg, getRemovedSuccessMsg, getUpdateSuccessMsg } from '../../ultils/getMessage';
 
 export interface CategorySliceProps {
   categoryList: CategoryProps[];

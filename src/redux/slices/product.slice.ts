@@ -4,7 +4,7 @@ import { RejectedAction } from '../../types/actionState.type';
 import { LoadingProps } from '../../types/loading.type';
 import { ProductProps } from '../../types/product.type';
 import { displayError, displaySuccess } from '../../ultils/displayToast';
-import { getCreateSuccessMsg, getRemovedSuccessMsg, getUpdateSuccessMsg } from '../../ultils/getRequiredMsg';
+import { getCreateSuccessMsg, getRemovedSuccessMsg, getUpdateSuccessMsg } from '../../ultils/getMessage';
 import {
   createProduct,
   fetchProductList,

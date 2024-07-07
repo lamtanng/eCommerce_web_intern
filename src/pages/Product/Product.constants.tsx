@@ -2,7 +2,7 @@ import { createColumnHelper } from '@tanstack/react-table';
 import * as yup from 'yup';
 import { ProductFormSchema, ProductProps } from '../../types/product.type';
 import { formatDate } from '../../ultils/formatDate';
-import { getRequiredMsg } from '../../ultils/getRequiredMsg';
+import { getRequiredMsg } from '../../ultils/getMessage';
 import ProductTableAction from './Components/table/ProductTableAction';
 
 const getProductParams = (searchQuery: string | undefined) => ({

@@ -7,7 +7,7 @@ import {
   PurchaseReviewFormSchema,
 } from '../../types/purchase.type';
 import { formatDate } from '../../ultils/formatDate';
-import { getRequiredMsg } from '../../ultils/getRequiredMsg';
+import { getRequiredMsg } from '../../ultils/getMessage';
 import PurchaseTableAction from './components/table/PurchaseTableAction';
 
 const purchaseSchema: yup.ObjectSchema<PurchaseFormSchema> = yup.object({
