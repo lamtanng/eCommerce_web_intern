@@ -1,15 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { LoadingProps } from '../../types/loading.type';
 import { RootState } from '../store';
-import {
-  createCategory,
-  deleteCategory,
-  fetchCategory,
-  updateCategory,
-} from '../actions/category.actions';
+import { createCategory, deleteCategory, fetchCategory, updateCategory } from '../actions/category.actions';
 import { RejectedAction } from '../../types/actionState.type';
 import { CategoryProps } from '../../types/category.type';
 import { displaySuccess } from '../../ultils/displayToast';
+import { getCreateSuccessMsg, getRemovedSuccessMsg, getUpdateSuccessMsg } from '../../ultils/getRequiredMsg';
 
 export interface CategorySliceProps {
   categoryList: CategoryProps[];
@@ -31,39 +27,37 @@ const categorySlice = createSlice({
     builder
       .addCase(fetchCategory.fulfilled, (state, action) => {
         state.loading = 'succeeded';
-        state.categoryList = action.payload.data;
+        state.categoryList = action.payload;
       })
       .addCase(createCategory.fulfilled, (state, action) => {
         state.loading = 'succeeded';
-        state.categoryList.unshift(action.payload.data);
-        displaySuccess('Category created successfully');
+        state.categoryList.unshift(action.payload);
+        displaySuccess(getCreateSuccessMsg('Category'));
       })
       .addCase(deleteCategory.fulfilled, (state, action) => {
         state.loading = 'succeeded';
-        state.categoryList = state.categoryList.filter(
-          (category) => category.id !== action.meta.arg
-        );
-        displaySuccess('Category deleted successfully');
+        state.categoryList = state.categoryList.filter((category) => category.id !== action.meta.arg);
+        displaySuccess(getRemovedSuccessMsg('Category'));
       })
       .addCase(updateCategory.fulfilled, (state, action) => {
         state.loading = 'succeeded';
         state.categoryList = state.categoryList.map((category) =>
-          category.id === action.payload.data.id ? action.payload.data : category
+          category.id === action.payload.id ? action.payload : category,
         );
-        displaySuccess('Category updated successfully');
+        displaySuccess(getUpdateSuccessMsg('Category'));
       })
       .addMatcher(
         (action) => action.type.endsWith('/pending'),
         (state) => {
           state.loading = 'loading';
-        }
+        },
       )
       .addMatcher<RejectedAction>(
         (action) => action.type.endsWith('/rejected'),
         (state, action) => {
           state.loading = 'failed';
           state.error = action.error.message || undefined;
-        }
+        },
       );
   },
 });

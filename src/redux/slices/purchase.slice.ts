@@ -1,6 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { remove } from 'lodash';
+import { RejectedAction } from '../../types/actionState.type';
 import { LoadingProps } from '../../types/loading.type';
 import { PurchaseProps } from '../../types/purchase.type';
+import { displayError, displaySuccess } from '../../ultils/displayToast';
+import { getCreateSuccessMsg, getRemovedSuccessMsg, getUpdateSuccessMsg } from '../../ultils/getRequiredMsg';
 import {
   createPurchase,
   fetchPurchaseList,
@@ -10,10 +14,7 @@ import {
   reviewPurchase,
   updatePurchase,
 } from '../actions/purchase.action';
-import { RejectedAction } from '../../types/actionState.type';
-import { displayError, displaySuccess } from '../../ultils/displayToast';
 import { RootState } from '../store';
-import { remove } from 'lodash';
 
 export interface PurchaseSliceProps {
   purchaseList: PurchaseProps[];
@@ -48,26 +49,26 @@ const purchaseSlice = createSlice({
       .addCase(createPurchase.fulfilled, (state, action) => {
         state.loading = 'succeeded';
         state.purchaseList.push(action.payload);
-        displaySuccess('Purchase create successfully');
+        displaySuccess(getCreateSuccessMsg('Purchase'));
       })
       .addCase(updatePurchase.fulfilled, (state, action) => {
         state.loading = 'succeeded';
         state.purchaseList = state.purchaseList.map((purchase) =>
           purchase.id === action.payload.id ? action.payload : purchase,
         );
-        displaySuccess('Purchase updated successfully');
+        displaySuccess(getUpdateSuccessMsg('Purchase'));
       })
       .addCase(reviewPurchase.fulfilled, (state, action) => {
         state.loading = 'succeeded';
         state.purchaseList = state.purchaseList.map((purchase) =>
           purchase.id === action.payload.id ? action.payload : purchase,
         );
-        displaySuccess('Purchase updated successfully');
+        displaySuccess(getUpdateSuccessMsg('Purchase'));
       })
       .addCase(removePurchase.fulfilled, (state, action) => {
         state.loading = 'succeeded';
         remove(state.purchaseList, (purchase) => purchase.id === action.meta.arg);
-        displaySuccess('Purchase removed successfully');
+        displaySuccess(getRemovedSuccessMsg('Purchase'));
       })
       .addMatcher(
         (action) => action.type.endsWith('/pending'),

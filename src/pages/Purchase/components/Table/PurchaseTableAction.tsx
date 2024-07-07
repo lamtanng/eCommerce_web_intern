@@ -6,8 +6,8 @@ import { Drawer } from '../../../../components/elements/drawer/Drawer';
 import { removePurchase } from '../../../../redux/actions/purchase.action';
 import { useAppDispatch } from '../../../../redux/hooks';
 import { PurchaseProps, PurchaseReviewFormSchema } from '../../../../types/purchase.type';
-import { ReviewForm } from '../Form/ReviewForm';
-const PurchaseForm = lazy(() => import('../../components/Form/PurchaseForm'));
+import { ReviewForm } from '../form/ReviewForm';
+const PurchaseForm = lazy(() => import('../form/PurchaseForm'));
 
 export default function PurchaseTableAction({ row }: { row: Row<PurchaseProps> }) {
   const dispatch = useAppDispatch();

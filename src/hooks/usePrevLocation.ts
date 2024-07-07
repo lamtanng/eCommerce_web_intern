@@ -6,10 +6,11 @@ export const usePrevLocation = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const auth = getStoredAuth();
-  const prevLocation = location.state?.from?.pathname || '/';
+
   const role = (auth?.userRole ?? undefined) as UserRole;
   const homePath = role === 'ADMIN' ? '/admin' : '/';
+  const prevLocation = location.state?.from?.pathname || homePath;
 
-  const toPrevLocation = () => navigate(homePath, { replace: true });
+  const toPrevLocation = () => navigate(prevLocation, { replace: true });
   return { toPrevLocation, prevLocation };
 };

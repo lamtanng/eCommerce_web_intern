@@ -54,6 +54,8 @@ export function useCategoryForm({ action, defaultValues }: CategoryFormProps<Cat
     dispatch(updateCategory(data));
   };
   const handleCreateCategory = async (data: CategoryProps) => {
+    console.log(data);
+
     dispatch(createCategory(data));
   };
 

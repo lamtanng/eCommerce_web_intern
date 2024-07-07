@@ -2,7 +2,7 @@ import { map } from 'lodash';
 import { SelectData } from '../types/selector.type';
 
 /**
- * @description Convert data to multi select data
+ * @description Convert to select data
  * @returns array of select data
  */
 const convertToSelectData = ({

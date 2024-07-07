@@ -4,6 +4,7 @@ import { RejectedAction } from '../../types/actionState.type';
 import { LoadingProps } from '../../types/loading.type';
 import { ProductProps } from '../../types/product.type';
 import { displayError, displaySuccess } from '../../ultils/displayToast';
+import { getCreateSuccessMsg, getRemovedSuccessMsg, getUpdateSuccessMsg } from '../../ultils/getRequiredMsg';
 import {
   createProduct,
   fetchProductList,
@@ -34,32 +35,32 @@ const productSlice = createSlice({
     builder
       .addCase(fetchProductList.fulfilled, (state, action) => {
         state.loading = 'succeeded';
-        state.productList = action.payload.data;
+        state.productList = action.payload;
       })
       .addCase(getProductById.fulfilled, (state, action) => {
         state.loading = 'succeeded';
-        state.productList = [action.payload.data];
+        state.productList = [action.payload];
       })
       .addCase(getProductByURL.fulfilled, (state, action) => {
         state.loading = 'succeeded';
-        state.productList = [action.payload.data];
+        state.productList = [action.payload];
       })
       .addCase(createProduct.fulfilled, (state, action) => {
         state.loading = 'succeeded';
-        state.productList.push(action.payload.data);
-        displaySuccess('Product created successfully');
+        state.productList.push(action.payload);
+        displaySuccess(getCreateSuccessMsg('Product'));
       })
       .addCase(removeProduct.fulfilled, (state, action) => {
         state.loading = 'succeeded';
         remove(state.productList, (product) => product.id === action.meta.arg);
-        displaySuccess('Product removed successfully');
+        displaySuccess(getRemovedSuccessMsg('Product'));
       })
       .addCase(updateProduct.fulfilled, (state, action) => {
         state.loading = 'succeeded';
         state.productList = state.productList.map((product) =>
-          product.id === action.payload.data.id ? action.payload.data : product,
+          product.id === action.payload.id ? action.payload : product,
         );
-        displaySuccess('Product updated successfully');
+        displaySuccess(getUpdateSuccessMsg('Product'));
       })
       .addMatcher(
         (action) => action.type.endsWith('/pending'),

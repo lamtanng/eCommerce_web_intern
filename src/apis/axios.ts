@@ -1,17 +1,11 @@
 import axios, { AxiosError } from 'axios';
-
-const baseURL = 'http://localhost:8070/';
-const timeout = 10000;
-const headers = {
-  'Content-Type': 'application/json',
-};
+import { baseURL, headers, timeout } from './axios.constants';
 
 const axiosClient = axios.create({
-  baseURL,
-  timeout,
-  headers,
+  baseURL: baseURL,
+  timeout: timeout,
+  headers: headers,
 });
-
 
 axiosClient.interceptors.request.use(
   function (config) {
@@ -19,18 +13,17 @@ axiosClient.interceptors.request.use(
   },
   function (error) {
     return Promise.reject(error);
-  }
+  },
 );
 
 axiosClient.interceptors.response.use(
   function (response) {
-    const data = response;
-    return data;
+    return response;
   },
   function (error: AxiosError) {
-    console.log('Error Resp >> ', error);
     return Promise.reject(error);
-  }
+  },
 );
 
 export { axiosClient };
+

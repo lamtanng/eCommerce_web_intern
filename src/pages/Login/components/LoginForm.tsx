@@ -1,6 +1,6 @@
-import SubmitButton from '../../../../components/elements/buttons/SubmitButton';
-import ControlledInput from '../../../../components/elements/controlledComponents/ControlledInput';
-import useLogin from '../../useLogin';
+import SubmitButton from '../../../components/elements/buttons/SubmitButton';
+import ControlledInput from '../../../components/elements/controlledComponents/ControlledInput';
+import useLogin from '../useLogin';
 
 export default function LoginForm() {
   const { handleLogin, handleSubmit, control, isSubmitting, isDirty } = useLogin();

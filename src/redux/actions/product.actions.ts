@@ -3,22 +3,28 @@ import { productApi } from '../../apis/product.api';
 import { GetAllProductParams, ProductFormSchema, ProductProps } from '../../types/product.type';
 
 const fetchProductList = createAsyncThunk('product/fetchProductList', async (params?: GetAllProductParams) => {
-  return await productApi.getAll(params);
+  const resp = await productApi.getAll(params);
+  return resp.data;
 });
 const getProductById = createAsyncThunk('product/getProductById', async (id: ProductProps['id']) => {
-  return await productApi.getById(id);
+  const resp = await productApi.getById(id);
+  return resp.data;
 });
 const getProductByURL = createAsyncThunk('product/getProductByURL', async (urlName: ProductProps['urlName']) => {
-  return await productApi.getByURL(urlName);
+  const resp = await productApi.getByURL(urlName);
+  return resp.data;
 });
 const createProduct = createAsyncThunk('product/createProduct', async (data: ProductFormSchema) => {
-  return await productApi.create(data);
+  const resp = await productApi.create(data);
+  return resp.data;
 });
 const removeProduct = createAsyncThunk('product/removeProduct', async (id: ProductProps['id']) => {
-  return await productApi.remove(id);
+  const resp = await productApi.remove(id);
+  return resp.data;
 });
 const updateProduct = createAsyncThunk('product/updateProduct', async (data: ProductFormSchema) => {
-  return await productApi.update(data);
+  const resp = await productApi.update(data);
+  return resp.data;
 });
 
 export { createProduct, fetchProductList, getProductById, getProductByURL, removeProduct, updateProduct };

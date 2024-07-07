@@ -8,7 +8,7 @@ import {
 } from '../../types/purchase.type';
 import { formatDate } from '../../ultils/formatDate';
 import { getRequiredMsg } from '../../ultils/getRequiredMsg';
-import PurchaseTableAction from './components/Table/PurchaseTableAction';
+import PurchaseTableAction from './components/table/PurchaseTableAction';
 
 const purchaseSchema: yup.ObjectSchema<PurchaseFormSchema> = yup.object({
   id: yup.string(),
@@ -27,7 +27,7 @@ const purchaseDefault: PurchaseFormSchema = {
   amount: 0,
 };
 
-const getPurchaseParmas = (searchQuery?: string | undefined): PurchaseGetRequestParams => ({
+const getPurchaseParams = (searchQuery?: string | undefined): PurchaseGetRequestParams => ({
   productId: searchQuery ?? undefined,
   userId: undefined,
   page: 1,
@@ -78,5 +78,4 @@ const purchaseFormColumns = [
   }),
 ];
 
-export { getPurchaseParmas, purchaseDefault, purchaseFormColumns, purchaseSchema, reviewSchema };
-
+export { getPurchaseParams, purchaseDefault, purchaseFormColumns, purchaseSchema, reviewSchema };

@@ -1,22 +1,17 @@
 import axios, { AxiosError } from 'axios';
 import { getStoredAuth, refresh } from '../ultils/authToken';
-
-const baseURL = 'http://localhost:8070/';
-const timeout = 10000;
-const headers = {
-  'Content-Type': 'application/json',
-};
+import { baseURL, headers, timeout } from './axios.constants';
 
 export const axiosPrivate = axios.create({
-  baseURL,
-  timeout,
-  headers,
+  baseURL: baseURL,
+  timeout: timeout,
+  headers: headers,
 });
 
 axiosPrivate.interceptors.request.use(
   (config) => {
     const auth = getStoredAuth();
-    config.headers['Authorization'] = `Bearer ${auth?.accessToken}`;
+    config.headers.Authorization = `Bearer ${auth?.accessToken}`;
     return config;
   },
   (error: AxiosError) => Promise.reject(error),

@@ -1,4 +1,3 @@
-import { CategorySchema } from '../pages/Category/Category.types';
 import { CategoryParams, CategoryProps } from '../types/category.type';
 import { axiosClient } from './axios';
 import { axiosPrivate } from './axiosPrivate';
@@ -8,9 +7,9 @@ function getAll(params?: CategoryParams) {
   return axiosClient.get<CategoryProps[]>(url, { params });
 }
 
-function create(data: CategorySchema) {
+function create(data: CategoryProps) {
   const url = '/category';
-  return axiosPrivate.post<CategoryProps>(url, data);
+  return axiosPrivate.post<CategoryProps>(url, { name: data.name });
 }
 
 function getById(id: CategoryProps['id']) {

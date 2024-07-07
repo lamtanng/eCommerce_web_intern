@@ -40,11 +40,6 @@ const removePurchase = createAsyncThunk('purchase/removePurchase', async (id: Pu
 });
 
 export {
-  fetchPurchaseList,
-  createPurchase,
-  updatePurchase,
-  removePurchase,
-  getPurchaseById,
-  reviewPurchase,
-  fetchPurchasesWithAdmin,
+  createPurchase, fetchPurchaseList, fetchPurchasesWithAdmin, getPurchaseById, removePurchase, reviewPurchase, updatePurchase
 };
+

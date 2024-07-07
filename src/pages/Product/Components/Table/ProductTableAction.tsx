@@ -5,7 +5,7 @@ import DialogFormButton from '../../../../components/elements/buttons/DialogForm
 import { removeProduct } from '../../../../redux/actions/product.actions';
 import { useAppDispatch } from '../../../../redux/hooks';
 import { ProductProps } from '../../../../types/product.type';
-const ProductForm = lazy(() => import('../../Components/Form/ProductForm'));
+const ProductForm = lazy(() => import('../form/ProductForm'));
 
 export default function ProductTableAction({ row }: { row: Row<ProductProps> }) {
   const dispatch = useAppDispatch();

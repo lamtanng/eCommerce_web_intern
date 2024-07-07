@@ -15,7 +15,6 @@ function ProductForm({ defaultValues, action }: ProductFormProps<ProductFormSche
   });
 
   return (
-    <>
       <form onSubmit={handleSubmit(onSubmit)} className="form !gap-2">
         {action === 'UPDATE' && <ControlledInput name="id" control={control} label="ID" disabled={true} />}
         <ControlledInput name="name" control={control} label="Name" />
@@ -35,7 +34,6 @@ function ProductForm({ defaultValues, action }: ProductFormProps<ProductFormSche
           <SubmitButton isSubmitting={isSubmitting} isDirty={isDirty} />
         </Stack>
       </form>
-    </>
   );
 }
 

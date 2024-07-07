@@ -1,8 +1,8 @@
 import { Paper, Table, TableContainer } from '@mui/material';
-import ReactTableBody from '../../../components/elements/reactTable/ReactTableBody';
-import ReactTableHeader from '../../../components/elements/reactTable/ReactTableHeader';
-import { CategoryTableProps } from '../Category.types';
-import { useCategoryTable } from '../useCategory';
+import ReactTableBody from '../../../../components/elements/reactTable/ReactTableBody';
+import ReactTableHeader from '../../../../components/elements/reactTable/ReactTableHeader';
+import { CategoryTableProps } from '../../Category.types';
+import { useCategoryTable } from '../../useCategory';
 
 function CategoryTable({ searchQuery = undefined }: CategoryTableProps) {
   const { categoryTable } = useCategoryTable({ searchQuery });

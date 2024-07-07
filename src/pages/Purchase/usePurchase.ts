@@ -15,7 +15,7 @@ import {
 } from '../../types/purchase.type';
 import { SelectData } from '../../types/selector.type';
 import convertToSelectData from '../../ultils/convertToSelectData';
-import { getPurchaseParmas, purchaseFormColumns, purchaseSchema, reviewSchema } from './Purchase.constants';
+import { getPurchaseParams, purchaseFormColumns, purchaseSchema, reviewSchema } from './Purchase.constants';
 import { PurchaseFormProps, PurchaseReviewFormProps, PurchaseTableProps } from './Purchase.type';
 
 export const usePurchaseForm = ({ defaultValues, action }: PurchaseFormProps<PurchaseFormSchema>) => {
@@ -68,7 +68,7 @@ export const usePurchaseTable = ({ searchQuery = undefined }: PurchaseTableProps
   });
 
   useEffect(() => {
-    let params: PurchaseGetRequestParams = getPurchaseParmas(searchQuery);
+    let params: PurchaseGetRequestParams = getPurchaseParams(searchQuery);
     dispatch(fetchPurchaseList(params));
   }, [searchQuery]);
 

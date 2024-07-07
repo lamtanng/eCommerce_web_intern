@@ -1,5 +1,5 @@
 import { AsyncThunk, createAsyncThunk } from '@reduxjs/toolkit';
-import { login, logout } from '../../apis/auth.api';
+import { login } from '../../apis/auth.api';
 import LoginProps from '../../types/login.type';
 import LoginResponseProps from '../../types/loginResponse.type';
 

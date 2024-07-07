@@ -14,17 +14,15 @@ function PurchaseForm({ defaultValues, action }: PurchaseFormProps<PurchaseFormS
     action,
   });
   return (
-    <>
-      <form onSubmit={handleSubmit(onSubmit)} className="form !gap-2">
-        {action === 'UPDATE' && <ControlledInput name="id" control={control} label="ID" disabled={true} />}
-        <ControlledInput name="amount" control={control} label="Amount" />
-        <ControlledSelector name="productId" control={control} data={productData} label="Product" multiple={false} />
-        <Stack width="100%" direction="row" alignItems="center" justifyContent="space-between" spacing="150px">
-          <ResetButton onReset={onReset} isDirty={isDirty} />
-          <SubmitButton isSubmitting={isSubmitting} isDirty={isDirty} />
-        </Stack>
-      </form>
-    </>
+    <form onSubmit={handleSubmit(onSubmit)} className="form !gap-2">
+      {action === 'UPDATE' && <ControlledInput name="id" control={control} label="ID" disabled={true} />}
+      <ControlledInput name="amount" control={control} label="Amount" />
+      <ControlledSelector name="productId" control={control} data={productData} label="Product" multiple={false} />
+      <Stack width="100%" direction="row" alignItems="center" justifyContent="space-between" spacing="150px">
+        <ResetButton onReset={onReset} isDirty={isDirty} />
+        <SubmitButton isSubmitting={isSubmitting} isDirty={isDirty} />
+      </Stack>
+    </form>
   );
 }
 

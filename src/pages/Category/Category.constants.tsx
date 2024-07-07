@@ -2,12 +2,17 @@ import { createColumnHelper } from '@tanstack/react-table';
 import * as yup from 'yup';
 import { CategoryParams, CategoryProps } from '../../types/category.type';
 import { getRequiredMsg } from '../../ultils/getRequiredMsg';
-import ActionColumn from './components/CategoryFormActions';
+import CategoryTableAction from './components/table/CategoryTableActions';
 
 const categorySchema: yup.ObjectSchema<CategoryProps> = yup.object({
   id: yup.string().optional(),
   name: yup.string().required(getRequiredMsg('Name')),
 });
+
+const categoryDefaults: CategoryProps = {
+  id: '',
+  name: '',
+};
 
 const getCategoryParams = (cateName?: string): CategoryParams => ({
   categoryName: cateName ?? '',
@@ -29,9 +34,9 @@ const columnDefs = [
     id: 'actions',
     header: 'Actions',
     cell: ({ row }) => {
-      return <ActionColumn row={row} />;
+      return <CategoryTableAction row={row} />;
     },
   }),
 ];
 
-export { categorySchema, columnDefs, getCategoryParams };
+export { categoryDefaults, categorySchema, columnDefs, getCategoryParams };

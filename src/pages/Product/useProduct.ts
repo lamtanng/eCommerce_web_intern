@@ -39,7 +39,7 @@ export function useProductForm({ defaultValues, action }: ProductFormProps<Produ
   };
 
   const handleUpdateProduct = async (data: ProductFormSchema) => {
-    // dispatch(updateProduct(data));
+    dispatch(updateProduct(data));
     console.log(data);
   };
 
