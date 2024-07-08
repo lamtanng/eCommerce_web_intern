@@ -124,11 +124,6 @@
   position: fixed;
 }
 
-#root :is(.\!mx-\[14px\]) {
-  margin-left: 14px !important;
-  margin-right: 14px !important;
-}
-
 #root :is(.mx-auto) {
   margin-left: auto;
   margin-right: auto;

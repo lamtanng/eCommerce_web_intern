@@ -6,7 +6,7 @@ import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import { useTheme } from '@mui/material/styles';
-import { adminFeatures } from '../../../constants/adminFeatures';
+import { adminFeatures } from '../../../constants/features/adminFeatures';
 import SideBarButton from '../../elements/buttons/SideBarButton';
 import { DrawerHeader, drawerWidth } from './AdminLayout.styled';
 import { SideBarProps } from './AdminLayout.types';
@@ -24,8 +24,8 @@ export default function SideBar({ open, handleDrawerClose }: SideBarProps) {
           boxSizing: 'border-box',
         },
       }}
-      variant='persistent'
-      anchor='left'
+      variant="persistent"
+      anchor="left"
       open={open}
     >
       <DrawerHeader>

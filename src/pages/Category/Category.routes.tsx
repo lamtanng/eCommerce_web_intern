@@ -1,7 +1,7 @@
 import { CircularProgress } from '@mui/material';
 import { Suspense, lazy } from 'react';
 import { RouteObject } from 'react-router-dom';
-import { categoryFeature } from '../../constants/adminFeatures';
+import { categoryFeature } from '../../constants/features/adminFeatures';
 const Category = lazy(() => import('./Category'));
 
 export const CategoryRoutes: RouteObject = {

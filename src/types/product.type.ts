@@ -11,7 +11,7 @@ interface ProductProps {
   stock?: number | undefined;
   description?: string | undefined;
   createdAt?: string | undefined;
-  categories?: { name: CategoryProps['name'] }[];
+  categories?: { name: CategoryProps['name'] }[] | CategoryProps['id'][];
 }
 interface GetAllProductParams {
   productName?: string;

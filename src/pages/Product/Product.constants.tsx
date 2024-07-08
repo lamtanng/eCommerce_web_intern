@@ -3,7 +3,7 @@ import * as yup from 'yup';
 import { ProductFormSchema, ProductProps } from '../../types/product.type';
 import { formatDate } from '../../ultils/formatDate';
 import { getRequiredMsg } from '../../ultils/getMessage';
-import ProductTableAction from './Components/table/ProductTableAction';
+import ProductTableAction from './Components/Table/ProductTableAction';
 
 const getProductParams = (searchQuery: string | undefined) => ({
   productName: searchQuery ?? '',

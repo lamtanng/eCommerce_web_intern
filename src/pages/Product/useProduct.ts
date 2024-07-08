@@ -45,7 +45,6 @@ export function useProductForm({ defaultValues, action }: ProductFormProps<Produ
 
   const handleCreateProduct = async (data: ProductFormSchema) => {
     dispatch(createProduct(data));
-    console.log(data);
   };
 
   const onReset = () => reset(defaultValues);

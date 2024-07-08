@@ -1,13 +1,14 @@
 import { CircularProgress } from '@mui/material';
 import { Suspense, lazy } from 'react';
 import { RouteObject } from 'react-router-dom';
-const Login = lazy(() => import('./Login'));
+// import { SignUpFeature } from '../../constants/adminFeatures';
+const SignUp = lazy(() => import('./SignUp'));
 
-export const LoginRoutes: RouteObject = {
-  path: '/login',
+export const SignUpRoutes: RouteObject = {
+  path: "",
   element: (
     <Suspense fallback={<CircularProgress />}>
-      <Login />
+      <SignUp />
     </Suspense>
   ),
 };

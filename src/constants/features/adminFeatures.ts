@@ -1,7 +1,5 @@
-export interface FeaturesProps {
-  title: string;
-  path: string;
-}
+import { FeaturesProps } from './features.type';
+
 const adminPath = '/admin';
 
 const dashboardFeature: FeaturesProps = {
@@ -21,18 +19,6 @@ const categoryFeature: FeaturesProps = {
   path: `${adminPath}/categories`,
 };
 
-const adminFeatures: FeaturesProps[] = [
-  dashboardFeature,
-  purchaseFeature,
-  productFeature,
-  categoryFeature,
-];
+const adminFeatures: FeaturesProps[] = [dashboardFeature, purchaseFeature, productFeature, categoryFeature];
 
-export {
-  adminPath,
-  productFeature,
-  purchaseFeature,
-  categoryFeature,
-  adminFeatures,
-  dashboardFeature,
-};
+export { adminFeatures, adminPath, categoryFeature, dashboardFeature, productFeature, purchaseFeature };

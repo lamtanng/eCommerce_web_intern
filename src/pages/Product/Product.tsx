@@ -3,9 +3,9 @@ import { lazy } from 'react';
 import DialogFormButton from '../../components/elements/buttons/DialogFormButton';
 import SearchBar from '../../components/elements/searchBar/SearchBar';
 import useDebounce from '../../hooks/useDebounce';
-import ProductTable from './Components/table/ProductTable';
 import { productDefaultValue } from './Product.constants';
-const ProductForm = lazy(() => import('./Components/form/ProductForm'));
+import ProductTable from './Components/Table/ProductTable';
+const ProductForm = lazy(() => import('./Components/Form/ProductForm'));
 
 export default function Product() {
   const { handleDebouncedSearch, searchQuery } = useDebounce();

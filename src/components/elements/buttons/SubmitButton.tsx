@@ -14,13 +14,13 @@ export default function SubmitButton({
   return (
     <LoadingButton
       variant={variant}
-      type='submit'
-      size='large'
+      type="submit"
+      size="large"
       fullWidth
-      className='group'
+      className="group"
       loading={isSubmitting}
       disabled={isDirty ? false : true}
-      loadingPosition='start'
+      // loadingPosition='start'
     >
       <span>{text}</span>
     </LoadingButton>

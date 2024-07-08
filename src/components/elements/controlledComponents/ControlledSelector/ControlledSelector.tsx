@@ -15,6 +15,7 @@ export function ControlledSelector<FormValues extends FieldValues>({
   data,
   label,
   multiple = false,
+  disabled = false,
 }: ControlledSelectorProps<FormValues>) {
   return (
     <Controller
@@ -25,6 +26,7 @@ export function ControlledSelector<FormValues extends FieldValues>({
           <InputLabel id="multi-label">{label}</InputLabel>
           <Select
             labelId="multi-label"
+            disabled={disabled}
             id="multi"
             multiple={multiple}
             value={value ? value : []}
