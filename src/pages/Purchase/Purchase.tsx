@@ -2,8 +2,8 @@ import { Stack } from '@mui/material';
 import DialogFormButton from '../../components/elements/buttons/DialogFormButton';
 import SearchBar from '../../components/elements/searchBar/SearchBar';
 import useDebounce from '../../hooks/useDebounce';
-import PurchaseForm from './components/form/PurchaseForm';
-import PurchaseTable from './components/table/PurchaseTable';
+import PurchaseForm from './components/Form/PurchaseForm';
+import PurchaseTable from './components/Table/PurchaseTable';
 import { purchaseDefault } from './Purchase.constants';
 
 export default function Product() {

@@ -1,6 +1,5 @@
 import { TableCell, TableHead, TableRow } from '@mui/material';
 import { flexRender, RowData } from '@tanstack/react-table';
-import { memo } from 'react';
 import { ReactTableProps } from './ReactTable.type';
 
 interface ReactTableHeaderProps<TData extends RowData> extends ReactTableProps<TData> {}
@@ -21,4 +20,4 @@ function ReactTableHeader<TData extends RowData>({ table }: ReactTableHeaderProp
   );
 }
 
-export default memo(ReactTableHeader) as typeof ReactTableHeader;
+export default ReactTableHeader as typeof ReactTableHeader;

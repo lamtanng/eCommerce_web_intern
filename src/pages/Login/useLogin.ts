@@ -1,11 +1,11 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 import { useForm } from 'react-hook-form';
 import { login } from '../../apis/auth.api';
 import { usePrevLocation } from '../../hooks/usePrevLocation';
 import LoginProps from '../../types/login.type';
-import { setStoredAuth } from '../../ultils/authToken';
-import { displayError } from '../../ultils/displayToast';
+import { removeAuth, setStoredAuth } from '../../ultils/authToken';
+import { handleError } from '../../ultils/handleError';
 import { loginSchema } from './Login.constants';
 
 const useLogin = () => {
@@ -28,6 +28,7 @@ const useLogin = () => {
 
   const verifyAccount = async (account: LoginProps) => {
     const response = await login(account);
+    removeAuth();
     setStoredAuth(response.data);
     toPrevLocation();
   };
@@ -39,14 +40,6 @@ const useLogin = () => {
     isSubmitting,
     isDirty,
   };
-};
-
-const handleError = (error: AxiosError | any) => {
-  if (axios.isAxiosError(error)) {
-    error.response ? displayError(error.response?.data.message) : displayError(error.message);
-  } else {
-    displayError(error.toString());
-  }
 };
 
 export default useLogin;

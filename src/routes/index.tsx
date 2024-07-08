@@ -15,7 +15,7 @@ const routes = createBrowserRouter([
     element: <App />,
     children: [
       LoginRoutes,
-      // SignUpRoutes,
+      SignUpRoutes,
 
       {
         path: '/',

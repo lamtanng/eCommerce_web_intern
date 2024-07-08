@@ -12,5 +12,5 @@ export const usePrevLocation = () => {
   const prevLocation = location.state?.from?.pathname || homePath;
 
   const toPrevLocation = () => navigate(prevLocation, { replace: true });
-  return { toPrevLocation, prevLocation };
+  return { toPrevLocation, prevLocation, homePath, navigate };
 };

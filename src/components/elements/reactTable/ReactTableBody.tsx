@@ -10,7 +10,7 @@ function ReactTableBody<TData extends RowData>({ table }: ReactTableBodyProps<TD
       {table.getRowModel().rows.map((row) => (
         <TableRow key={row.id}>
           {row.getVisibleCells().map((cell) => (
-            <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
+            <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())} </TableCell>
           ))}
         </TableRow>
       ))}

@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import { useEffect, useMemo } from 'react';
+import { getCoreRowModel, useReactTable, VisibilityState, VisibilityTableState } from '@tanstack/react-table';
+import { useEffect, useMemo, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { fetchCategory } from '../../redux/actions/category.actions';
 import { createProduct, fetchProductList, updateProduct } from '../../redux/actions/product.actions';
@@ -72,9 +72,11 @@ export function useProductForm({ defaultValues, action }: ProductFormProps<Produ
 export function useProductTable({ searchQuery = undefined }: ProductTableProps) {
   const dispatch = useAppDispatch();
   const { productList } = useAppSelector(productSelector);
+  const [columns] = useState<typeof columnDefs>(() => [...columnDefs]);
+
   const productTable = useReactTable<ProductProps>({
     data: productList,
-    columns: columnDefs,
+    columns,
     getCoreRowModel: getCoreRowModel(),
   });
 

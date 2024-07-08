@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import { useEffect, useMemo } from 'react';
+import { getCoreRowModel, useReactTable, VisibilityState } from '@tanstack/react-table';
+import { useEffect, useMemo, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { createCategory, fetchCategory, updateCategory } from '../../redux/actions/category.actions';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
@@ -9,14 +9,22 @@ import { CategoryParams, CategoryProps } from '../../types/category.type';
 import { categorySchema, columnDefs, getCategoryParams } from './Category.constants';
 import { CategoryFormProps, CategorySchema, CategoryTableProps } from './Category.types';
 
+let columnDefault: VisibilityState = { id: true, name: false, actions: true };
+
 export function useCategoryTable({ searchQuery }: CategoryTableProps) {
   const dispatch = useAppDispatch();
   const { categoryList, error, loading } = useAppSelector(categorySelector);
+  const [columnVisibility, setColumnVisibility] = useState(columnDefault);
+  const [columns] = useState<typeof columnDefs>(() => [...columnDefs]);
 
   const categoryTable = useReactTable<CategoryProps>({
     data: categoryList,
-    columns: columnDefs,
+    columns,
     getCoreRowModel: getCoreRowModel(),
+    state: {
+      columnVisibility,
+    },
+    onColumnVisibilityChange: setColumnVisibility,
   });
 
   useEffect(() => {

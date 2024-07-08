@@ -1,6 +1,6 @@
 import { FeaturesProps } from './features.type';
 
-const publicPath = '/';
+const publicPath = '';
 
 const loginFeature: FeaturesProps = {
   title: 'Sign in',

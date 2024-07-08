@@ -1,6 +1,7 @@
-import { Link } from '@mui/material';
 import Logo from '../../assets/react.svg';
 import LoginForm from './components/LoginForm';
+import { signupFeature } from '../../constants/features/publicFeatures';
+import { Link } from 'react-router-dom';
 
 function Login() {
   return (
@@ -15,8 +16,8 @@ function Login() {
             <p className="text-[54px] font-extrabold">Getting Started</p>
             <p className="text-base text-gray-600">
               Already have an account?{' '}
-              <Link href="" underline="none" className="font-medium">
-                Sign up
+              <Link to={signupFeature.path} className="font-medium">
+                {signupFeature.title}
               </Link>
             </p>
           </div>

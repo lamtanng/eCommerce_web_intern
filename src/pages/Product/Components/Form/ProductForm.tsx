@@ -3,7 +3,7 @@ import { memo } from 'react';
 import ResetButton from '../../../../components/elements/buttons/ResetButton';
 import SubmitButton from '../../../../components/elements/buttons/SubmitButton';
 import ControlledInput from '../../../../components/elements/controlledComponents/ControlledInput';
-import { ControlledSelector } from '../../../../components/elements/controlledComponents/ControlledSelector/ControlledSelector';
+import { ControlledSelector } from '../../../../components/elements/controlledComponents/ControlledSelector';
 import { ProductFormSchema } from '../../../../types/product.type';
 import { ProductFormProps } from '../../Product.type';
 import { useProductForm } from '../../useProduct';
