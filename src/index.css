@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --page-gutter-lg: 10rem;
+    --header: 56px;
+  }
+}
+
+@layer components {
+  .form {
+    @apply flex w-full flex-col items-start justify-between gap-6;
+  }
+}
