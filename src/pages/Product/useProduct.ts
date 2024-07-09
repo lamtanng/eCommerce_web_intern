@@ -1,6 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { useSearchParams } from 'react-router-dom';
 import { useTable } from '../../hooks/useTable';
 import { fetchCategory } from '../../redux/actions/category.actions';
 import { createProduct, fetchProductList, updateProduct } from '../../redux/actions/product.actions';
@@ -10,8 +11,9 @@ import { productSelector } from '../../redux/slices/product.slice';
 import { ProductFormSchema, ProductProps } from '../../types/product.type';
 import { SelectData } from '../../types/selector.type';
 import convertToSelectData from '../../ultils/convertToSelectData';
+import getSearchParams from '../../ultils/getSearchParams';
 import { getCategoryParams } from '../Category/Category.constants';
-import { columnDefs, getProductParams, productSchema } from './Product.constants';
+import { columnDefs, productSchema } from './Product.constants';
 import { ProductFormProps, ProductTableProps } from './Product.type';
 
 export function useProductForm({ defaultValues, action }: ProductFormProps<ProductFormSchema>) {
@@ -72,18 +74,28 @@ export function useProductForm({ defaultValues, action }: ProductFormProps<Produ
 export function useProductTable({ searchQuery = undefined }: ProductTableProps) {
   const dispatch = useAppDispatch();
   const { productList } = useAppSelector(productSelector);
-
-  const { table } = useTable<ProductProps>({
+  const [searchParams, setSearchParams] = useSearchParams({});
+  let { table, pagination, currentPageIndex, pageSize } = useTable<ProductProps>({
     columnDefs,
     data: productList,
     localStorageKey: 'productCols',
   });
 
   useEffect(() => {
-    let params = getProductParams(searchQuery);
-    dispatch(fetchProductList(params));
-  }, [searchQuery]);
+    setPaginateURLParams();
+    dispatch(fetchProductList(getSearchParams(searchParams)));
+  }, [pagination, searchQuery]);
 
-  useMemo(() => table, [productList]);
+  const setPaginateURLParams = () => {
+    setSearchParams({
+      productName: searchQuery || '',
+      page: currentPageIndex,
+      offset: pageSize,
+    });
+    searchParams.set('productName', searchQuery || '');
+    searchParams.set('page', currentPageIndex);
+    searchParams.set('offset', pageSize);
+  };
+
   return { table };
 }

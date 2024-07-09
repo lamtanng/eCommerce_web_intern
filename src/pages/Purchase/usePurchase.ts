@@ -1,23 +1,19 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { useTable } from '../../hooks/useTable';
 import { fetchProductList } from '../../redux/actions/product.actions';
 import { createPurchase, fetchPurchaseList, reviewPurchase, updatePurchase } from '../../redux/actions/purchase.action';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { productSelector } from '../../redux/slices/product.slice';
 import { purchaseSelector } from '../../redux/slices/purchase.slice';
-import {
-  PurchaseFormSchema,
-  PurchaseGetRequestParams,
-  PurchaseProps,
-  PurchaseReviewFormSchema,
-} from '../../types/purchase.type';
+import { PurchaseFormSchema, PurchaseProps, PurchaseReviewFormSchema } from '../../types/purchase.type';
 import { SelectData } from '../../types/selector.type';
 import convertToSelectData from '../../ultils/convertToSelectData';
-import { getPurchaseParams, purchaseFormColumns, purchaseSchema, reviewSchema } from './Purchase.constants';
+import getSearchParams from '../../ultils/getSearchParams';
+import { purchaseFormColumns, purchaseSchema, reviewSchema } from './Purchase.constants';
 import { PurchaseFormProps, PurchaseReviewFormProps, PurchaseTableProps } from './Purchase.type';
-import { useTable } from '../../hooks/useTable';
+import { useSearchParams } from 'react-router-dom';
 
 export const usePurchaseForm = ({ defaultValues, action }: PurchaseFormProps<PurchaseFormSchema>) => {
   const dispatch = useAppDispatch();
@@ -61,17 +57,30 @@ export const usePurchaseForm = ({ defaultValues, action }: PurchaseFormProps<Pur
 export const usePurchaseTable = ({ searchQuery = undefined }: PurchaseTableProps) => {
   const dispatch = useAppDispatch();
   const { purchaseList } = useAppSelector(purchaseSelector);
+  const [searchParams, setSearchParams] = useSearchParams({});
 
-  const { table } = useTable<PurchaseProps>({
+  const { table, pagination, currentPageIndex, pageSize } = useTable<PurchaseProps>({
     columnDefs: purchaseFormColumns,
     data: purchaseList,
     localStorageKey: 'purchaseCols',
   });
 
   useEffect(() => {
-    let params: PurchaseGetRequestParams = getPurchaseParams(searchQuery);
-    dispatch(fetchPurchaseList(params));
-  }, [searchQuery]);
+    setPaginateURLParams();
+    dispatch(fetchPurchaseList(getSearchParams(searchParams)));
+  }, [searchQuery, pagination]);
+
+  // filter data by userId
+  const setPaginateURLParams = () => {
+    setSearchParams({
+      userId: searchQuery || '',
+      page: currentPageIndex,
+      offset: pageSize,
+    });
+    searchParams.set('userId', searchQuery || '');
+    searchParams.set('page', currentPageIndex);
+    searchParams.set('offset', pageSize);
+  };
 
   return { table };
 };
