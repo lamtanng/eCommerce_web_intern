@@ -25,7 +25,7 @@ function ProductForm({ defaultValues, action }: ProductFormProps<ProductFormSche
         data={cateSelectData}
         label="Category"
         multiple={true}
-        disabled={action === 'UPDATE' ?? true}
+        disabled={action === 'UPDATE' ? true : false}
       />
       <ControlledInput name="discountPercentage" control={control} label="Discount" />
       <ControlledInput name="stock" control={control} label="Stock" />

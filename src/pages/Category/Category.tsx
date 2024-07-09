@@ -1,5 +1,5 @@
 import { Stack } from '@mui/material';
-import { lazy, Suspense } from 'react';
+import { lazy } from 'react';
 import DialogFormButton from '../../components/elements/buttons/DialogFormButton';
 import SearchBar from '../../components/elements/searchBar/SearchBar';
 import useDebounce from '../../hooks/useDebounce';
@@ -18,9 +18,7 @@ export default function Category() {
           <CategoryForm action="CREATE" defaultValues={categoryDefaults} />
         </DialogFormButton>
       </Stack>
-      <Suspense fallback={<div>Loading...</div>}>
-        <CategoryTable searchQuery={searchQuery} />
-      </Suspense>
+      <CategoryTable searchQuery={searchQuery} />
     </>
   );
 }

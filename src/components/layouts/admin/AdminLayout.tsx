@@ -20,7 +20,7 @@ export default function AdminLayout() {
       <CssBaseline />
       <AdminHeader open={open} handleDrawerOpen={handleDrawerOpen} />
       <SideBar open={open} handleDrawerClose={handleDrawerClose} />
-      <Main open={open}>
+      <Main open={open} sx={{ position: 'relative', height: '100vh' }}>
         <DrawerHeader />
         <Outlet />
       </Main>

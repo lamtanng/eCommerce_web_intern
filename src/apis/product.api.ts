@@ -4,9 +4,8 @@ import { axiosPrivate } from './axiosPrivate';
 
 function getAll(params?: GetAllProductParams) {
   const url = '/product';
-  console.log(params);
-
-  return axiosPrivate.get<ProductProps[]>(url, { params });
+  let newParams = params?.productName == '' ? { ...omit(params, ['productName']) } : params;
+  return axiosPrivate.get<ProductProps[]>(url, { params: newParams });
 }
 
 function getById(id: ProductProps['id']) {
