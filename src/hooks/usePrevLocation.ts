@@ -5,12 +5,14 @@ import { UserRole } from '../types/userRole.type';
 export const usePrevLocation = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const auth = getStoredAuth();
 
-  const role = (auth?.userRole ?? undefined) as UserRole;
-  const homePath = role === 'ADMIN' ? '/admin' : '/';
-  const prevLocation = location.state?.from?.pathname || homePath;
+  const getPreLocation = () => {
+    const role = (getStoredAuth()?.userRole ?? undefined) as UserRole;
+    const homePath = role === 'ADMIN' ? '/admin' : '/';
+    return location.state?.from?.pathname || homePath;
+  };
 
-  const toPrevLocation = () => navigate(prevLocation, { replace: true });
-  return { toPrevLocation, prevLocation, homePath, navigate };
+  const toPrevLocation = () => navigate(getPreLocation(), { replace: true });
+
+  return { toPrevLocation, getPreLocation, navigate };
 };

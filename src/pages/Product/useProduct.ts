@@ -1,7 +1,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { getCoreRowModel, useReactTable, VisibilityState, VisibilityTableState } from '@tanstack/react-table';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
+import { useTable } from '../../hooks/useTable';
 import { fetchCategory } from '../../redux/actions/category.actions';
 import { createProduct, fetchProductList, updateProduct } from '../../redux/actions/product.actions';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
@@ -72,12 +72,11 @@ export function useProductForm({ defaultValues, action }: ProductFormProps<Produ
 export function useProductTable({ searchQuery = undefined }: ProductTableProps) {
   const dispatch = useAppDispatch();
   const { productList } = useAppSelector(productSelector);
-  const [columns] = useState<typeof columnDefs>(() => [...columnDefs]);
 
-  const productTable = useReactTable<ProductProps>({
+  const { table } = useTable<ProductProps>({
+    columnDefs,
     data: productList,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
+    localStorageKey: 'productCols',
   });
 
   useEffect(() => {
@@ -85,6 +84,6 @@ export function useProductTable({ searchQuery = undefined }: ProductTableProps) 
     dispatch(fetchProductList(params));
   }, [searchQuery]);
 
-  useMemo(() => productTable, [productList]);
-  return { productTable };
+  useMemo(() => table, [productList]);
+  return { table };
 }

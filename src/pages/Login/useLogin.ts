@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { login } from '../../apis/auth.api';
 import { usePrevLocation } from '../../hooks/usePrevLocation';
 import LoginProps from '../../types/login.type';
-import { removeAuth, setStoredAuth } from '../../ultils/authToken';
+import { getStoredAuth, removeAuth, setStoredAuth } from '../../ultils/authToken';
 import { handleError } from '../../ultils/handleError';
 import { loginSchema } from './Login.constants';
 
@@ -30,6 +30,8 @@ const useLogin = () => {
     const response = await login(account);
     removeAuth();
     setStoredAuth(response.data);
+    console.log('>>> ', getStoredAuth());
+
     toPrevLocation();
   };
 

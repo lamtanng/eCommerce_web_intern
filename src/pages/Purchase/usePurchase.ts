@@ -17,6 +17,7 @@ import { SelectData } from '../../types/selector.type';
 import convertToSelectData from '../../ultils/convertToSelectData';
 import { getPurchaseParams, purchaseFormColumns, purchaseSchema, reviewSchema } from './Purchase.constants';
 import { PurchaseFormProps, PurchaseReviewFormProps, PurchaseTableProps } from './Purchase.type';
+import { useTable } from '../../hooks/useTable';
 
 export const usePurchaseForm = ({ defaultValues, action }: PurchaseFormProps<PurchaseFormSchema>) => {
   const dispatch = useAppDispatch();
@@ -61,10 +62,10 @@ export const usePurchaseTable = ({ searchQuery = undefined }: PurchaseTableProps
   const dispatch = useAppDispatch();
   const { purchaseList } = useAppSelector(purchaseSelector);
 
-  const purchaseTable = useReactTable<PurchaseProps>({
+  const { table } = useTable<PurchaseProps>({
+    columnDefs: purchaseFormColumns,
     data: purchaseList,
-    columns: purchaseFormColumns,
-    getCoreRowModel: getCoreRowModel(),
+    localStorageKey: 'purchaseCols',
   });
 
   useEffect(() => {
@@ -72,8 +73,7 @@ export const usePurchaseTable = ({ searchQuery = undefined }: PurchaseTableProps
     dispatch(fetchPurchaseList(params));
   }, [searchQuery]);
 
-  useCallback(() => purchaseTable, []);
-  return { purchaseTable };
+  return { table };
 };
 
 export function useReviewForm({ defaultValues }: PurchaseReviewFormProps<PurchaseReviewFormSchema>) {

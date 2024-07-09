@@ -6,7 +6,7 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import Select from '@mui/material/Select';
 import { Controller, FieldValues } from 'react-hook-form';
 import { ControlledSelectorProps } from '../../../../types/selector.type';
-import { MenuProps } from './ControlledSelector.constants';
+import { MenuProps } from '../../../../constants/menuProps';
 import SelectedItem from './SelectedItem';
 import SelectRow from './SelectRow';
 

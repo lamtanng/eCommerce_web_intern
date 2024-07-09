@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom';
-import { FeaturesProps } from '../../../constants/features/adminFeatures';
 import { ListItemButton, ListItemText } from '@mui/material';
+import { FeaturesProps } from '../../../constants/features/features.type';
 
 export default function SideBarButton({ title, path }: FeaturesProps) {
   return (
