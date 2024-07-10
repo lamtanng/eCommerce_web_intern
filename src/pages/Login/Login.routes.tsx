@@ -1,15 +1,14 @@
-import { CircularProgress } from '@mui/material';
 import { Suspense, lazy } from 'react';
 import { RouteObject } from 'react-router-dom';
-const Login = lazy(() => import('./Login'));
+import PageSkeleton from '../../components/elements/skeletons/PageSkeleton';
+import { loginFeature } from '../../constants/features/publicFeatures';
+const Login = lazy(() => import('.'));
 
-export const LoginRoutes: RouteObject[] = [
-  {
-    path: '/login',
-    element: (
-      <Suspense fallback={<CircularProgress />}>
-        <Login />
-      </Suspense>
-    ),
-  },
-];
+export const LoginRoutes: RouteObject = {
+  path: loginFeature.path,
+  element: (
+    <Suspense fallback={<PageSkeleton />}>
+      <Login />
+    </Suspense>
+  ),
+};

@@ -17,4 +17,5 @@ export interface ControlledInputProps<FormValues extends FieldValues> {
   multiline?: boolean;
   rows?: number;
   disabled?: boolean;
+  isRequired?: boolean;
 }

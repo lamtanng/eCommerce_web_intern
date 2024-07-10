@@ -1,5 +1,5 @@
 import { styled } from '@mui/material';
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
+import MuiAppBar from '@mui/material/AppBar';
 import { AppBarProps } from './AdminLayout.types';
 
 export const drawerWidth = 240;
@@ -49,4 +49,4 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   justifyContent: 'flex-end',
 }));
 
-export { Main, AppBar, DrawerHeader };
+export { AppBar, DrawerHeader, Main };

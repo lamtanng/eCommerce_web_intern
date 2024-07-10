@@ -1,14 +1,14 @@
 import { createColumnHelper } from '@tanstack/react-table';
 import * as yup from 'yup';
-import { ProductFormSchema, ProductProps } from '../../types/product.type';
+import { GetAllProductParams, ProductFormSchema, ProductProps } from '../../types/product.type';
 import { formatDate } from '../../ultils/formatDate';
 import { getRequiredMsg } from '../../ultils/getMessage';
-import ProductTableAction from './Components/table/ProductTableAction';
+import ProductTableAction from './Components/ProductTable/ProductTableAction';
+import { getPaginationParams } from '../../constants/pagination';
 
-const getProductParams = (searchQuery: string | undefined) => ({
-  productName: searchQuery ?? '',
-  page: 1,
-  offset: 5,
+const getProductURLParams = ({ productName = '' }: GetAllProductParams): GetAllProductParams => ({
+  ...getPaginationParams({}),
+  productName,
 });
 
 const productSchema: yup.ObjectSchema<ProductFormSchema> = yup.object({
@@ -76,4 +76,4 @@ const columnDefs = [
   }),
 ];
 
-export { columnDefs, getProductParams, productDefaultValue, productSchema };
+export { columnDefs, productDefaultValue, productSchema, getProductURLParams };

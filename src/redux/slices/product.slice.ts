@@ -37,6 +37,9 @@ const productSlice = createSlice({
         state.loading = 'succeeded';
         state.productList = action.payload;
       })
+      .addCase(fetchProductList.pending, (state) => {
+        state.loading = 'loading';
+      })
       .addCase(getProductById.fulfilled, (state, action) => {
         state.loading = 'succeeded';
         state.productList = [action.payload];
@@ -62,12 +65,12 @@ const productSlice = createSlice({
         );
         displaySuccess(getUpdateSuccessMsg('Product'));
       })
-      .addMatcher(
-        (action) => action.type.endsWith('/pending'),
-        (state) => {
-          state.loading = 'loading';
-        },
-      )
+      // .addMatcher(
+      //   (action) => action.type.endsWith('/pending'),
+      //   (state) => {
+      //     state.loading = 'loading';
+      //   },
+      // )
       .addMatcher<RejectedAction>(
         (action) => action.type.endsWith('/rejected'),
         (state, action) => {

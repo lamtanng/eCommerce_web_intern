@@ -1,4 +1,5 @@
 import { CategoryProps } from './category.type';
+import { PaginationParams } from './pagination.type';
 
 type ProductFormSchema = Omit<ProductProps, 'urlName' | 'picture' | 'createdAt'>;
 interface ProductProps {
@@ -11,12 +12,10 @@ interface ProductProps {
   stock?: number | undefined;
   description?: string | undefined;
   createdAt?: string | undefined;
-  categories?: { name: CategoryProps['name'] }[];
+  categories?: { name: CategoryProps['name'] }[] | CategoryProps['id'][];
 }
-interface GetAllProductParams {
+interface GetAllProductParams extends PaginationParams {
   productName?: string;
-  page?: number;
-  offset?: number;
 }
 interface UploadImageRequestProps {
   id: ProductProps['id'];

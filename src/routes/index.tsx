@@ -1,19 +1,21 @@
 import { createBrowserRouter } from 'react-router-dom';
 import App from '../App';
-import RequiredAuth from '../components/layouts/RequiredAuth';
-import { adminPath, dashboardFeature } from '../constants/adminFeatures';
+import { adminPath, dashboardFeature } from '../constants/features/adminFeatures';
 import { CategoryRoutes } from '../pages/Category/Category.routes';
-import Home from '../pages/Home/Home';
+import Home from '../pages/Home';
 import { LoginRoutes } from '../pages/Login/Login.routes';
 import { ProductRoutes } from '../pages/Product/Product.routes';
 import { PurchaseRoutes } from '../pages/Purchase/Purchase.routes';
+import { SignUpRoutes } from '../pages/SignUp/SignUp.routes';
+import RequiredAuth from '../components/layouts/RequiredAuth';
 
 const routes = createBrowserRouter([
   {
     path: '/',
     element: <App />,
     children: [
-      ...LoginRoutes,
+      LoginRoutes,
+      SignUpRoutes,
 
       {
         path: '/',

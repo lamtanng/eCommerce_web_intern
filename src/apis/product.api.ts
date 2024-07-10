@@ -1,15 +1,11 @@
 import { omit } from 'lodash';
-import {
-  GetAllProductParams,
-  ProductFormSchema,
-  ProductProps,
-  UploadImageRequestProps,
-} from '../types/product.type';
+import { GetAllProductParams, ProductFormSchema, ProductProps, UploadImageRequestProps } from '../types/product.type';
 import { axiosPrivate } from './axiosPrivate';
 
 function getAll(params?: GetAllProductParams) {
   const url = '/product';
-  return axiosPrivate.get<ProductProps[]>(url, { params });
+  let newParams = params?.productName == '' ? { ...omit(params, ['productName']) } : params;
+  return axiosPrivate.get<ProductProps[]>(url, { params: newParams });
 }
 
 function getById(id: ProductProps['id']) {
@@ -34,7 +30,7 @@ function remove(id: ProductProps['id']) {
 
 function update(data: ProductFormSchema) {
   const url = `/product/${data.id}`;
-  return axiosPrivate.patch<ProductFormSchema>(url, { ...omit(data, 'id') });
+  return axiosPrivate.patch<ProductFormSchema>(url, { ...omit(data, ['id', 'categories']) });
 }
 
 function uploadImage({ id, file }: UploadImageRequestProps) {

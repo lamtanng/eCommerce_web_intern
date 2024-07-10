@@ -19,13 +19,13 @@ import { RootState } from '../store';
 export interface PurchaseSliceProps {
   purchaseList: PurchaseProps[];
   loading: LoadingProps;
-  error: string | undefined;
+  error: string | null;
 }
 
 const initialState: PurchaseSliceProps = {
   purchaseList: [],
   loading: 'idle',
-  error: undefined,
+  error: null,
 };
 
 const purchaseSlice = createSlice({
@@ -37,6 +37,9 @@ const purchaseSlice = createSlice({
       .addCase(fetchPurchaseList.fulfilled, (state, action) => {
         state.loading = 'succeeded';
         state.purchaseList = action.payload;
+      })
+      .addCase(fetchPurchaseList.pending, (state) => {
+        state.loading = 'loading';
       })
       .addCase(fetchPurchasesWithAdmin.fulfilled, (state, action) => {
         state.loading = 'succeeded';
@@ -70,17 +73,17 @@ const purchaseSlice = createSlice({
         remove(state.purchaseList, (purchase) => purchase.id === action.meta.arg);
         displaySuccess(getRemovedSuccessMsg('Purchase'));
       })
-      .addMatcher(
-        (action) => action.type.endsWith('/pending'),
-        (state) => {
-          state.loading = 'loading';
-        },
-      )
+      // .addMatcher(
+      //   (action) => action.type.endsWith('/pending'),
+      //   (state) => {
+      //     state.loading = 'loading';
+      //   },
+      // )
       .addMatcher<RejectedAction>(
         (action) => action.type.endsWith('/rejected'),
         (state, action) => {
           state.loading = 'failed';
-          state.error = action.error.message || undefined;
+          state.error = action.error.message || null;
           displayError(state.error);
         },
       );

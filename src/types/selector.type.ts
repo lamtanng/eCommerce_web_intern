@@ -9,4 +9,5 @@ export interface SelectData {
 export interface ControlledSelectorProps<FormValues extends FieldValues> extends ControlledInputProps<FormValues> {
   data: SelectData[];
   multiple?: boolean;
+  isCheckbox?: boolean;
 }
