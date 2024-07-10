@@ -2,7 +2,7 @@ import { createColumnHelper } from '@tanstack/react-table';
 import * as yup from 'yup';
 import { CategoryParams, CategoryProps } from '../../types/category.type';
 import { getRequiredMsg } from '../../ultils/getMessage';
-import CategoryTableAction from './components/table/CategoryTableActions';
+import CategoryTableAction from './components/CategoryTable/CategoryTableActions';
 
 const categorySchema: yup.ObjectSchema<CategoryProps> = yup.object({
   id: yup.string().optional(),

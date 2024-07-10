@@ -3,7 +3,7 @@ import * as yup from 'yup';
 import { GetAllProductParams, ProductFormSchema, ProductProps } from '../../types/product.type';
 import { formatDate } from '../../ultils/formatDate';
 import { getRequiredMsg } from '../../ultils/getMessage';
-import ProductTableAction from './Components/Table/ProductTableAction';
+import ProductTableAction from './Components/ProductTable/ProductTableAction';
 import { getPaginationParams } from '../../constants/pagination';
 
 const getProductURLParams = ({ productName = '' }: GetAllProductParams): GetAllProductParams => ({
