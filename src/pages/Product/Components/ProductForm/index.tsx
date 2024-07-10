@@ -17,8 +17,8 @@ function ProductForm({ defaultValues, action }: ProductFormProps<ProductFormSche
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="form !gap-2">
       {action === 'UPDATE' && <ControlledInput name="id" control={control} label="ID" disabled={true} />}
-      <ControlledInput name="name" control={control} label="Name" />
-      <ControlledInput name="basePrice" control={control} label="Price" />
+      <ControlledInput name="name" control={control} label="Name" isRequired/>
+      <ControlledInput name="basePrice" control={control} label="Price" isRequired/>
       <ControlledSelector
         name="categories"
         control={control}

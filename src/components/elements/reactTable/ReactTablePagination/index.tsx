@@ -7,7 +7,7 @@ interface ReactTablePaginationProps<TData extends RowData> extends ReactTablePro
 
 const ReactTablePagination = <TData extends RowData>({ table }: ReactTablePaginationProps<TData>) => {
   return (
-    <Stack direction="row" spacing={2}>
+    <Stack direction="row" spacing={2} alignSelf='end'>
       <PreviousButton table={table} />
       <NextButton table={table} />
     </Stack>

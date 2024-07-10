@@ -1,4 +1,4 @@
-import { TextField } from '@mui/material';
+import { Stack, TextField, Typography } from '@mui/material';
 import { Controller, FieldValues } from 'react-hook-form';
 import { ControlledInputProps } from '../../../../types/input.type';
 
@@ -10,6 +10,7 @@ export default function ControlledInput<FormValues extends FieldValues>({
   multiline = false,
   rows = 4,
   disabled = false,
+  isRequired = false,
 }: ControlledInputProps<FormValues>) {
   return (
     <Controller
@@ -23,7 +24,12 @@ export default function ControlledInput<FormValues extends FieldValues>({
           helperText={error ? error.message : null}
           error={!!error}
           value={value}
-          label={label}
+          label={
+            <Stack direction="row" spacing={2}>
+              {label}
+              {isRequired && <Typography color="error">*</Typography>}
+            </Stack>
+          }
           type={type}
           multiline={multiline}
           rows={rows}

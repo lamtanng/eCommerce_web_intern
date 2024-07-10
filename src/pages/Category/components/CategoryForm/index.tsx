@@ -13,7 +13,7 @@ export default function CategoryForm({ action, defaultValues }: CategoryFormProp
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className="form">
-        <ControlledInput name="name" label="Category Name" control={control} />
+        <ControlledInput name="name" label="Category Name" control={control} isRequired />
         <Stack direction="row" spacing={2}>
           <ResetButton onReset={handleResetForm} isDirty={isDirty} />
           <SubmitButton isSubmitting={isSubmitting} isDirty={isDirty} />

@@ -1,5 +1,4 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import queryString from 'query-string';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSearchParams } from 'react-router-dom';
@@ -12,7 +11,6 @@ import { productSelector } from '../../redux/slices/product.slice';
 import { ProductFormSchema, ProductProps } from '../../types/product.type';
 import { SelectData } from '../../types/selector.type';
 import convertToSelectData from '../../ultils/convertToSelectData';
-import getSearchParams from '../../ultils/getSearchParams';
 import { getCategoryParams } from '../Category/Category.constants';
 import { columnDefs, getProductURLParams, productSchema } from './Product.constants';
 import { ProductFormProps, ProductTableProps } from './Product.type';
@@ -75,7 +73,7 @@ export function useProductForm({ defaultValues, action }: ProductFormProps<Produ
 export function useProductTable({ searchQuery = undefined }: ProductTableProps) {
   const dispatch = useAppDispatch();
   const { productList } = useAppSelector(productSelector);
-  // const [searchParams, setSearchParams] = useSearchParams({});
+  const [searchParams, setSearchParams] = useSearchParams({});
   let { table, pagination, currentPageIndex, pageSize } = useTable<ProductProps>({
     columnDefs,
     data: productList,
@@ -86,16 +84,9 @@ export function useProductTable({ searchQuery = undefined }: ProductTableProps) 
   );
 
   useEffect(() => {
-    // setPaginateURLParams();
-    dispatch(fetchProductList(proParams));
-  }, [proParams]);
-
-  useEffect(() => {
     setPaginateURLParams();
+    dispatch(fetchProductList(proParams));
   }, [pagination, searchQuery]);
-
-  const parsed = queryString.parse(location.search);
-  // console.log(parsed);
 
   const setPaginateURLParams = () => {
     setProParams({
@@ -103,11 +94,9 @@ export function useProductTable({ searchQuery = undefined }: ProductTableProps) 
       page: currentPageIndex,
       offset: pageSize,
     });
-    console.log(searchQuery);
-
-    // searchParams.set('productName', searchQuery || '');
-    // searchParams.set('page', currentPageIndex);
-    // searchParams.set('offset', pageSize);
+    searchParams.set('productName', searchQuery || '');
+    searchParams.set('page', currentPageIndex);
+    searchParams.set('offset', pageSize);
   };
 
   return { table };

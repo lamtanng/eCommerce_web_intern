@@ -1,7 +1,7 @@
 import DeleteForeverRoundedIcon from '@mui/icons-material/DeleteForeverRounded';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import { useState } from 'react';
-import { SlideUpTransition } from '../SlideUpTransition';
+import { SlideUpTransition } from '../../SlideUpTransition';
 
 export interface ConfirmButtonProps {
   title?: string;
@@ -12,8 +12,8 @@ export interface ConfirmButtonProps {
 }
 
 export default function ConfirmButton({
-  title,
-  description,
+  title = 'Are you sure you want to delete?',
+  description = 'This action cannot be undone. Click Delete if you are certain you would like to delete it.',
   cancelText = 'Cancel',
   confirmText = 'Delete',
   onConfirm,

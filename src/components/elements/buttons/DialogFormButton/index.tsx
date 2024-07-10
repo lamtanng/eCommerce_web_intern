@@ -1,7 +1,7 @@
 import BorderColorRoundedIcon from '@mui/icons-material/BorderColorRounded';
 import { Button, Dialog, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import { ReactNode, useState } from 'react';
-import { SlideUpTransition } from '../SlideUpTransition';
+import { SlideUpTransition } from '../../SlideUpTransition';
 
 export interface DialogFormButtonProps {
   dialogButton?: ReactNode | string;

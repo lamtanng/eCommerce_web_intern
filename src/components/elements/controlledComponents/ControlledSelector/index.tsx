@@ -1,14 +1,13 @@
-import { Checkbox, FormHelperText } from '@mui/material';
+import { Checkbox, FormHelperText, Stack, Typography } from '@mui/material';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Select from '@mui/material/Select';
 import { Controller, FieldValues } from 'react-hook-form';
-import { ControlledSelectorProps } from '../../../../types/selector.type';
 import { MenuProps } from '../../../../constants/menuProps';
+import { ControlledSelectorProps } from '../../../../types/selector.type';
 import SelectedItem from './SelectedItem';
-import SelectRow from './SelectRow';
 
 export function ControlledSelector<FormValues extends FieldValues>({
   name,
@@ -18,6 +17,7 @@ export function ControlledSelector<FormValues extends FieldValues>({
   multiple = false,
   disabled = false,
   isCheckbox = false,
+  isRequired = false,
 }: ControlledSelectorProps<FormValues>) {
   return (
     <Controller
@@ -25,7 +25,14 @@ export function ControlledSelector<FormValues extends FieldValues>({
       control={control}
       render={({ field: { onChange, value }, fieldState: { error } }) => (
         <FormControl sx={{ width: 1 / 1 }}>
-          <InputLabel id="multi-label">{label}</InputLabel>
+          <InputLabel id="multi-label">
+            {
+              <Stack direction="row" spacing={2}>
+                {label}
+                {isRequired && <Typography color="error">*</Typography>}
+              </Stack>
+            }
+          </InputLabel>
           <Select
             labelId="multi-label"
             disabled={disabled}

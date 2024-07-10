@@ -5,8 +5,8 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import Select from '@mui/material/Select';
 import { RowData } from '@tanstack/react-table';
 import { MenuProps } from '../../../../constants/menuProps';
-import { CheckboxButton } from '../../buttons/CheckboxButton/CheckboxButton';
 import { ReactTableProps } from '../ReactTable.type';
+import { CheckboxButton } from '../../buttons/CheckboxButton';
 
 interface ColumnSelector<TData extends RowData> extends ReactTableProps<TData> {}
 
