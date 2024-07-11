@@ -17,11 +17,12 @@ const routes = createBrowserRouter([
     children: [
       LoginRoutes,
       SignUpRoutes,
-
+      ProductDetailsRoutes,
+      UserProductRoutes,
       {
         path: '/',
         element: <RequiredAuth allowedRoles={['USER']} />,
-        children: [UserProductRoutes, ProductDetailsRoutes],
+        // children: [UserProductRoutes, ProductDetailsRoutes],
       },
 
       {

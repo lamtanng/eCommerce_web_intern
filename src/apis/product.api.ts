@@ -35,9 +35,9 @@ function update(data: ProductFormSchema) {
   return axiosPrivate.patch<ProductFormSchema>(url, { ...omit(data, ['id', 'categories']) });
 }
 
-function uploadImage({ id, file }: UploadImageRequestProps) {
+function uploadImage({ id, formData }: UploadImageRequestProps) {
   const url = `/product/picture/${id}`;
-  return axiosPrivate.patch<ProductFormSchema>(url, { file });
+  return axiosPrivate.patch<ProductFormSchema>(url, formData, { headers: { 'Content-Type': 'multipart/form-data' } });
 }
 
 export const productApi = { getAll, create, remove, update, getById, getByURL, uploadImage };

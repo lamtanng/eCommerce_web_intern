@@ -237,6 +237,14 @@
   display: table;
 }
 
+#root :is(.hidden) {
+  display: none;
+}
+
+#root :is(.aspect-square) {
+  aspect-ratio: 1 / 1;
+}
+
 #root :is(.h-4) {
   height: 1rem;
 }
@@ -253,6 +261,10 @@
   min-height: 5rem;
 }
 
+#root :is(.w-16) {
+  width: 4rem;
+}
+
 #root :is(.w-4) {
   width: 1rem;
 }
@@ -263,6 +275,10 @@
 
 #root :is(.w-full) {
   width: 100%;
+}
+
+#root :is(.min-w-32) {
+  min-width: 8rem;
 }
 
 #root :is(.max-w-screen-2xl) {
@@ -331,6 +347,10 @@
   border-radius: 0.25rem;
 }
 
+#root :is(.rounded-lg) {
+  border-radius: 0.5rem;
+}
+
 #root :is(.rounded-md) {
   border-radius: 0.375rem;
 }
@@ -359,6 +379,21 @@
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
+#root :is(.object-scale-down) {
+  -o-object-fit: scale-down;
+     object-fit: scale-down;
+}
+
+#root :is(.object-center) {
+  -o-object-position: center;
+     object-position: center;
+}
+
+#root :is(.px-0) {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
 #root :is(.px-3) {
   padding-left: 0.75rem;
   padding-right: 0.75rem;
@@ -367,6 +402,11 @@
 #root :is(.px-4) {
   padding-left: 1rem;
   padding-right: 1rem;
+}
+
+#root :is(.px-5) {
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
 }
 
 #root :is(.px-52) {
@@ -384,6 +424,11 @@
   padding-bottom: 0.25rem;
 }
 
+#root :is(.py-10) {
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+}
+
 #root :is(.py-11) {
   padding-top: 2.75rem;
   padding-bottom: 2.75rem;
@@ -392,6 +437,10 @@
 #root :is(.py-20) {
   padding-top: 5rem;
   padding-bottom: 5rem;
+}
+
+#root :is(.text-center) {
+  text-align: center;
 }
 
 #root :is(.text-justify) {
@@ -447,6 +496,11 @@
   letter-spacing: 0.025em;
 }
 
+#root :is(.text-blue-500) {
+  --tw-text-opacity: 1;
+  color: rgb(59 130 246 / var(--tw-text-opacity));
+}
+
 #root :is(.text-gray-500) {
   --tw-text-opacity: 1;
   color: rgb(107 114 128 / var(--tw-text-opacity));
@@ -470,6 +524,10 @@
 #root :is(.text-white) {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+#root :is(.underline) {
+  text-decoration-line: underline;
 }
 
 #root :is(.line-through) {
@@ -507,22 +565,12 @@
   transition-duration: 150ms;
 }
 
-#root :is(.duration-300) {
-  transition-duration: 300ms;
-}
-
 #root :is(.duration-200) {
   transition-duration: 200ms;
 }
 
 #root :is(.ease-in-out) {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-#root :is(.hover\:scale-105:hover) {
-  --tw-scale-x: 1.05;
-  --tw-scale-y: 1.05;
-  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
 #root :is(.hover\:scale-110:hover) {

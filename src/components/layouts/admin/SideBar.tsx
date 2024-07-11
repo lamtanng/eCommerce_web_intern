@@ -37,7 +37,7 @@ export default function SideBar({ open, handleDrawerClose }: SideBarProps) {
       <List>
         {adminFeatures.map((feature, index) => (
           <ListItem key={index} disablePadding>
-            <SideBarButton path={feature.path} title={feature.title} />
+            <SideBarButton path={feature.path} title={feature.title} icon={feature.icon} />
           </ListItem>
         ))}
       </List>

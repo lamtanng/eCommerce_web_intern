@@ -74,22 +74,22 @@ export function useProductTable({ searchQuery = undefined }: ProductTableProps) 
   const dispatch = useAppDispatch();
   const { productList } = useAppSelector(productSelector);
   const [searchParams, setSearchParams] = useSearchParams({});
-  let { table, pagination, currentPageIndex, pageSize } = useTable<ProductProps>({
+  const { table, pagination, currentPageIndex, pageSize } = useTable<ProductProps>({
     columnDefs,
     data: productList,
     localStorageKey: 'productCols',
   });
-  const [proParams, setProParams] = useState(
-    getProductURLParams({ productName: searchQuery, page: currentPageIndex, offset: pageSize }),
-  );
+  // const [proParams, setProParams] = useState(
+  //   getProductURLParams({ productName: searchQuery, page: currentPageIndex, offset: pageSize }),
+  // );
 
   useEffect(() => {
     setPaginateURLParams();
-    dispatch(fetchProductList(proParams));
+    dispatch(fetchProductList(searchParams));
   }, [pagination, searchQuery]);
 
   const setPaginateURLParams = () => {
-    setProParams({
+    setSearchParams({
       productName: searchQuery || '',
       page: currentPageIndex,
       offset: pageSize,

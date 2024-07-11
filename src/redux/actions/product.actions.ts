@@ -1,6 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { productApi } from '../../apis/product.api';
-import { GetAllProductParams, ProductFormSchema, ProductProps } from '../../types/product.type';
+import {
+  GetAllProductParams,
+  ProductFormSchema,
+  ProductProps,
+  UploadImageRequestProps,
+} from '../../types/product.type';
 
 const fetchProductList = createAsyncThunk('product/fetchProductList', async (params?: GetAllProductParams) => {
   const resp = await productApi.getAll(params);
@@ -26,5 +31,20 @@ const updateProduct = createAsyncThunk('product/updateProduct', async (data: Pro
   const resp = await productApi.update(data);
   return resp.data;
 });
+const uploadProductImage = createAsyncThunk(
+  'product/uploadProductImage',
+  async ({ id, formData }: UploadImageRequestProps) => {
+    const resp = await productApi.uploadImage({ id, formData });
+    return resp.data;
+  },
+);
 
-export { createProduct, fetchProductList, getProductById, getProductByURL, removeProduct, updateProduct };
+export {
+  createProduct,
+  uploadProductImage,
+  fetchProductList,
+  getProductById,
+  getProductByURL,
+  removeProduct,
+  updateProduct,
+};

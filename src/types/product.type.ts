@@ -19,7 +19,7 @@ interface GetAllProductParams extends PaginationParams {
 }
 interface UploadImageRequestProps {
   id: ProductProps['id'];
-  file: string;
+  formData: FormData;
 }
 
 export type { GetAllProductParams, ProductFormSchema, ProductProps, UploadImageRequestProps };

@@ -7,6 +7,7 @@ import { ProductFormProps } from '../../Product.type';
 import { useProductForm } from '../../hooks';
 import ControlledInput from '../../../../components/elements/controlledComponents/ControlledInput';
 import SubmitButton from '../../../../components/elements/buttons/SubmitButton';
+import InputFileUpload from '../../../../components/elements/buttons/FileUploadButton';
 
 function ProductForm({ defaultValues, action }: ProductFormProps<ProductFormSchema>) {
   const { handleSubmit, onSubmit, control, isSubmitting, cateSelectData, isDirty, onReset } = useProductForm({
@@ -17,8 +18,9 @@ function ProductForm({ defaultValues, action }: ProductFormProps<ProductFormSche
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="form !gap-2">
       {action === 'UPDATE' && <ControlledInput name="id" control={control} label="ID" disabled={true} />}
-      <ControlledInput name="name" control={control} label="Name" isRequired/>
-      <ControlledInput name="basePrice" control={control} label="Price" isRequired/>
+      {/* <InputFileUpload control={control}/> */}
+      <ControlledInput name="name" control={control} label="Name" isRequired />
+      <ControlledInput name="basePrice" control={control} label="Price" isRequired />
       <ControlledSelector
         name="categories"
         control={control}

@@ -49,29 +49,18 @@ export default function Header() {
           <img src={Logo} alt="" />
         </Box>
 
-        <Stack direction="row" spacing={4}>
-          <Button variant='text'>
-            <NavLink to={productFeature.path}>Products</NavLink>
-          </Button>
-          <Button variant='text'>
-            <NavLink to={productDetailsFeature.path}>Product Details</NavLink>
-          </Button>
-        </Stack>
-
         {/* Sign-in/Sign-up */}
         {!auth?.accessToken ? (
           <Stack direction="row" spacing={4}>
             <Button variant="text" size="small">
               Sign In
             </Button>
-            <Button size="small">Sign Up</Button>
+            <Button variant="contained" size="small">
+              Sign Up
+            </Button>
           </Stack>
         ) : (
           <Stack direction="row" spacing={4}>
-            <Button variant="text" size="small" onClick={doLogout}>
-              Sign out
-            </Button>
-
             <Stack direction="row" spacing={4}>
               <Stack direction="row" spacing={1} alignItems="center" justifyContent="space-between">
                 <Tooltip title="Account settings">
@@ -127,22 +116,11 @@ export default function Header() {
                   <Avatar /> Profile
                 </MenuItem>
                 <MenuItem onClick={handleClose}>
-                  <Avatar /> My account
+                  <Avatar /> My purchase
                 </MenuItem>
                 <Divider />
-                <MenuItem onClick={handleClose}>
-                  <ListItemIcon>
-                    <PersonAdd fontSize="small" />
-                  </ListItemIcon>
-                  Add another account
-                </MenuItem>
-                <MenuItem onClick={handleClose}>
-                  <ListItemIcon>
-                    <Settings fontSize="small" />
-                  </ListItemIcon>
-                  Settings
-                </MenuItem>
-                <MenuItem onClick={handleClose}>
+
+                <MenuItem onClick={doLogout}>
                   <ListItemIcon>
                     <Logout fontSize="small" />
                   </ListItemIcon>

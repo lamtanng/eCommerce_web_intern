@@ -5,10 +5,11 @@ import useProductList from './useProductList';
 
 export interface ProductListProps {
   searchQuery?: string;
+  perPage?: number;
 }
 
-export default function ProductList({ searchQuery }: ProductListProps) {
-  const { productListDisplay, spinnerRef, hasMore, loading } = useProductList({ searchQuery: searchQuery });
+export default function ProductList({ searchQuery, perPage }: ProductListProps) {
+  const { productListDisplay, spinnerRef, hasMore, loading } = useProductList({ searchQuery: searchQuery, perPage });
 
   return (
     <>

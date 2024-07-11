@@ -1,10 +1,12 @@
 import { createColumnHelper } from '@tanstack/react-table';
 import * as yup from 'yup';
+import { getPaginationParams } from '../../constants/pagination';
 import { GetAllProductParams, ProductFormSchema, ProductProps } from '../../types/product.type';
 import { formatDate } from '../../ultils/formatDate';
 import { getRequiredMsg } from '../../ultils/getMessage';
-import ProductTableAction from './Components/ProductTable/ProductTableAction';
-import { getPaginationParams } from '../../constants/pagination';
+import ProductTableAction, { ImageButton } from './Components/ProductTable/ProductTableAction';
+import { productFeature } from '../../constants/features/publicFeatures';
+import { Link } from '@mui/material';
 
 const getProductURLParams = ({ productName }: GetAllProductParams): GetAllProductParams => ({
   ...getPaginationParams({}),
@@ -37,21 +39,31 @@ const columnDefs = [
     accessorKey: 'id',
     header: 'ID',
   },
+  columnHelper.accessor((row) => row.picture, {
+    id: 'picture',
+    header: 'Picture',
+    cell: ({ row }) => <ImageButton row={row} />,
+  }),
   {
     accessorKey: 'name',
-    header: 'Category Name',
+    header: 'Product Name',
   },
-  {
-    accessorKey: 'urlName',
+  columnHelper.accessor((row) => row.urlName, {
+    id: 'urlName',
     header: 'URL',
-  },
+    cell: ({ row }) => (
+      <Link underline='none' href={`http://localhost:5173${productFeature.path}/${row.original.urlName}`}>
+        http://localhost:5173{productFeature.path}/{row.original.urlName}
+      </Link>
+    ),
+  }),
   {
     accessorKey: 'basePrice',
-    header: 'Price',
+    header: 'Price($)',
   },
   {
     accessorKey: 'discountPercentage',
-    header: 'Discount',
+    header: 'Discount(%)',
   },
   {
     accessorKey: 'stock',
@@ -62,6 +74,7 @@ const columnDefs = [
     header: 'Created At',
     cell: ({ row }) => `${formatDate(row.original.createdAt)}`,
   }),
+
   columnHelper.accessor((row) => row.categories, {
     id: 'categories',
     header: 'Categories',
@@ -76,4 +89,4 @@ const columnDefs = [
   }),
 ];
 
-export { columnDefs, productDefaultValue, productSchema, getProductURLParams };
+export { columnDefs, getProductURLParams, productDefaultValue, productSchema };

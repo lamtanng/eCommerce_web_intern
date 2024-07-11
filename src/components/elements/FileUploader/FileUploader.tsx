@@ -1,18 +1,34 @@
-// import { useState } from 'react';
+import React, { useState } from 'react';
+import { createRoot } from 'react-dom/client';
+import FileUpload from 'react-mui-fileuploader';
+import { Button } from '@mui/material';
+import './styles.css';
 
-// function FileUploader({ submit }) {
-//   const [file, setFile] = useState();
-//   const [description, setDescription] = useState('');
+function MuiFileUploader() {
+  const [filesToUpload, setFilesToUpload] = useState([]);
 
-//   return (
-//     <div className="row">
-//       <form onSubmit={(e) => submit(e, file, description)}>
-//         <input filename={file} onChange={(e) => setFile(e.target.files[0])} type="file" accept="image/*"></input>
-//         <input onChange={(e) => setDescription(e.target.value)} type="text"></input>
-//         <button type="submit">Submit</button>
-//       </form>
-//     </div>
-//   );
-// }
+  const handleFilesChange = (files: []) => {
+    // Update chosen files
+    setFilesToUpload([...files]);
+  };
 
-// export default FileUploader;
+  const uploadFiles = () => {
+    // Create a form and post it to server
+    let formData = new FormData();
+    filesToUpload.forEach((file) => formData.append('files', file));
+
+    fetch('/file/upload', {
+      method: 'POST',
+      body: formData,
+    });
+  };
+
+  return (
+    <>
+      <FileUpload multiFile={true} onFilesChange={handleFilesChange} onContextReady={(context) => {}} />
+      <Button onClick={uploadFiles} variant="contained" id="uploadButton">
+        Upload
+      </Button>
+    </>
+  );
+}

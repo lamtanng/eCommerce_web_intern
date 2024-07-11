@@ -4,8 +4,8 @@ import { productApi } from '../../../../../apis/product.api';
 import { ProductProps } from '../../../../../types/product.type';
 import { handleError } from '../../../../../ultils/handleError';
 
-export default function useProductList({ searchQuery }: ProductListProps) {
-  const [productParams, setProductParams] = useState({ productName: searchQuery, page: '1', offset: '6' });
+export default function useProductList({ searchQuery = '', perPage }: ProductListProps) {
+  const [productParams, setProductParams] = useState({ productName: searchQuery, page: '1', offset: String(perPage) });
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
   const [num, setNum] = useState(2);
@@ -13,15 +13,20 @@ export default function useProductList({ searchQuery }: ProductListProps) {
   const [productListDisplay, setProductListDisplay] = useState<ProductProps[]>([]);
   const spinnerRef = useRef(null);
 
+  console.log('re-render >>> ', perPage);
+
   useEffect(() => {
-    setProductParams({ productName: searchQuery, page: '1', offset: '6' });
-  }, [searchQuery]);
+    setProductParams(() => ({ productName: searchQuery, page: '0', offset: String(perPage) }));
+    // fetchMoreProduct();
+  }, [searchQuery, perPage]);
 
   const fetchMoreProduct = async () => {
     try {
       setLoading(true);
       setError(false);
       const params = productParams;
+      console.log('params >>> ', params);
+
       const res = await productApi.getAll(params);
 
       if (Array.isArray(res.data) && res.data.length) {
@@ -42,16 +47,16 @@ export default function useProductList({ searchQuery }: ProductListProps) {
     }
   };
 
-  const onIntersection = (entries: any) => {
-    let firstEntry = entries[0];
-    console.log('params >>> ', firstEntry);
-
-    if (firstEntry.isIntersecting && hasMore) {
-      fetchMoreProduct();
-    }
-  };
-
   useEffect(() => {
+    const onIntersection = (entries: any) => {
+      let firstEntry = entries[0];
+
+      if (firstEntry.isIntersecting && hasMore) {
+        // console.log('params >>> ', firstEntry.isIntersecting);
+        fetchMoreProduct();
+      }
+    };
+
     const observer = new IntersectionObserver(onIntersection);
     if (observer && spinnerRef.current) {
       observer.observe(spinnerRef.current);
@@ -61,7 +66,7 @@ export default function useProductList({ searchQuery }: ProductListProps) {
         observer.disconnect();
       }
     };
-  }, [productListDisplay.length, searchQuery]);
+  }, [productListDisplay]);
 
   return { productListDisplay, hasMore, loading, spinnerRef };
 }
