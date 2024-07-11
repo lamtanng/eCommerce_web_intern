@@ -1,24 +1,37 @@
-// import axios from 'axios';
-// import FileUploader from './FileUploader';
+// import React, { useState } from "react"
+// import { createRoot } from "react-dom/client"
+// import FileUpload from "react-mui-fileuploader"
 
-// function App() {
-//   const sendImage = async (e, file, description) => {
-//     e.preventDefault();
+// function MuiFileUploader() {
+//   const [filesToUpload, setFilesToUpload] = useState([])
 
-//     const formData = new FormData();
-//     formData.append('image', file);
-//     formData.append('description', description);
-
-//     const result = await axios.post('http://localhost:8080/api/images', formData, {
-//       headers: { 'Content-Type': 'multipart/form-data' },
-//     });
-//     console.log(result.data);
+//   const handleFilesChange = (files) => {
+//     // Update chosen files
+//     setFilesToUpload([ ...files ])
 //   };
+
+//   const uploadFiles = () => {
+//     // Create a form and post it to server
+//     let formData = new FormData()
+//     filesToUpload.forEach((file) => formData.append("files", file))
+
+//     fetch("/file/upload", {
+//       method: "POST",
+//       body: formData
+//     })
+//   }
+
 //   return (
 //     <>
-//       <FileUploader submit={sendImage} />
+//       <FileUpload
+//         multiFile={true}
+//         onFilesChange={handleFilesChange}
+//         onContextReady={(context) => {}}
+//       />
+//       <button onClick={uploadFiles}>Upload</button>
 //     </>
-//   );
+//   )
 // }
 
-// export default App;
+// const root = createRoot(document.getElementById("root"))
+// root.render(<MuiFileUploader />)

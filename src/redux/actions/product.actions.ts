@@ -10,7 +10,7 @@ const getProductById = createAsyncThunk('product/getProductById', async (id: Pro
   const resp = await productApi.getById(id);
   return resp.data;
 });
-const getProductByURL = createAsyncThunk('product/getProductByURL', async (urlName: ProductProps['urlName']) => {
+const getProductByURL = createAsyncThunk('product/getProductByURL', async (urlName?: ProductProps['urlName']) => {
   const resp = await productApi.getByURL(urlName);
   return resp.data;
 });

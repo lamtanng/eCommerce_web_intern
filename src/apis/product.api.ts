@@ -5,6 +5,8 @@ import { axiosPrivate } from './axiosPrivate';
 function getAll(params?: GetAllProductParams) {
   const url = '/product';
   let newParams = params?.productName == '' ? { ...omit(params, ['productName']) } : params;
+  console.log('newParams', newParams);
+
   return axiosPrivate.get<ProductProps[]>(url, { params: newParams });
 }
 
@@ -13,7 +15,7 @@ function getById(id: ProductProps['id']) {
   return axiosPrivate.get<ProductProps>(url);
 }
 
-function getByURL(urlName: ProductProps['urlName']) {
+function getByURL(urlName?: ProductProps['urlName']) {
   const url = `/product/${urlName}`;
   return axiosPrivate.get<ProductProps>(url);
 }

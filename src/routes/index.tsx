@@ -1,13 +1,14 @@
 import { createBrowserRouter } from 'react-router-dom';
 import App from '../App';
+import RequiredAuth from '../components/layouts/RequiredAuth';
 import { adminPath, dashboardFeature } from '../constants/features/adminFeatures';
 import { CategoryRoutes } from '../pages/Category/Category.routes';
-import Home from '../pages/Home';
+import { UserProductRoutes } from '../pages/Customer/Product/UserProduct.routes';
 import { LoginRoutes } from '../pages/Login/Login.routes';
 import { ProductRoutes } from '../pages/Product/Product.routes';
 import { PurchaseRoutes } from '../pages/Purchase/Purchase.routes';
 import { SignUpRoutes } from '../pages/SignUp/SignUp.routes';
-import RequiredAuth from '../components/layouts/RequiredAuth';
+import { ProductDetailsRoutes } from '../pages/Customer/ProductDetails/ProductDetails.routes';
 
 const routes = createBrowserRouter([
   {
@@ -20,12 +21,7 @@ const routes = createBrowserRouter([
       {
         path: '/',
         element: <RequiredAuth allowedRoles={['USER']} />,
-        children: [
-          { path: '/', element: <Home /> },
-          { path: '/purchase', element: <div>Purchase</div> },
-          { path: '/profile', element: <div>Profile</div> },
-          { path: '/products', element: <div>Product page</div> },
-        ],
+        children: [UserProductRoutes, ProductDetailsRoutes],
       },
 
       {

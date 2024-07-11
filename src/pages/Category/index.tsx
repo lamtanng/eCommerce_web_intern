@@ -1,9 +1,9 @@
 import { Stack } from '@mui/material';
 import { lazy } from 'react';
-import DialogFormButton from '../../components/elements/buttons/DialogFormButton';
 import SearchBar from '../../components/elements/SearchBar';
 import useDebounce from '../../hooks/useDebounce';
 import { categoryDefaults } from './Category.constants';
+import DialogFormButton from '../../components/elements/buttons/DialogFormButton';
 const CategoryTable = lazy(() => import('./components/CategoryTable'));
 const CategoryForm = lazy(() => import('./components/CategoryForm'));
 

@@ -5,10 +5,10 @@ type ProductFormSchema = Omit<ProductProps, 'urlName' | 'picture' | 'createdAt'>
 interface ProductProps {
   id?: string;
   name: string;
-  urlName: string | undefined;
+  urlName: string;
   picture?: string | undefined;
   basePrice: number;
-  discountPercentage?: number | undefined;
+  discountPercentage: number;
   stock?: number | undefined;
   description?: string | undefined;
   createdAt?: string | undefined;

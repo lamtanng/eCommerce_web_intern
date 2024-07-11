@@ -6,7 +6,7 @@ import { getRequiredMsg } from '../../ultils/getMessage';
 import ProductTableAction from './Components/ProductTable/ProductTableAction';
 import { getPaginationParams } from '../../constants/pagination';
 
-const getProductURLParams = ({ productName = '' }: GetAllProductParams): GetAllProductParams => ({
+const getProductURLParams = ({ productName }: GetAllProductParams): GetAllProductParams => ({
   ...getPaginationParams({}),
   productName,
 });

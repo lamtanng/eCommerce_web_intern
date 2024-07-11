@@ -21,6 +21,8 @@ import { useState } from 'react';
 import PersonAdd from '@mui/icons-material/PersonAdd';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
+import { productFeature } from '../../../constants/features/publicFeatures';
+import { productDetailsFeature } from '../../../constants/features/customerFeatures';
 
 export default function Header() {
   const auth = getStoredAuth();
@@ -48,12 +50,12 @@ export default function Header() {
         </Box>
 
         <Stack direction="row" spacing={4}>
-          <MenuItem>
-            <NavLink to="/">Home</NavLink>
-          </MenuItem>
-          <MenuItem>
-            <NavLink to="/product">Product</NavLink>
-          </MenuItem>
+          <Button variant='text'>
+            <NavLink to={productFeature.path}>Products</NavLink>
+          </Button>
+          <Button variant='text'>
+            <NavLink to={productDetailsFeature.path}>Product Details</NavLink>
+          </Button>
         </Stack>
 
         {/* Sign-in/Sign-up */}
