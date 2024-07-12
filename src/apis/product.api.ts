@@ -5,6 +5,8 @@ import { axiosPrivate } from './axiosPrivate';
 function getAll(params?: GetAllProductParams) {
   const url = '/product';
   let newParams = params?.productName == '' ? { ...omit(params, ['productName']) } : params;
+  console.log('newParams', newParams);
+
   return axiosPrivate.get<ProductProps[]>(url, { params: newParams });
 }
 
@@ -13,7 +15,7 @@ function getById(id: ProductProps['id']) {
   return axiosPrivate.get<ProductProps>(url);
 }
 
-function getByURL(urlName: ProductProps['urlName']) {
+function getByURL(urlName?: ProductProps['urlName']) {
   const url = `/product/${urlName}`;
   return axiosPrivate.get<ProductProps>(url);
 }
@@ -33,9 +35,9 @@ function update(data: ProductFormSchema) {
   return axiosPrivate.patch<ProductFormSchema>(url, { ...omit(data, ['id', 'categories']) });
 }
 
-function uploadImage({ id, file }: UploadImageRequestProps) {
+function uploadImage({ id, formData }: UploadImageRequestProps) {
   const url = `/product/picture/${id}`;
-  return axiosPrivate.patch<ProductFormSchema>(url, { file });
+  return axiosPrivate.patch<ProductFormSchema>(url, formData, { headers: { 'Content-Type': 'multipart/form-data' } });
 }
 
 export const productApi = { getAll, create, remove, update, getById, getByURL, uploadImage };

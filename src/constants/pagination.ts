@@ -1,7 +1,7 @@
 import { PaginationState } from '@tanstack/react-table';
 import { PaginationParams } from '../types/pagination.type';
 
-const pageSize = 2;
+const pageSize = 6;
 const pageIndex = 0;
 const itemsPerPage = [5, 10, 15, 20, 25];
 

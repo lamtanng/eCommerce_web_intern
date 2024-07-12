@@ -19,7 +19,7 @@ function refreshToken(data: RefreshTokenProps) {
 
 function logout(data: RefreshTokenProps) {
   const url = '/logout';
-  return axiosPrivate.post(url, { refreshToken: data });
+  return axiosPrivate.post(url, { ...data });
 }
 
 export { getAll, login, refreshToken, logout };

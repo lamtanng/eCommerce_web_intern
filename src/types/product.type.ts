@@ -5,11 +5,11 @@ type ProductFormSchema = Omit<ProductProps, 'urlName' | 'picture' | 'createdAt'>
 interface ProductProps {
   id?: string;
   name: string;
-  urlName: string | undefined;
+  urlName: string;
   picture?: string | undefined;
   basePrice: number;
-  discountPercentage?: number | undefined;
-  stock?: number | undefined;
+  discountPercentage: number;
+  stock?: number ;
   description?: string | undefined;
   createdAt?: string | undefined;
   categories?: { name: CategoryProps['name'] }[] | CategoryProps['id'][];
@@ -19,7 +19,7 @@ interface GetAllProductParams extends PaginationParams {
 }
 interface UploadImageRequestProps {
   id: ProductProps['id'];
-  file: string;
+  formData: FormData;
 }
 
 export type { GetAllProductParams, ProductFormSchema, ProductProps, UploadImageRequestProps };

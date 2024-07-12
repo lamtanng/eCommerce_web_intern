@@ -41,6 +41,7 @@ export function useCategoryTable({ searchQuery }: CategoryTableProps) {
   return {
     table,
     loading,
+    categoryList,
     error,
   };
 }

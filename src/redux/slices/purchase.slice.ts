@@ -52,7 +52,7 @@ const purchaseSlice = createSlice({
       .addCase(createPurchase.fulfilled, (state, action) => {
         state.loading = 'succeeded';
         state.purchaseList.push(action.payload);
-        displaySuccess(getCreateSuccessMsg('Purchase'));
+        // displaySuccess(getCreateSuccessMsg('Purchase'));
       })
       .addCase(updatePurchase.fulfilled, (state, action) => {
         state.loading = 'succeeded';

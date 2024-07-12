@@ -12,6 +12,7 @@ import {
   getProductByURL,
   removeProduct,
   updateProduct,
+  uploadProductImage,
 } from '../actions/product.actions';
 import { RootState } from '../store';
 
@@ -59,6 +60,13 @@ const productSlice = createSlice({
         displaySuccess(getRemovedSuccessMsg('Product'));
       })
       .addCase(updateProduct.fulfilled, (state, action) => {
+        state.loading = 'succeeded';
+        state.productList = state.productList.map((product) =>
+          product.id === action.payload.id ? action.payload : product,
+        );
+        displaySuccess(getUpdateSuccessMsg('Product'));
+      })
+      .addCase(uploadProductImage.fulfilled, (state, action) => {
         state.loading = 'succeeded';
         state.productList = state.productList.map((product) =>
           product.id === action.payload.id ? action.payload : product,

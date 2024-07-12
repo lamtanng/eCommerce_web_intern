@@ -1,13 +1,16 @@
 import { createBrowserRouter } from 'react-router-dom';
 import App from '../App';
+import { AdminRoute, PrivateRoute, PublicRoute } from '../components/layouts/RequiredAuth';
 import { adminPath, dashboardFeature } from '../constants/features/adminFeatures';
 import { CategoryRoutes } from '../pages/Category/Category.routes';
-import Home from '../pages/Home';
+import { UserProductRoutes } from '../pages/Customer/Product/UserProduct.routes';
+import { ProductDetailsRoutes } from '../pages/Customer/ProductDetails/ProductDetails.routes';
+import { UserPurchaseRoutes } from '../pages/Customer/UserPurchase/ProductDetails.routes';
+import { UserPurchaseDetailsRoutes } from '../pages/Customer/UserPurchaseDetails/ProductDetails.routes';
 import { LoginRoutes } from '../pages/Login/Login.routes';
 import { ProductRoutes } from '../pages/Product/Product.routes';
 import { PurchaseRoutes } from '../pages/Purchase/Purchase.routes';
 import { SignUpRoutes } from '../pages/SignUp/SignUp.routes';
-import RequiredAuth from '../components/layouts/RequiredAuth';
 
 const routes = createBrowserRouter([
   {
@@ -16,21 +19,20 @@ const routes = createBrowserRouter([
     children: [
       LoginRoutes,
       SignUpRoutes,
-
       {
         path: '/',
-        element: <RequiredAuth allowedRoles={['USER']} />,
-        children: [
-          { path: '/', element: <Home /> },
-          { path: '/purchase', element: <div>Purchase</div> },
-          { path: '/profile', element: <div>Profile</div> },
-          { path: '/products', element: <div>Product page</div> },
-        ],
+        element: <PublicRoute />,
+        children: [UserProductRoutes, ProductDetailsRoutes],
+      },
+      {
+        path: '/',
+        element: <PrivateRoute />,
+        children: [UserPurchaseRoutes, UserPurchaseDetailsRoutes],
       },
 
       {
         path: adminPath,
-        element: <RequiredAuth allowedRoles={['ADMIN']} />,
+        element: <AdminRoute />,
         children: [
           { path: dashboardFeature.path, element: <>Dashboard</> },
           ProductRoutes,
