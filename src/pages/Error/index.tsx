@@ -6,8 +6,8 @@ interface ErrorPageProps {
 
 export default function Error({ errorMsg }: ErrorPageProps) {
   return (
-    <>
-      <Typography variant="h1">{errorMsg}</Typography>
-    </>
+    <div className="w-full py-10 text-center">
+      <Typography variant="h6">{errorMsg}</Typography>
+    </div>
   );
 }

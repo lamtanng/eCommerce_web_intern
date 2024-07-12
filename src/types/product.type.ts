@@ -9,7 +9,7 @@ interface ProductProps {
   picture?: string | undefined;
   basePrice: number;
   discountPercentage: number;
-  stock?: number | undefined;
+  stock?: number ;
   description?: string | undefined;
   createdAt?: string | undefined;
   categories?: { name: CategoryProps['name'] }[] | CategoryProps['id'][];

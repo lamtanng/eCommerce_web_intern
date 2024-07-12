@@ -16,7 +16,7 @@ export default function useProductList({ searchQuery = '', perPage }: ProductLis
   console.log('re-render >>> ', perPage);
 
   useEffect(() => {
-    setProductParams(() => ({ productName: searchQuery, page: '0', offset: String(perPage) }));
+    setProductParams(() => ({ productName: searchQuery, page: '1', offset: String(perPage) }));
     // fetchMoreProduct();
   }, [searchQuery, perPage]);
 
@@ -25,7 +25,6 @@ export default function useProductList({ searchQuery = '', perPage }: ProductLis
       setLoading(true);
       setError(false);
       const params = productParams;
-      console.log('params >>> ', params);
 
       const res = await productApi.getAll(params);
 
@@ -52,7 +51,6 @@ export default function useProductList({ searchQuery = '', perPage }: ProductLis
       let firstEntry = entries[0];
 
       if (firstEntry.isIntersecting && hasMore) {
-        // console.log('params >>> ', firstEntry.isIntersecting);
         fetchMoreProduct();
       }
     };

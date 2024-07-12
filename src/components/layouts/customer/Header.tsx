@@ -1,3 +1,4 @@
+import Logout from '@mui/icons-material/Logout';
 import {
   AppBar,
   Avatar,
@@ -5,30 +6,28 @@ import {
   Button,
   Divider,
   IconButton,
+  Link,
   ListItemIcon,
   Menu,
   MenuItem,
   Stack,
   Tooltip,
-  Typography,
 } from '@mui/material';
-import { NavLink } from 'react-router-dom';
-import Logo from '../../../assets/react.svg';
-import { getStoredAuth, removeAuth } from '../../../ultils/authToken';
-import { logout } from '../../../apis/auth.api';
-import { usePrevLocation } from '../../../hooks/usePrevLocation';
 import { useState } from 'react';
-import PersonAdd from '@mui/icons-material/PersonAdd';
-import Settings from '@mui/icons-material/Settings';
-import Logout from '@mui/icons-material/Logout';
-import { productFeature } from '../../../constants/features/publicFeatures';
-import { productDetailsFeature } from '../../../constants/features/customerFeatures';
+import { logout } from '../../../apis/auth.api';
+import Logo from '../../../assets/react.svg';
+import { usePrevLocation } from '../../../hooks/usePrevLocation';
+import { getStoredAuth, removeAuth } from '../../../ultils/authToken';
+import { loginFeature, productFeature, signupFeature } from '../../../constants/features/publicFeatures';
+import { NavLink } from 'react-router-dom';
+import { purchaseFeature } from '../../../constants/features/customerFeatures';
+import SideBarButton from '../../elements/buttons/SideBarButton';
 
 export default function Header() {
   const auth = getStoredAuth();
   const { toPrevLocation } = usePrevLocation();
   const doLogout = async () => {
-    const resp = await logout(auth.refreshToken);
+    await logout({ refreshToken: auth.refreshToken });
     removeAuth();
     toPrevLocation();
   };
@@ -43,21 +42,50 @@ export default function Header() {
   };
 
   return (
-    <AppBar position="fixed" className="h-header_height bg-white px-page_gutter_lg">
-      <Stack direction="row" spacing={10} justifyContent="space-between" alignItems="center">
+    <AppBar position="fixed" className="h-header_height bg-white px-page_gutter_lg shadow-md">
+      <Stack direction="row" spacing={10} justifyContent="space-between" alignItems="center" className="h-full">
         <Box>
-          <img src={Logo} alt="" />
+          <Link href={productFeature.path} underline="none">
+            <img src={Logo} alt="" />
+          </Link>
         </Box>
+
+        <Stack direction="row" spacing={3}>
+          <NavLink
+            to={productFeature.path}
+            className={({ isActive, isPending, isTransitioning }) =>
+              [isActive ? 'text-green-500' : 'text-gray-200', isPending ? '' : '', isTransitioning ? '' : ''].join(
+                'leading-header inline-block h-full border-b border-b-blue-500 font-normal text-gray-900 no-underline transition-all duration-100 ease-in-out hover:border-b hover:font-medium',
+              )
+            }
+          >
+            {productFeature.title}
+          </NavLink>
+          <NavLink
+            to={purchaseFeature.path}
+            className={({ isActive, isPending, isTransitioning }) =>
+              [isActive ? 'text-green-500' : 'text-gray-200', isPending ? '' : '', isTransitioning ? '' : ''].join(
+                'leading-header inline-block h-full border-b border-b-blue-500 font-normal text-gray-900 no-underline transition-all duration-100 ease-in-out hover:border-b hover:font-medium',
+              )
+            }
+          >
+            {purchaseFeature.title}
+          </NavLink>
+        </Stack>
 
         {/* Sign-in/Sign-up */}
         {!auth?.accessToken ? (
-          <Stack direction="row" spacing={4}>
-            <Button variant="text" size="small">
-              Sign In
-            </Button>
-            <Button variant="contained" size="small">
-              Sign Up
-            </Button>
+          <Stack direction="row" spacing={2}>
+            <Link href={loginFeature.path} underline="none">
+              <Button variant="outlined" size="medium">
+                Sign In
+              </Button>
+            </Link>
+            <Link href={signupFeature.path} underline="none">
+              <Button variant="contained" size="medium">
+                Sign Up
+              </Button>
+            </Link>
           </Stack>
         ) : (
           <Stack direction="row" spacing={4}>
@@ -83,9 +111,11 @@ export default function Header() {
                 open={open}
                 onClose={handleClose}
                 onClick={handleClose}
+                className="w-72"
                 PaperProps={{
                   elevation: 0,
                   sx: {
+                    width: 200,
                     overflow: 'visible',
                     filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
                     mt: 1.5,
@@ -115,8 +145,13 @@ export default function Header() {
                 <MenuItem onClick={handleClose}>
                   <Avatar /> Profile
                 </MenuItem>
-                <MenuItem onClick={handleClose}>
-                  <Avatar /> My purchase
+
+                <MenuItem onClick={handleClose} className="w-full">
+                  <SideBarButton
+                    path={purchaseFeature.path}
+                    title={purchaseFeature.title}
+                    // icon={purchaseFeature.icon}
+                  />
                 </MenuItem>
                 <Divider />
 

@@ -1,11 +1,10 @@
+import { Stack } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
+import { useState } from 'react';
+import PerPageSelector from '../../../components/elements/PerPageSelector';
 import SearchBar from '../../../components/elements/SearchBar';
 import useDebounce from '../../../hooks/useDebounce';
 import ProductList from './components/ProductList';
-import { useState } from 'react';
-import PerPageSelector from '../../../components/elements/PerPageSelector';
-import { set } from 'lodash';
-import { Stack } from '@mui/material';
 
 export default function UserProduct() {
   const { handleDebouncedSearch, searchQuery } = useDebounce();

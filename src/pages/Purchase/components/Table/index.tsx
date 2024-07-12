@@ -7,11 +7,11 @@ import Error from '../../../Error';
 import { PurchaseTableProps } from '../../Purchase.type';
 import { usePurchaseTable } from '../../hooks';
 
-export default function PurchaseTable({ searchQuery = undefined }: PurchaseTableProps) {
-  const { table } = usePurchaseTable({ searchQuery });
+export default function PurchaseTable({ searchQuery = undefined, columnDefs }: PurchaseTableProps<PurchaseProps>) {
+  const { table, purchaseList } = usePurchaseTable({ searchQuery, columnDefs });
   const { loading, error } = useAppSelector(purchaseSelector);
 
   if (error) return <Error errorMsg={error} />;
   if (loading === 'loading') return <TableSkeleton />;
-  if (loading === 'succeeded') return <ReactTable<PurchaseProps> table={table} />;
+  if (loading === 'succeeded') return <ReactTable<PurchaseProps> table={table} data={purchaseList} fileName='purchases'/>;
 }

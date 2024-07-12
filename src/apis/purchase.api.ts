@@ -14,7 +14,8 @@ function getAll(params?: PurchaseGetRequestParams) {
 
 function getAllWithAdmin(params?: PurchaseGetRequestParams) {
   const url = `/purchase/admin`;
-  return axiosPrivate.get<PurchaseProps[]>(url, { params });
+  let newParams = params?.userId == '' ? { ...omit(params, ['userId']) } : params;
+  return axiosPrivate.get<PurchaseProps[]>(url, { params: newParams });
 }
 
 function getById(id: PurchaseProps['id']) {

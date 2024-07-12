@@ -9,7 +9,6 @@ export default function CustomerLayout() {
       <main className="relative mt-header_height px-page_gutter_lg py-11">
         <Outlet />
       </main>
-      <Footer />
     </>
   );
 }

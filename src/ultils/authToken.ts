@@ -3,7 +3,7 @@ import AuthProps from '../types/auth.type';
 import LoginResponseProps from '../types/loginResponse.type';
 import { decodeToken } from './decodToken';
 
-const getStoredAuth = () => JSON.parse(localStorage.getItem('auth') || '{}');
+const getStoredAuth = () => JSON.parse(localStorage.getItem('auth') || '{}') as AuthProps;
 const removeAuth = () => localStorage.removeItem('auth');
 const setStoredAuth = (loginResponse: LoginResponseProps) => {
   let decodedToken = decodeToken(loginResponse.accessToken);

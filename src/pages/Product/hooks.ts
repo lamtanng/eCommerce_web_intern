@@ -99,5 +99,5 @@ export function useProductTable({ searchQuery = undefined }: ProductTableProps) 
     searchParams.set('offset', pageSize);
   };
 
-  return { table };
+  return { table, productList };
 }

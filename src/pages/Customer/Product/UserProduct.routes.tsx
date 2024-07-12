@@ -6,10 +6,10 @@ const UserProduct = lazy(() => import('.'));
 
 export const UserProductRoutes: RouteObject = {
   path: productFeature.path,
+  index: true,
   element: (
     <Suspense fallback={<PageSkeleton />}>
       <UserProduct />
     </Suspense>
   ),
-  // children: [ProductDetailsRoutes],
 };

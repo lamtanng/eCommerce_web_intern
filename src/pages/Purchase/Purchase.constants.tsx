@@ -9,6 +9,8 @@ import {
 import { formatDate } from '../../ultils/formatDate';
 import { getRequiredMsg } from '../../ultils/getMessage';
 import PurchaseTableAction from './components/Table/PurchaseTableAction';
+import { Link, Rating } from '@mui/material';
+import { ControlledStarRating } from '../../components/elements/controlledComponents/ControlledStarRating';
 
 const purchaseSchema: yup.ObjectSchema<PurchaseFormSchema> = yup.object({
   id: yup.string(),
@@ -36,10 +38,20 @@ const getPurchaseParams = (searchQuery?: string | undefined): PurchaseGetRequest
 
 const columnHelper = createColumnHelper<PurchaseProps>();
 const purchaseFormColumns = [
-  {
-    accessorKey: 'id',
-    header: 'ID',
-  },
+  columnHelper.accessor((row) => row.id, {
+    id: 'id',
+    header: 'Purchase ID',
+    cell: ({ row }) => (
+      <Link
+        underline="none"
+        target="_blank"
+        className="text-black"
+        href={`http://localhost:5173/purchases/${row.original.id}`}
+      >
+        {row.original.id}
+      </Link>
+    ),
+  }),
   {
     accessorKey: 'userId',
     header: 'User',
@@ -56,14 +68,17 @@ const purchaseFormColumns = [
     accessorKey: 'totalPrice',
     header: 'Total',
   },
-  {
-    accessorKey: 'reviewNote',
-    header: 'Review',
-  },
-  {
-    accessorKey: 'reviewComment',
+
+  columnHelper.accessor((row) => row.reviewNote, {
+    id: 'reviewNote',
+    header: 'Rating',
+    cell: ({ row }) => <Rating value={row.original.reviewNote} readOnly />,
+  }),
+  columnHelper.accessor((row) => row.reviewComment, {
+    id: 'reviewComment',
     header: 'Comment',
-  },
+    cell: ({ row }) => <span className="line-clamp-2">{row.original.reviewComment}</span>,
+  }),
   columnHelper.accessor((row) => row.createdAt, {
     id: 'createdAt',
     header: 'Created At',
@@ -72,6 +87,7 @@ const purchaseFormColumns = [
   columnHelper.display({
     id: 'actions',
     header: 'Actions',
+    enableResizing: true,
     cell: ({ row }) => {
       return <PurchaseTableAction row={row} />;
     },

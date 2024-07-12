@@ -1,7 +1,7 @@
 import { Box, Button, Card, CardActions, CardContent, Stack, Typography } from '@mui/material';
 import { ProductProps } from '../../../../../types/product.type';
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
-import CardImage from '../CardImage';
+import CardImage from '../ProductCardImage';
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 import { calculateDiscountedPrice } from '../../../../../ultils/calcProductPrice';
@@ -20,8 +20,8 @@ export default function ProductItem({ product }: { product: ProductProps }) {
             className="relative w-full"
           >
             <CardImage
-              picture={product.picture}
-              name={product.name}
+              oldPicture={product.picture}
+              alt={product.name}
               url={product.urlName}
               discountPercentage={product.discountPercentage}
             />

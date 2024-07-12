@@ -52,7 +52,7 @@ const columnDefs = [
     id: 'urlName',
     header: 'URL',
     cell: ({ row }) => (
-      <Link underline='none' href={`http://localhost:5173${productFeature.path}/${row.original.urlName}`}>
+      <Link underline='none' target='_blank' href={`http://localhost:5173${productFeature.path}/${row.original.urlName}`}>
         http://localhost:5173{productFeature.path}/{row.original.urlName}
       </Link>
     ),

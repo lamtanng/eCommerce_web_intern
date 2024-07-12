@@ -3,6 +3,7 @@ import { Unstable_NumberInput as BaseNumberInput, NumberInputProps } from '@mui/
 import { styled } from '@mui/system';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
+import { FormControl, useFormControlContext } from '@mui/base/FormControl';
 
 const NumberInput = React.forwardRef(function CustomNumberInput(
   props: NumberInputProps,
@@ -23,6 +24,7 @@ const NumberInput = React.forwardRef(function CustomNumberInput(
         },
         decrementButton: {
           children: <RemoveIcon fontSize="small" />,
+          className: 'decrement',
         },
       }}
       {...props}
@@ -35,10 +37,29 @@ interface QuantityInputProps {
   min?: number;
   max?: number;
   defaultValue?: number;
+  handleAmountChange: (value: string) => void;
+  amount?: number;
 }
 
-export default function QuantityInput({ min = 1, max, defaultValue = 1 }: QuantityInputProps) {
-  return <NumberInput aria-label="Quantity Input" min={min} max={max} defaultValue={max ? defaultValue : Number(0)} />;
+export default function QuantityInput({
+  min = 1,
+  max,
+  defaultValue = 1,
+  handleAmountChange,
+  amount,
+}: QuantityInputProps) {
+  console.log(amount);
+
+  return (
+    <NumberInput
+      aria-label="Quantity Input"
+      min={min}
+      max={max}
+      defaultValue={defaultValue}
+      disabled={max === 0}
+      onInputChange={(e) => handleAmountChange(e.currentTarget.value)}
+    />
+  );
 }
 
 const blue = {
@@ -77,7 +98,7 @@ const StyledInputRoot = styled('div')(
 `,
 );
 
-const StyledInput = styled('input')(
+export const StyledInput = styled('input')(
   ({ theme }) => `
   font-size: 0.875rem;
   font-family: inherit;

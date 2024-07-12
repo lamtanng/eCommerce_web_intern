@@ -1,10 +1,16 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSearchParams } from 'react-router-dom';
 import { useTable } from '../../hooks/useTable';
 import { fetchProductList } from '../../redux/actions/product.actions';
-import { createPurchase, fetchPurchaseList, reviewPurchase, updatePurchase } from '../../redux/actions/purchase.action';
+import {
+  createPurchase,
+  fetchPurchaseList,
+  fetchPurchasesWithAdmin,
+  reviewPurchase,
+  updatePurchase,
+} from '../../redux/actions/purchase.action';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { productSelector } from '../../redux/slices/product.slice';
 import { purchaseSelector } from '../../redux/slices/purchase.slice';
@@ -14,6 +20,7 @@ import convertToSelectData from '../../ultils/convertToSelectData';
 import getSearchParams from '../../ultils/getSearchParams';
 import { purchaseFormColumns, purchaseSchema, reviewSchema } from './Purchase.constants';
 import { PurchaseFormProps, PurchaseReviewFormProps, PurchaseTableProps } from './Purchase.type';
+import { getStoredAuth } from '../../ultils/authToken';
 
 export const usePurchaseForm = ({ defaultValues, action }: PurchaseFormProps<PurchaseFormSchema>) => {
   const dispatch = useAppDispatch();
@@ -51,23 +58,30 @@ export const usePurchaseForm = ({ defaultValues, action }: PurchaseFormProps<Pur
     valueField: 'id',
     nameField: 'name',
   });
+
+  useCallback(() => handleCreatePurchase, []);
+  useCallback(() => handleUpdatePurchase, []);
+  useCallback(() => onSubmit, []);
   return { handleSubmit, onSubmit, control, isSubmitting, isDirty, onReset, productData };
 };
 
-export const usePurchaseTable = ({ searchQuery = undefined }: PurchaseTableProps) => {
+export const usePurchaseTable = ({ searchQuery = undefined, columnDefs }: PurchaseTableProps<PurchaseProps>) => {
   const dispatch = useAppDispatch();
   const { purchaseList, error, loading } = useAppSelector(purchaseSelector);
   const [searchParams, setSearchParams] = useSearchParams({});
+  const role = getStoredAuth()?.userRole;
 
   const { table, pagination, currentPageIndex, pageSize } = useTable<PurchaseProps>({
-    columnDefs: purchaseFormColumns,
+    columnDefs,
     data: purchaseList,
     localStorageKey: 'purchaseCols',
   });
 
   useEffect(() => {
     setPaginateURLParams();
-    dispatch(fetchPurchaseList(getSearchParams(searchParams)));
+    role === 'ADMIN'
+      ? dispatch(fetchPurchasesWithAdmin(getSearchParams(searchParams)))
+      : dispatch(fetchPurchaseList(getSearchParams(searchParams)));
   }, [searchQuery, pagination]);
 
   // filter data by userId
@@ -82,7 +96,7 @@ export const usePurchaseTable = ({ searchQuery = undefined }: PurchaseTableProps
     searchParams.set('offset', pageSize);
   };
 
-  return { table, error, loading };
+  return { table, purchaseList };
 };
 
 export function useReviewForm({ defaultValues }: PurchaseReviewFormProps<PurchaseReviewFormSchema>) {

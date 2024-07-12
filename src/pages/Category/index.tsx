@@ -14,7 +14,7 @@ export default function Category() {
     <>
       <Stack spacing={2} direction="row" justifyContent="flex-end">
         <SearchBar onSearch={handleDebouncedSearch} />
-        <DialogFormButton dialogButton="Create category">
+        <DialogFormButton variant='contained' dialogButton="Create category">
           <CategoryForm action="CREATE" defaultValues={categoryDefaults} />
         </DialogFormButton>
       </Stack>
