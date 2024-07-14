@@ -28,7 +28,6 @@ export default function FavoriteButton({ productUrl }: FavoriteButtonProps) {
     isFavorite ? dispatch(removeFromWishlist(productUrl)) : dispatch(addToWishlist(productUrl));
     setIsFavorite(!isFavorite);
   };
-  // console.log(productUrl, isFavorite);
 
   if (isFavorite)
     return (

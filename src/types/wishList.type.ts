@@ -1,3 +1,3 @@
 import { ProductProps } from './product.type';
 
-export type WishListProps = ProductProps['urlName'][];
+export type ProductURLsProps = ProductProps['urlName'][];

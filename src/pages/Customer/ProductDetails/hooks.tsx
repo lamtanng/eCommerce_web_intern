@@ -9,17 +9,24 @@ import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { productSelector } from '../../../redux/slices/product.slice';
 import { ProductProps } from '../../../types/product.type';
 import { PurchaseFormSchema } from '../../../types/purchase.type';
+import { ProductURLsProps } from '../../../types/wishList.type';
 import { getStoredAuth } from '../../../ultils/authToken';
 import { displayInfo, displaySuccess } from '../../../ultils/displayToast';
 import { getNumbersFromString } from '../../../ultils/getNumbersFromString';
 import { handleError } from '../../../ultils/handleError';
-import { productApi } from '../../../apis/product.api';
+import { storedRelatedProducts } from '../../../ultils/storeWishList';
+
+export interface StoredUser {
+  wishlist: ProductURLsProps;
+  relatedProducts: ProductURLsProps;
+}
 
 export default function useProductDetails() {
   const { productUrl } = useParams<{ productUrl: string }>();
   const { error, loading, productList } = useAppSelector(productSelector);
   const dispatch = useAppDispatch();
   const [amount, setAmount] = useState<number>(0);
+  const { getRelatedProducts, setRelatedProducts } = storedRelatedProducts;
   const auth = getStoredAuth();
   const navigate = useNavigate();
   const [product, setProduct] = useState<ProductProps>(
@@ -29,18 +36,17 @@ export default function useProductDetails() {
   useEffect(() => {
     const getProductDetails = async () => {
       try {
-        dispatch(getProductByURL(productUrl));
-
-        // const res = await productApi.getByURL(productUrl);
-        // setProduct(res.data);
-
+        await dispatch(getProductByURL(productUrl));
         setAmount(Number(product.stock) > 0 ? 1 : 0);
       } catch (error) {
         handleError(error);
       }
     };
-
     getProductDetails();
+    return () => {
+      //prevent displayed product details before exit page
+      !!productUrl && setRelatedProducts([...getRelatedProducts(), productUrl]); //set related products to local storage
+    };
   }, []);
 
   const handleCreatePurchase = async () => {
@@ -76,5 +82,5 @@ export default function useProductDetails() {
   };
 
   useCallback(() => handleCreatePurchase, []);
-  return { productUrl, error, loading, handleCreatePurchase, product, handleAmountChange, amount, productList };
+  return { productUrl, error, loading, handleCreatePurchase, handleAmountChange, amount, productList };
 }

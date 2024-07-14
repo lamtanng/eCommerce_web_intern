@@ -1,24 +1,30 @@
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import { Button, Card, CardActions, CardContent, Stack, Typography } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
-import FavoriteButton from '../../../../../components/elements/buttons/FavoriteButton';
-import { ProductProps } from '../../../../../types/product.type';
-import ProductPrice from '../../../components/ProductPrice';
-import CardImage from '../ProductCardImage';
+import ProductPrice from '../../../pages/Customer/components/ProductPrice';
+import { ProductProps } from '../../../types/product.type';
+import { getProductUrl } from '../../../ultils/getProductUrl';
+import FavoriteButton from '../buttons/FavoriteButton';
+import ProductCardImage from '../CardImage';
 
-export default function ProductItem({ product }: { product: ProductProps }) {
+export interface ProductCardItemProps {
+  product: ProductProps;
+}
+
+export default function ProductCardItem({ product }: ProductCardItemProps) {
+  const productUrl = getProductUrl(product.urlName);
   return (
     <Grid2 xs={4} display="flex" justifyContent="center" alignItems="center">
       <Card sx={{ height: '100%', width: '100%', paddingBottom: '8px' }}>
         <Stack direction="column" spacing={1} justifyContent="space-between" alignItems="start">
           <Stack
             direction="column"
-            spacing={1}
+            spacing={0}
             justifyContent="space-between"
             alignItems="start"
             className="relative w-full"
           >
-            <CardImage
+            <ProductCardImage
               oldPicture={product.picture}
               alt={product.name}
               url={product.urlName}
@@ -50,14 +56,20 @@ export default function ProductItem({ product }: { product: ProductProps }) {
               </Typography>
             </CardContent>
           </Stack>
-          <Stack direction="row" spacing={1} alignItems="center" justifyContent="flex-end" className="w-full px-4">
+          <Stack direction="row" spacing={0} alignItems="center" justifyContent="flex-end" className="w-full px-4">
             <ProductPrice basePrice={product.basePrice} discountPercentage={product.discountPercentage} />
           </Stack>
 
           <CardActions className="w-full px-4">
             <Stack direction="row" spacing={2} alignItems="center" flex={1} justifyContent="space-between">
               <FavoriteButton productUrl={product.urlName} />
-              <Button size="large" variant="contained" fullWidth startIcon={<ShoppingCartCheckoutIcon />}>
+              <Button
+                size="large"
+                variant="contained"
+                fullWidth
+                startIcon={<ShoppingCartCheckoutIcon />}
+                href={productUrl}
+              >
                 Add to cart
               </Button>
             </Stack>

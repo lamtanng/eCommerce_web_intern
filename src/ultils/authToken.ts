@@ -1,14 +1,15 @@
 import { refreshToken } from '../apis/auth.api';
+import { authKey } from '../constants/localStorageKeys';
 import AuthProps from '../types/auth.type';
 import LoginResponseProps from '../types/loginResponse.type';
 import { decodeToken } from './decodToken';
 
-const getStoredAuth = () => JSON.parse(localStorage.getItem('auth') || '{}') as AuthProps;
-const removeAuth = () => localStorage.removeItem('auth');
+const getStoredAuth = () => JSON.parse(localStorage.getItem(authKey) || '{}') as AuthProps;
+const removeAuth = () => localStorage.removeItem(authKey);
 const setStoredAuth = (loginResponse: LoginResponseProps) => {
   let decodedToken = decodeToken(loginResponse.accessToken);
   let authData: AuthProps = { ...loginResponse, ...decodedToken };
-  localStorage.setItem('auth', JSON.stringify(authData));
+  localStorage.setItem(authKey, JSON.stringify(authData));
 };
 const refresh = async () => {
   const auth = getStoredAuth();
@@ -17,4 +18,4 @@ const refresh = async () => {
   return response.data;
 };
 
-export { getStoredAuth, setStoredAuth, refresh, removeAuth };
+export { getStoredAuth, refresh, removeAuth, setStoredAuth };

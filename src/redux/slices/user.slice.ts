@@ -1,9 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { userIDKey } from '../../constants/localStorageKeys';
+import { RejectedAction } from '../../types/actionState.type';
+import { LoadingProps } from '../../types/loading.type';
 import UserProps from '../../types/user.type';
 import { getUser } from '../actions/user.actions';
 import { RootState } from '../store';
-import { LoadingProps } from '../../types/loading.type';
-import { RejectedAction } from '../../types/actionState.type';
 
 export interface UserSliceProps {
   user: UserProps;
@@ -24,7 +25,7 @@ const userSlice = createSlice({
       .addCase(getUser.fulfilled, (state, action) => {
         state.loading = 'succeeded';
         state.user = action.payload;
-        localStorage.setItem('userId', String(action.payload.id));
+        localStorage.setItem(userIDKey, String(action.payload.id));
       })
       .addMatcher(
         (action) => action.type.endsWith('/pending'),

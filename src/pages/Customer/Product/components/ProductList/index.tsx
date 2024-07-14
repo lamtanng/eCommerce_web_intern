@@ -1,8 +1,8 @@
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import ProductItem from '../ProductItem';
 import { useProductPage } from './useProductList';
 import { memo } from 'react';
+import ProductCardItem from '../../../../../components/elements/ProductCardItem';
 
 export interface ProductListProps {
   searchQuery?: string;
@@ -33,7 +33,7 @@ function ProductList({ searchQuery, perPage }: ProductListProps) {
         columns={{ lg: 12, md: 12 }}
       >
         {productList.map((product) => (
-          <ProductItem key={product.id} product={product} />
+          <ProductCardItem key={product.id} product={product} />
         ))}
       </Grid2>
       {/* </InfiniteScroll> */}

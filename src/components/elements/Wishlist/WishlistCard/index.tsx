@@ -1,4 +1,4 @@
-import { Button, Stack, Typography } from '@mui/material';
+import { Box, Button, Stack, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { productApi } from '../../../../apis/product.api';
 import ProductPrice from '../../../../pages/Customer/components/ProductPrice';
@@ -8,7 +8,7 @@ import { ProductProps } from '../../../../types/product.type';
 import { getProductUrl } from '../../../../ultils/getProductUrl';
 import { handleError } from '../../../../ultils/handleError';
 import FavoriteButton from '../../buttons/FavoriteButton';
-import CardImage from '../../CardImage';
+import ProductCardImage from '../../CardImage';
 
 export default function WishListCard({ productUrl }: { productUrl: ProductProps['urlName'] }) {
   const { productList } = useAppSelector(productSelector);
@@ -35,9 +35,25 @@ export default function WishListCard({ productUrl }: { productUrl: ProductProps[
   const productFullPath = getProductUrl(product?.urlName);
 
   return (
-    <Stack direction="row" alignItems="start" spacing={3} className="w-full">
-      <CardImage oldPicture={product.picture} alt={product.name} key={product.id} height="150px" width="150px" />
-      <Stack direction="column" spacing="4px" justifyContent="space-between" alignItems="start">
+    <Stack direction="row" alignItems="start" spacing={2} className="w-full">
+      <Box flexBasis="32%">
+        <ProductCardImage
+          discountPercentage={product.discountPercentage}
+          url={product.urlName}
+          oldPicture={product.picture}
+          alt={product.name}
+          key={product.id}
+          height="150px"
+          width="150px"
+        />
+      </Box>
+      <Stack
+        direction="column"
+        spacing="4px"
+        justifyContent="space-between"
+        alignItems="start"
+        flexBasis="78%"
+      >
         <Typography fontWeight={600} variant="body1">
           {product.name}
         </Typography>

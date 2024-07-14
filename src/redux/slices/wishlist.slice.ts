@@ -1,13 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { storedWishList } from '../../ultils/storeWishList';
 import { RootState } from '../store';
-import { WishListProps } from '../../types/wishList.type';
+import { ProductURLsProps } from '../../types/wishList.type';
 
 const { getWishList, setWishList } = storedWishList;
 
 export interface WishlistState {
   count: number;
-  wishlist: WishListProps;
+  wishlist: ProductURLsProps;
 }
 
 const initialState: WishlistState = {
