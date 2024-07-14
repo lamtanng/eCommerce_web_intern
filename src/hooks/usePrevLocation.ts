@@ -1,14 +1,14 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import { getStoredAuth } from '../ultils/authToken';
 import { UserRole } from '../types/userRole.type';
+import { getStoredAuth } from '../ultils/authToken';
 
 export const usePrevLocation = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const getRole = () => (getStoredAuth()?.userRole ?? undefined) as UserRole;
 
   const getPreLocation = () => {
-    const role = (getStoredAuth()?.userRole ?? undefined) as UserRole;
-    const homePath = role === 'ADMIN' ? '/admin' : '/';
+    const homePath = getRole() === 'ADMIN' ? '/admin' : '/';
     return location.state?.from?.pathname || homePath;
   };
 

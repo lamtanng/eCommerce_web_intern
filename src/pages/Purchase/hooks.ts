@@ -37,7 +37,8 @@ export const usePurchaseForm = ({ defaultValues, action }: PurchaseFormProps<Pur
   });
 
   useEffect(() => {
-    dispatch(fetchProductList());
+    console.log('fetchProductList', productList.length);
+    productList.length === 0 && dispatch(fetchProductList());
   }, []);
 
   const onSubmit = async (data: PurchaseFormSchema) => {

@@ -1,8 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { ProductListProps } from '.';
 import { productApi } from '../../../../../apis/product.api';
-import { ProductProps } from '../../../../../types/product.type';
+import { GetAllProductParams, ProductProps } from '../../../../../types/product.type';
 import { handleError } from '../../../../../ultils/handleError';
+import { useAppDispatch, useAppSelector } from '../../../../../redux/hooks';
+import { fetchProductList, fetchUserProductList } from '../../../../../redux/actions/product.actions';
+import { unwrapResult } from '@reduxjs/toolkit';
+import { productSelector } from '../../../../../redux/slices/product.slice';
 
 export default function useProductList({ searchQuery = '', perPage }: ProductListProps) {
   const [productParams, setProductParams] = useState({ productName: searchQuery, page: '1', offset: String(perPage) });
@@ -67,4 +71,40 @@ export default function useProductList({ searchQuery = '', perPage }: ProductLis
   }, [productListDisplay]);
 
   return { productListDisplay, hasMore, loading, spinnerRef };
+}
+
+export function useProductPage({ searchQuery = '', perPage }: ProductListProps) {
+  const dispatch = useAppDispatch();
+  const { productList, loading } = useAppSelector(productSelector);
+  const [hasMore, setHasMore] = useState<boolean>(true);
+  const [params, setParams] = useState<GetAllProductParams>({
+    productName: searchQuery,
+    page: String(1),
+    offset: String(perPage),
+  });
+
+  // useEffect(() => {
+  //   setHasMore(true);
+  //   setParams({ productName: searchQuery, page: String(1), offset: String(perPage) });
+  // }, [perPage, searchQuery]);
+
+  useEffect(() => {
+    const productParams = { productName: searchQuery, page: String(1), offset: String(perPage) };
+    dispatch(fetchUserProductList(productParams));
+    // const res = await productApi.getAll(params);
+    // const products = res.data;
+    // setParams({ productName: searchQuery, page: String(1), offset: String(perPage) });
+    // if (products.length === 0) {
+    //   setHasMore(() => false);
+    // }
+  }, [perPage, searchQuery]);
+
+  const fetchMoreProducts = async () => {
+    setParams((prev) => {
+      return { ...prev, page: String(Number(prev.page) + 1) };
+    });
+    // const res = await productApi.getAll(params);
+    // const products = res.data;
+  };
+  return { productList, hasMore, fetchMoreProducts };
 }

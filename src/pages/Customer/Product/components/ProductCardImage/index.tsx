@@ -2,6 +2,7 @@ import { Box, Typography } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 import CardImage from '../../../../../components/elements/CardImage';
 import { CardImageProps } from '../../../../../types/cardImage.type';
+import { getProductUrl } from '../../../../../ultils/getProductUrl';
 
 interface ProductCardImageProps extends CardImageProps {
   url: string;
@@ -15,9 +16,10 @@ export default function ProductCardImage({
   discountPercentage,
   height = 280,
 }: ProductCardImageProps) {
+  const productUrl = getProductUrl(url);
   return (
-    <NavLink to={`/products/${url}`} className="relative w-full">
-      <CardImage alt={alt} oldPicture={oldPicture} height={height} width='100%' />
+    <NavLink to={productUrl} className="relative w-full">
+      <CardImage alt={alt} oldPicture={oldPicture} height={height} width="100%" />
       {!!discountPercentage && (
         <Box className="flex w-full items-center justify-between px-4">
           <Typography

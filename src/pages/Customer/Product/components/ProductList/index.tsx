@@ -1,18 +1,29 @@
-import { CircularProgress, Stack } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import ProductItem from '../ProductItem';
-import useProductList from './useProductList';
+import { useProductPage } from './useProductList';
+import { memo } from 'react';
 
 export interface ProductListProps {
   searchQuery?: string;
   perPage?: number;
 }
 
-export default function ProductList({ searchQuery, perPage }: ProductListProps) {
-  const { productListDisplay, spinnerRef, hasMore, loading } = useProductList({ searchQuery: searchQuery, perPage });
-
+function ProductList({ searchQuery, perPage }: ProductListProps) {
+  const { productList, hasMore, fetchMoreProducts } = useProductPage({ searchQuery, perPage });
   return (
     <>
+      {/* <InfiniteScroll
+        dataLength={productList.length} 
+        next={fetchMoreProducts}
+        hasMore={hasMore}
+        loader={<h4>Loading...</h4>}
+        endMessage={
+          <p style={{ textAlign: 'center' }}>
+            <b>Yay! You have seen it all</b>
+          </p>
+        }
+      > */}
       <Grid2
         container
         lg={12}
@@ -21,15 +32,13 @@ export default function ProductList({ searchQuery, perPage }: ProductListProps) 
         columnSpacing={{ lg: 3, md: 2 }}
         columns={{ lg: 12, md: 12 }}
       >
-        {productListDisplay.map((product) => (
+        {productList.map((product) => (
           <ProductItem key={product.id} product={product} />
         ))}
       </Grid2>
-      {hasMore && (
-        <Stack width="100%" ref={spinnerRef} alignItems="center">
-          <CircularProgress sx={{ margin: 10 }} />
-        </Stack>
-      )}
+      {/* </InfiniteScroll> */}
     </>
   );
 }
+
+export default memo(ProductList);

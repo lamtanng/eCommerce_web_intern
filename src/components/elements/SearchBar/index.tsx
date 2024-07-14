@@ -7,6 +7,8 @@ interface SearchBarProps {
 }
 
 function SearchBar({ onSearch, placeholder = 'Searching' }: SearchBarProps) {
+  console.log('search');
+
   return (
     <>
       <Paper sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}>

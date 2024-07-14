@@ -7,7 +7,7 @@ interface ReactTableBodyProps<TData extends RowData> extends ReactTableProps<TDa
 
 function ReactTableBody<TData extends RowData>({ table }: ReactTableBodyProps<TData>) {
   return (
-    <TableBody>
+    <TableBody className="relative h-56">
       {table.getRowModel().rows.length <= 0 ? (
         <NoItemsFounded />
       ) : (

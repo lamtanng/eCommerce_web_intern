@@ -11,6 +11,10 @@ const fetchProductList = createAsyncThunk('product/fetchProductList', async (par
   const resp = await productApi.getAll(params);
   return resp.data;
 });
+const fetchUserProductList = createAsyncThunk('product/fetchUserProductList', async (params?: GetAllProductParams) => {
+  const resp = await productApi.getAll(params);
+  return resp.data;
+});
 const getProductById = createAsyncThunk('product/getProductById', async (id: ProductProps['id']) => {
   const resp = await productApi.getById(id);
   return resp.data;
@@ -47,4 +51,5 @@ export {
   getProductByURL,
   removeProduct,
   updateProduct,
+  fetchUserProductList,
 };

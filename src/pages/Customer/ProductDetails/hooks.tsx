@@ -13,28 +13,35 @@ import { getStoredAuth } from '../../../ultils/authToken';
 import { displayInfo, displaySuccess } from '../../../ultils/displayToast';
 import { getNumbersFromString } from '../../../ultils/getNumbersFromString';
 import { handleError } from '../../../ultils/handleError';
+import { productApi } from '../../../apis/product.api';
 
 export default function useProductDetails() {
   const { productUrl } = useParams<{ productUrl: string }>();
+  const { error, loading, productList } = useAppSelector(productSelector);
   const dispatch = useAppDispatch();
-  const { error, loading } = useAppSelector(productSelector);
-  const [product, setProduct] = useState<ProductProps>({} as ProductProps);
   const [amount, setAmount] = useState<number>(0);
-  const [reLoading, setReLoading] = useState<boolean>(false);
   const auth = getStoredAuth();
   const navigate = useNavigate();
+  const [product, setProduct] = useState<ProductProps>(
+    (productList.find((product) => product.urlName === productUrl) as ProductProps) ?? {},
+  );
 
   useEffect(() => {
     const getProductDetails = async () => {
-      const res = await dispatch(getProductByURL(productUrl));
-      const product = unwrapResult(res);
-      setProduct((pre) => ({ ...pre, ...product }));
-      // setAmount((pre) => (Number(product.stock) > 0 ? 1 : 0));
+      try {
+        dispatch(getProductByURL(productUrl));
+
+        // const res = await productApi.getByURL(productUrl);
+        // setProduct(res.data);
+
+        setAmount(Number(product.stock) > 0 ? 1 : 0);
+      } catch (error) {
+        handleError(error);
+      }
     };
 
     getProductDetails();
-    return () => setReLoading(false);
-  }, [reLoading]);
+  }, []);
 
   const handleCreatePurchase = async () => {
     let data = { id: '', amount: amount, productId: String(product.id) } as PurchaseFormSchema;
@@ -57,7 +64,6 @@ export default function useProductDetails() {
             </Link>
           </div>,
         );
-        setReLoading(() => true);
       } catch (rejectedValueOrSerializedError) {
         handleError(rejectedValueOrSerializedError);
       }
@@ -67,9 +73,8 @@ export default function useProductDetails() {
   const handleAmountChange = (value: string) => {
     const amountNumber = getNumbersFromString(value);
     setAmount((prev) => amountNumber);
-    console.log('value', amount);
   };
 
   useCallback(() => handleCreatePurchase, []);
-  return { productUrl, error, loading, handleCreatePurchase, product, handleAmountChange, amount };
+  return { productUrl, error, loading, handleCreatePurchase, product, handleAmountChange, amount, productList };
 }

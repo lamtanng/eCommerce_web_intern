@@ -9,7 +9,6 @@ const setStoredAuth = (loginResponse: LoginResponseProps) => {
   let decodedToken = decodeToken(loginResponse.accessToken);
   let authData: AuthProps = { ...loginResponse, ...decodedToken };
   localStorage.setItem('auth', JSON.stringify(authData));
-  console.log(getStoredAuth());
 };
 const refresh = async () => {
   const auth = getStoredAuth();

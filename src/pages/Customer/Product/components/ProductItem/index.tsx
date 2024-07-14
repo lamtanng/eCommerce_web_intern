@@ -1,11 +1,10 @@
-import { Box, Button, Card, CardActions, CardContent, Stack, Typography } from '@mui/material';
-import { ProductProps } from '../../../../../types/product.type';
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
-import CardImage from '../ProductCardImage';
-import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
+import { Button, Card, CardActions, CardContent, Stack, Typography } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
-import { calculateDiscountedPrice } from '../../../../../ultils/calcProductPrice';
+import FavoriteButton from '../../../../../components/elements/buttons/FavoriteButton';
+import { ProductProps } from '../../../../../types/product.type';
 import ProductPrice from '../../../components/ProductPrice';
+import CardImage from '../ProductCardImage';
 
 export default function ProductItem({ product }: { product: ProductProps }) {
   return (
@@ -27,8 +26,13 @@ export default function ProductItem({ product }: { product: ProductProps }) {
             />
             <CardContent>
               {product.categories?.map((category, index) => (
-                <Typography key={index} variant="body2" color="text.secondary" className="uppercase tracking-wide">
-                  {category.name}
+                <Typography
+                  key={index}
+                  variant="body2"
+                  color="text.secondary"
+                  className="inline-block uppercase tracking-wide"
+                >
+                  {category.name}&nbsp;
                 </Typography>
               ))}
               <Typography
@@ -41,7 +45,7 @@ export default function ProductItem({ product }: { product: ProductProps }) {
               >
                 {product.name}
               </Typography>
-              <Typography variant="body2" color="text.secondary" className="line-clamp-4 min-h-20">
+              <Typography variant="body2" color="text.secondary" className="line-clamp-2">
                 {product.description}
               </Typography>
             </CardContent>
@@ -52,9 +56,7 @@ export default function ProductItem({ product }: { product: ProductProps }) {
 
           <CardActions className="w-full px-4">
             <Stack direction="row" spacing={2} alignItems="center" flex={1} justifyContent="space-between">
-              <Button variant="text" size="large" color="error">
-                <FavoriteBorderRoundedIcon />
-              </Button>
+              <FavoriteButton productUrl={product.urlName} />
               <Button size="large" variant="contained" fullWidth startIcon={<ShoppingCartCheckoutIcon />}>
                 Add to cart
               </Button>

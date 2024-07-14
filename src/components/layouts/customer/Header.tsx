@@ -13,21 +13,28 @@ import {
   Stack,
   Tooltip,
 } from '@mui/material';
-import { useState } from 'react';
+import { lazy, Suspense, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import { logout } from '../../../apis/auth.api';
 import Logo from '../../../assets/react.svg';
-import { usePrevLocation } from '../../../hooks/usePrevLocation';
-import { getStoredAuth, removeAuth } from '../../../ultils/authToken';
-import { loginFeature, productFeature, signupFeature } from '../../../constants/features/publicFeatures';
-import { NavLink } from 'react-router-dom';
 import { purchaseFeature } from '../../../constants/features/customerFeatures';
+import { loginFeature, productFeature, signupFeature } from '../../../constants/features/publicFeatures';
+import { usePrevLocation } from '../../../hooks/usePrevLocation';
+import { useAppDispatch } from '../../../redux/hooks';
+import { resetWishlist } from '../../../redux/slices/wishlist.slice';
+import { getStoredAuth, removeAuth } from '../../../ultils/authToken';
 import SideBarButton from '../../elements/buttons/SideBarButton';
+const Wishlist = lazy(() => import('../../elements/Wishlist'));
 
 export default function Header() {
+  const dispatch = useAppDispatch();
   const auth = getStoredAuth();
   const { toPrevLocation } = usePrevLocation();
+
   const doLogout = async () => {
     await logout({ refreshToken: auth.refreshToken });
+    localStorage.removeItem('userId');
+    await dispatch(resetWishlist());
     removeAuth();
     toPrevLocation();
   };
@@ -72,6 +79,10 @@ export default function Header() {
             {purchaseFeature.title}
           </NavLink>
         </Stack>
+
+        <Suspense fallback={<>loading...</>}>
+          <Wishlist />
+        </Suspense>
 
         {/* Sign-in/Sign-up */}
         {!auth?.accessToken ? (

@@ -22,7 +22,7 @@ export default function ReactTable<TData extends RowData>({ table, data, fileNam
           </Table>
         </TableContainer>
       </Stack>
-      <ReactTablePagination<TData> table={table} />
+      {table.getRowModel().rows.length > 0 && <ReactTablePagination<TData> table={table} />}
     </Stack>
   );
 }

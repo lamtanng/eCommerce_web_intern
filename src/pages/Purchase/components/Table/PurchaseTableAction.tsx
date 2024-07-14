@@ -47,7 +47,7 @@ export default function PurchaseTableAction({ row }: { row: Row<PurchaseProps> }
         className="text-black"
         href={`http://localhost:5173${purchaseFeature.path}/${row.original.id}`}
       >
-        <IconButton color="primary" aria-label="add to shopping cart">
+        <IconButton color="primary">
           <PublicIcon />
         </IconButton>
       </Link>

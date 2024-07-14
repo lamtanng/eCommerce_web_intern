@@ -9,15 +9,17 @@ import NoItemsFounded from '../../NoItemsFounded';
 import ProductPrice from '../components/ProductPrice';
 import QuantityInput from './components/QuantityRange';
 import useProductDetails from './hooks';
+import FavoriteButton from '../../../components/elements/buttons/FavoriteButton';
 
 export default function ProductDetails() {
-  const { productUrl, error, loading, handleCreatePurchase, product, handleAmountChange, amount } = useProductDetails();
+  const { productUrl, error, loading, handleCreatePurchase, product, handleAmountChange, amount, productList } =
+    useProductDetails();
 
   if (!productUrl) return <NoItemsFounded />;
   if (error) return <Error errorMsg={error} />;
   if (loading === 'loading') return <PageSkeleton />;
   if (loading == 'succeeded') {
-    const { basePrice, name, description, stock, discountPercentage, id, categories, picture } = product;
+    const { basePrice, name, description, stock, discountPercentage, urlName, categories, picture } = productList[0];
     return (
       <Stack direction="column" alignItems="start" justifyContent="start" spacing={8} className="">
         <PageBreadcrumbs />
@@ -26,11 +28,18 @@ export default function ProductDetails() {
             <CardImage oldPicture={picture} alt={name} height={520} />
           </div>
           <Stack direction="column" alignItems="start" justifyContent="space-between" spacing={4} className="basis-1/2">
-            {categories?.map((category, index) => (
-              <Typography key={index} variant="body2" color="text.secondary" className="uppercase tracking-wide">
-                {category.name}
-              </Typography>
-            ))}
+            <div className="">
+              {categories?.map((category, index) => (
+                <Typography
+                  key={index}
+                  variant="body2"
+                  color="text.secondary"
+                  className="inline-block uppercase tracking-wide"
+                >
+                  {category.name}&nbsp;
+                </Typography>
+              ))}
+            </div>
             <Typography
               gutterBottom
               variant="h4"
@@ -45,17 +54,23 @@ export default function ProductDetails() {
               <ProductPrice basePrice={basePrice} discountPercentage={discountPercentage} />
             </Stack>
             <Stack direction="row" spacing={1} alignItems="center" justifyContent="flex-start" className="w-full">
-              <QuantityInput max={stock} defaultValue={amount} amount={amount} handleAmountChange={handleAmountChange} />
+              <QuantityInput
+                max={stock}
+                defaultValue={amount}
+                amount={amount}
+                handleAmountChange={handleAmountChange}
+              />
               {/* <QuantityPicker /> */}
               <Typography variant="body2" component="div" className="italic text-red-500" color="">
                 {stock ? `${stock} in stock` : 'Out of stock'}
               </Typography>
             </Stack>
 
+            {/* Buttons */}
             <div className="">
               <Stack direction="row" spacing={2} alignItems="center" flex={1} justifyContent="start">
                 <Button variant="text" size="large" color="error">
-                  <FavoriteBorderRoundedIcon />
+                  <FavoriteButton productUrl={urlName} />
                 </Button>
                 <Button
                   size="large"

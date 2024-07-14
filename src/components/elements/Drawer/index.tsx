@@ -16,7 +16,7 @@ export function Drawer({ children, anchor = 'right', drawerButton = <KeyboardArr
   return (
     <>
       <Button onClick={toggleDrawer(true)}>{drawerButton}</Button>
-      <MuiDrawer anchor={anchor} open={isOpen} onClose={toggleDrawer(false)}>
+      <MuiDrawer anchor={anchor} open={isOpen} onClose={toggleDrawer(false)} variant="temporary">
         {children}
       </MuiDrawer>
     </>

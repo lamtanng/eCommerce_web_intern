@@ -43,7 +43,6 @@ interface PerPageSelectorProps {
 }
 
 export default function PerPageSelector({ perPage, setPerPage }: PerPageSelectorProps): JSX.Element {
-  const theme = useTheme();
 
   return (
     <div>
@@ -52,18 +51,14 @@ export default function PerPageSelector({ perPage, setPerPage }: PerPageSelector
         <Select
           labelId="demo-multiple-name-label"
           id="demo-multiple-name"
-        //   multiple
+          //   multiple
           value={perPage}
           onChange={(value) => setPerPage(value.target.value as number)}
           input={<OutlinedInput label="Name" />}
           MenuProps={MenuProps}
         >
           {[6, 9, 12, 18].map((perPage) => (
-            <MenuItem
-              key={perPage}
-              value={perPage}
-              //   style={getStyles(perPage, personName, theme)}
-            >
+            <MenuItem key={perPage} value={perPage}>
               {perPage}
             </MenuItem>
           ))}
