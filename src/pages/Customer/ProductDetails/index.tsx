@@ -1,15 +1,15 @@
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
-import { Button, Stack, Typography } from '@mui/material';
 import { PageBreadcrumbs } from '../../../components/elements/Breadcrumbs';
-import FavoriteButton from '../../../components/elements/buttons/FavoriteButton';
-import ProductCardImage from '../../../components/elements/CardImage';
 import PageSkeleton from '../../../components/elements/skeletons/PageSkeleton';
 import Error from '../../Error';
 import NoItemsFounded from '../../NoItemsFounded';
-import ProductPrice from '../components/ProductPrice';
-import ProductCarousel from './components/ProductCarousel';
-import QuantityInput from './components/QuantityRange';
 import useProductDetails from './hooks';
+import { Button, Stack, Typography } from '@mui/material';
+import ProductCardImage from '../../../components/elements/CardImage';
+import ProductPrice from '../components/ProductPrice';
+import QuantityInput from './components/QuantityRange';
+import FavoriteButton from '../../../components/elements/buttons/FavoriteButton';
+import ProductCarousel from './components/ProductCarousel';
 
 export default function ProductDetails() {
   const { productUrl, error, loading, handleCreatePurchase, handleAmountChange, amount, productList } =

@@ -1,8 +1,8 @@
 import { Box, CardMedia, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
 import ImageDefault from '../../../assets/product_default.jpg';
 import { ProductCardImageProps } from '../../../types/cardImage.type';
 import { getProductUrl } from '../../../ultils/getProductUrl';
-import { Link } from 'react-router-dom';
 
 export default function ProductCardImage({
   selectedFile = undefined,

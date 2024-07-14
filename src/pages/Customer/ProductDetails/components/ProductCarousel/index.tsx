@@ -1,13 +1,9 @@
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import { useRef } from 'react';
-import 'swiper/css';
-import 'swiper/css/autoplay';
-import 'swiper/css/pagination';
-import 'swiper/css/scrollbar';
-import { A11y, Autoplay, Navigation, Pagination, Scrollbar } from 'swiper/modules';
 import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
-import 'swiper/swiper-bundle.css';
+import 'swiper/css';
+import { Navigation, Pagination, Scrollbar, A11y, Autoplay } from 'swiper/modules';
+import { useRef } from 'react';
 import { storedRelatedProducts } from '../../../../../ultils/storeWishList';
 import CarouselButton from '../CarouselButton';
 import RelatedProductCard from '../RelatedProductCard';

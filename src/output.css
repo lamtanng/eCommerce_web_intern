@@ -352,14 +352,6 @@
   flex-basis: 50%;
 }
 
-#root :is(.basis-2\/5) {
-  flex-basis: 40%;
-}
-
-#root :is(.basis-3\/5) {
-  flex-basis: 60%;
-}
-
 #root :is(.-translate-x-1\/2) {
   --tw-translate-x: -50%;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));

@@ -1,5 +1,6 @@
 import { Box, Button, Stack, Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import useState from 'react-usestateref';
 import { productApi } from '../../../../apis/product.api';
 import ProductPrice from '../../../../pages/Customer/components/ProductPrice';
 import { useAppSelector } from '../../../../redux/hooks';
@@ -27,9 +28,7 @@ export default function WishListCard({ productUrl }: { productUrl: ProductProps[
     };
 
     if (!!product.id) setProduct(product);
-    else {
-      getProductByUrl();
-    }
+    else getProductByUrl();
   }, []);
 
   const productFullPath = getProductUrl(product?.urlName);
@@ -47,13 +46,7 @@ export default function WishListCard({ productUrl }: { productUrl: ProductProps[
           width="150px"
         />
       </Box>
-      <Stack
-        direction="column"
-        spacing="4px"
-        justifyContent="space-between"
-        alignItems="start"
-        flexBasis="78%"
-      >
+      <Stack direction="column" spacing="4px" justifyContent="space-between" alignItems="start" flexBasis="78%">
         <Typography fontWeight={600} variant="body1">
           {product.name}
         </Typography>
