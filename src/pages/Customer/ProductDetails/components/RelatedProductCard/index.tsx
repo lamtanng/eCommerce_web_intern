@@ -17,5 +17,9 @@ export default function RelatedProductCard({ productUrl }: { productUrl: Product
     };
     getProductByUrl();
   }, []);
-  return <ProductCardItem product={product} />;
+  return (
+    <div className="pb-5">
+      <ProductCardItem product={product} />
+    </div>
+  );
 }

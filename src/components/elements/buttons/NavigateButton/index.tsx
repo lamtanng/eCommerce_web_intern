@@ -8,7 +8,6 @@ interface PreviousButtonProps<TData extends RowData> extends ReactTableProps<TDa
 function PreviousButton<TData>({ table }: PreviousButtonProps<TData>) {
   const { currentPageIndex } = usePagination<TData>(table);
   const isPreviousPage = !(Number(currentPageIndex) > 1);
-  console.log('currentPageIndex: ', currentPageIndex);
 
   return (
     <Button variant="outlined" onClick={() => table.previousPage()} disabled={isPreviousPage}>

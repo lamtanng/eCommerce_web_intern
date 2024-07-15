@@ -9,7 +9,8 @@ export const usePrevLocation = () => {
 
   const getPreLocation = () => {
     const homePath = getRole() === 'ADMIN' ? '/admin' : '/';
-    return location.state?.from?.pathname || homePath;
+    console.log(location.state);
+    return location.pathname || homePath;
   };
 
   const toPrevLocation = () => navigate(getPreLocation(), { replace: true });

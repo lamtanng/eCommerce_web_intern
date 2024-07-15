@@ -5,6 +5,7 @@ const ProductDetails = lazy(() => import('./index'));
 
 export const ProductDetailsRoutes: RouteObject = {
   path: '/products/:productUrl',
+
   element: (
     <Suspense fallback={<PageSkeleton />}>
       <ProductDetails />

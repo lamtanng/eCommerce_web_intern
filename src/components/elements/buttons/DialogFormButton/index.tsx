@@ -28,7 +28,6 @@ export default function DialogFormButton({
   const handleClose = () => {
     setOpen(false);
   };
-  console.log('isOpen', isOpen);
 
   return (
     <>

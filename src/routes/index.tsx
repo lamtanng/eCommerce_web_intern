@@ -5,7 +5,7 @@ import { adminPath, dashboardFeature } from '../constants/features/adminFeatures
 import { CategoryRoutes } from '../pages/Category/Category.routes';
 import { UserProductRoutes } from '../pages/Customer/Product/UserProduct.routes';
 import { ProductDetailsRoutes } from '../pages/Customer/ProductDetails/ProductDetails.routes';
-import { UserPurchaseRoutes } from '../pages/Customer/UserPurchase/ProductDetails.routes';
+import { UserPurchaseRoutes } from '../pages/Customer/UserPurchase/UserPurchase.routes';
 import { UserPurchaseDetailsRoutes } from '../pages/Customer/UserPurchaseDetails/ProductDetails.routes';
 import { LoginRoutes } from '../pages/Login/Login.routes';
 import { ProductRoutes } from '../pages/Product/Product.routes';

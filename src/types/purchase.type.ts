@@ -7,6 +7,12 @@ interface PurchaseProps {
   reviewNote: number;
   reviewComment: string;
   createdAt: string;
+  user: {
+    email: string;
+  };
+  product: {
+    name: string;
+  };
 }
 interface PurchaseGetRequestParams extends Partial<Pick<PurchaseProps, 'userId' | 'productId'>> {
   page?: number;

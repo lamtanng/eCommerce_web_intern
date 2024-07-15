@@ -13,8 +13,6 @@ interface FavoriteButtonProps {
 
 const isFavoritedProduct = ({ productUrl }: FavoriteButtonProps) => {
   const { getWishList } = storedWishList;
-  console.log('getWishList', productUrl);
-
   return getWishList().includes(productUrl);
 };
 

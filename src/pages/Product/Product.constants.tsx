@@ -40,7 +40,7 @@ const columnDefs = [
     accessorKey: 'id',
     header: 'ID',
   },
-  columnHelper.accessor((row) => row.picture, {
+  columnHelper.accessor((row) => `http://${row.picture}`, {
     id: 'picture',
     header: 'Picture',
     cell: ({ row }) => <ImageButton row={row} />,
@@ -49,7 +49,7 @@ const columnDefs = [
     accessorKey: 'name',
     header: 'Product Name',
   },
-  columnHelper.accessor((row) => row.urlName, {
+  columnHelper.accessor((row) => `http://localhost:5173${productFeature.path}/${row.urlName}`, {
     id: 'urlName',
     header: 'URL',
     cell: ({ row }) => (
@@ -74,12 +74,12 @@ const columnDefs = [
     accessorKey: 'stock',
     header: 'Stock',
   },
-  columnHelper.accessor((row) => row.createdAt, {
+  columnHelper.accessor((row) => `${formatDate(row.createdAt)}`, {
     id: 'createdAt',
     header: 'Created At',
     cell: ({ row }) => `${formatDate(row.original.createdAt)}`,
   }),
-  columnHelper.accessor((row) => row.categories, {
+  columnHelper.accessor((row) => `${row.categories?.map(({ name }) => name).join(', ')}`, {
     id: 'categories',
     header: 'Categories',
     cell: ({ row }) => `${row.original.categories?.map(({ name }) => name).join(', ')}`,

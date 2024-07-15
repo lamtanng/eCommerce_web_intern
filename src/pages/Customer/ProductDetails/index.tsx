@@ -12,10 +12,13 @@ import FavoriteButton from '../../../components/elements/buttons/FavoriteButton'
 import ProductCarousel from './components/ProductCarousel';
 import DialogFormButton from '../../../components/elements/buttons/DialogFormButton';
 import LoginModal from '../../Login/components/LoginModal';
+import { useLocation } from 'react-router-dom';
 
 export default function ProductDetails() {
   const { productUrl, error, loading, handleCreatePurchase, handleAmountChange, auth, amount, productList } =
     useProductDetails();
+  const location = useLocation();
+  console.log(location);
 
   if (!productUrl) return <NoItemsFounded />;
   if (error) return <Error errorMsg={error} />;

@@ -6,14 +6,15 @@ import ReactTableBody from './ReactTableBody';
 import ReactTableHeader from './ReactTableHeader';
 import ReactTablePagination from './ReactTablePagination';
 import ExportButton from '../buttons/ExportButton';
+import getVisibleDataTable from '../../../ultils/getVisibleDataTable';
 
-export default function ReactTable<TData extends RowData>({ table, data, fileName }: ReactTableProps<TData>) {
+export default function ReactTable<TData extends RowData>({ table, fileName }: ReactTableProps<TData>) {
   return (
     <Stack direction="column" spacing={3} className="mt-6">
       <Stack direction="column" spacing={3}>
         <Stack direction="row" spacing={3} justifyContent="space-between" alignItems="center">
           <ColumnSelector<TData> table={table} />
-          <ExportButton<TData> data={data} fileName={fileName} />
+          <ExportButton<TData> data={getVisibleDataTable({ table })} fileName={fileName} />
         </Stack>
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }}>
