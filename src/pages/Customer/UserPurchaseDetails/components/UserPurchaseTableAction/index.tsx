@@ -1,7 +1,7 @@
 import { Row } from '@tanstack/react-table';
 import { PurchaseProps, PurchaseReviewFormSchema } from '../../../../../types/purchase.type';
-import { Drawer } from '../../../../../components/elements/Drawer';
 import { ReviewForm } from '../../../../Purchase/components/ReviewForm';
+import Drawer from '../../../../../components/elements/Drawer';
 
 export default function UserPurchaseTableAction({ row }: { row: Row<PurchaseProps> }) {
   const defaultReview: PurchaseReviewFormSchema = {

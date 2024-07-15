@@ -1,12 +1,13 @@
+import { Link } from '@mui/material';
 import { createColumnHelper } from '@tanstack/react-table';
 import * as yup from 'yup';
+import { productFeature } from '../../constants/features/publicFeatures';
 import { getPaginationParams } from '../../constants/pagination';
 import { GetAllProductParams, ProductFormSchema, ProductProps } from '../../types/product.type';
 import { formatDate } from '../../ultils/formatDate';
 import { getRequiredMsg } from '../../ultils/getMessage';
-import ProductTableAction, { ImageButton } from './Components/ProductTable/ProductTableAction';
-import { productFeature } from '../../constants/features/publicFeatures';
-import { Link } from '@mui/material';
+import ProductTableAction from './Components/ProductTable/ProductTableAction';
+import { ImageButton } from './Components/UploadImageButton';
 
 const getProductURLParams = ({ productName }: GetAllProductParams): GetAllProductParams => ({
   ...getPaginationParams({}),
@@ -52,7 +53,11 @@ const columnDefs = [
     id: 'urlName',
     header: 'URL',
     cell: ({ row }) => (
-      <Link underline='none' target='_blank' href={`http://localhost:5173${productFeature.path}/${row.original.urlName}`}>
+      <Link
+        underline="none"
+        target="_blank"
+        href={`http://localhost:5173${productFeature.path}/${row.original.urlName}`}
+      >
         http://localhost:5173{productFeature.path}/{row.original.urlName}
       </Link>
     ),
@@ -74,7 +79,6 @@ const columnDefs = [
     header: 'Created At',
     cell: ({ row }) => `${formatDate(row.original.createdAt)}`,
   }),
-
   columnHelper.accessor((row) => row.categories, {
     id: 'categories',
     header: 'Categories',

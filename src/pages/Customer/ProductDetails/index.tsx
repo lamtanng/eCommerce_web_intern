@@ -10,9 +10,11 @@ import ProductPrice from '../components/ProductPrice';
 import QuantityInput from './components/QuantityRange';
 import FavoriteButton from '../../../components/elements/buttons/FavoriteButton';
 import ProductCarousel from './components/ProductCarousel';
+import DialogFormButton from '../../../components/elements/buttons/DialogFormButton';
+import LoginModal from '../../Login/components/LoginModal';
 
 export default function ProductDetails() {
-  const { productUrl, error, loading, handleCreatePurchase, handleAmountChange, amount, productList } =
+  const { productUrl, error, loading, handleCreatePurchase, handleAmountChange, auth, amount, productList } =
     useProductDetails();
 
   if (!productUrl) return <NoItemsFounded />;
@@ -68,13 +70,13 @@ export default function ProductDetails() {
                 <ProductPrice basePrice={basePrice} discountPercentage={discountPercentage} />
               </Stack>
               <Stack direction="row" spacing={1} alignItems="center" justifyContent="flex-start" className="w-full">
+                {/* <QuantityPicker /> */}
                 <QuantityInput
                   max={stock}
                   defaultValue={amount}
                   amount={amount}
                   handleAmountChange={handleAmountChange}
                 />
-                {/* <QuantityPicker /> */}
                 <Typography variant="body2" component="div" className="italic text-red-500" color="">
                   {stock ? `${stock} in stock` : 'Out of stock'}
                 </Typography>
@@ -86,16 +88,35 @@ export default function ProductDetails() {
                   <Button variant="text" size="large" color="error">
                     <FavoriteButton productUrl={urlName} />
                   </Button>
-                  <Button
-                    size="large"
-                    variant="contained"
-                    fullWidth
-                    startIcon={<ShoppingCartCheckoutIcon />}
-                    onClick={() => handleCreatePurchase()}
-                    disabled={Number(stock) < 1}
-                  >
-                    Buy now
-                  </Button>
+                  {auth.accessToken ? (
+                    <Button
+                      size="large"
+                      variant="contained"
+                      fullWidth
+                      startIcon={<ShoppingCartCheckoutIcon />}
+                      onClick={() => handleCreatePurchase()}
+                      disabled={Number(stock) < 1}
+                    >
+                      Buy now
+                    </Button>
+                  ) : (
+                    <DialogFormButton
+                      variant="text"
+                      dialogButton={
+                        <Button
+                          size="large"
+                          variant="contained"
+                          fullWidth
+                          startIcon={<ShoppingCartCheckoutIcon />}
+                          disabled={Number(stock) < 1}
+                        >
+                          Buy now
+                        </Button>
+                      }
+                    >
+                      <LoginModal />
+                    </DialogFormButton>
+                  )}
                 </Stack>
               </div>
 

@@ -1,22 +1,22 @@
-import { Link } from 'react-router-dom';
+import { Link } from '@mui/material';
 import Logo from '../../assets/react.svg';
-import { signupFeature } from '../../constants/features/publicFeatures';
+import { productFeature, signupFeature } from '../../constants/features/publicFeatures';
 import LoginForm from './components/LoginForm';
 
 function Login() {
   return (
     <>
       <div className="mx-auto flex items-start justify-between font-sans text-base">
-        <div className="mx-auto flex w-full flex-col items-start justify-start gap-8 px-52 py-20">
-          <div className="">
-            <img src={Logo} alt="Logo" className="" />
-          </div>
+        <div className="mx-auto flex w-full flex-col items-center justify-start gap-8 px-52 py-20">
+          <Link href={productFeature.path} className="no-underline">
+            <img src={Logo} alt="Logo" className="w-14" />
+          </Link>
 
           <div className="w-full">
             <p className="text-[54px] font-extrabold">Getting Started</p>
-            <p className="text-base text-gray-600">
-              Already have an account?{' '}
-              <Link to={signupFeature.path} className="font-medium">
+            <p className="-mt-4 text-base text-gray-600">
+              Don't have account?{' '}
+              <Link href={signupFeature.path} className="font-medium no-underline">
                 {signupFeature.title}
               </Link>
             </p>

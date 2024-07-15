@@ -38,6 +38,7 @@ export default function FavoriteButton({ productUrl }: FavoriteButtonProps) {
         color="error"
         className="cursor-pointer transition-all duration-200 ease-in-out hover:scale-110"
         onClick={handleFavorite}
+        sx={{ cursor: 'pointer' }}
       />
     );
   else
@@ -46,6 +47,7 @@ export default function FavoriteButton({ productUrl }: FavoriteButtonProps) {
         color="error"
         className="cursor-pointer transition-all duration-200 ease-in-out hover:scale-110"
         onClick={handleFavorite}
+        sx={{ cursor: 'pointer' }}
       />
     );
 }

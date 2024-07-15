@@ -12,6 +12,9 @@ export default {
         page_gutter_lg: 'var(--page-gutter-lg)',
         header_height: 'var(--header)',
       },
+      lineHeight: {
+        header_height: 'var(--header)',
+      },
     },
   },
   plugins: [],

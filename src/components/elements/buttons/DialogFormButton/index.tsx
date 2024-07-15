@@ -1,7 +1,8 @@
 import BorderColorRoundedIcon from '@mui/icons-material/BorderColorRounded';
 import { Button, Dialog, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
-import { ReactNode, useState } from 'react';
+import { ReactNode } from 'react';
 import { SlideUpTransition } from '../../SlideUpTransition';
+import useStateRef from 'react-usestateref';
 
 export interface DialogFormButtonProps {
   dialogButton?: ReactNode | string;
@@ -9,6 +10,7 @@ export interface DialogFormButtonProps {
   variant?: 'text' | 'contained' | 'outlined';
   description?: string;
   children: ReactNode | null;
+  isOpen?: boolean;
 }
 
 export default function DialogFormButton({
@@ -17,14 +19,17 @@ export default function DialogFormButton({
   variant = 'text',
   description,
   children = null,
+  isOpen = false,
 }: DialogFormButtonProps) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useStateRef(isOpen);
   const handleClickOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
     setOpen(false);
   };
+  console.log('isOpen', isOpen);
+
   return (
     <>
       <Button variant={variant} onClick={handleClickOpen}>
@@ -38,10 +43,10 @@ export default function DialogFormButton({
         fullWidth
         maxWidth="sm"
         aria-describedby="alert-dialog-slide-description"
-        className="w-56"
+        className="relative"
       >
         <DialogTitle>{title}</DialogTitle>
-        <DialogContent className="w-56">
+        <DialogContent className="">
           <DialogContentText id="alert-dialog-slide-description">{description}</DialogContentText>
           {children}
         </DialogContent>

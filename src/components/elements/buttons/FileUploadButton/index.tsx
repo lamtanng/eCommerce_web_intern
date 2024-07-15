@@ -4,15 +4,15 @@ import Button from '@mui/material/Button';
 import * as React from 'react';
 import { uploadProductImage } from '../../../../redux/actions/product.actions';
 import { useAppDispatch } from '../../../../redux/hooks';
-import MediaImage from '../../CardImage';
+import { ProductCardImageProps } from '../../../../types/cardImage.type';
+import ProductCardImage from '../../CardImage';
 import { VisuallyHiddenInput } from './styled';
 
-export interface InputFileUploadProps {
+interface InputFileUploadProps extends ProductCardImageProps {
   id: string | undefined;
-  oldPicture: string | undefined;
 }
 
-export default function InputFileUpload({ id, oldPicture }: InputFileUploadProps) {
+export default function InputFileUpload({ id, oldPicture, discountPercentage, url }: InputFileUploadProps) {
   const [selectedFile, setSelectedFile] = React.useState<Blob>();
   const dispatch = useAppDispatch();
 
@@ -33,9 +33,14 @@ export default function InputFileUpload({ id, oldPicture }: InputFileUploadProps
 
   return (
     <>
-      <MediaImage selectedFile={selectedFile} oldPicture={oldPicture} />
+      <ProductCardImage
+        selectedFile={selectedFile}
+        oldPicture={oldPicture}
+        discountPercentage={discountPercentage}
+        url={url}
+      />
       <Stack spacing={4} direction="row" alignItems="center" justifyContent="center" marginTop={3}>
-        <Button component="label" role={undefined} variant="outlined" tabIndex={-1} startIcon={<CloudUploadIcon />}>
+        <Button component="label" variant="outlined" startIcon={<CloudUploadIcon />}>
           Upload file
           <VisuallyHiddenInput onChange={handleFileChange} type="file" />
         </Button>

@@ -10,7 +10,7 @@ function ReactTableBody<TData extends RowData>({ table }: ReactTableBodyProps<TD
     return (
       <>
         <TableBody className="relative h-56">
-          <NoItemsFounded />;
+          <NoItemsFounded />
         </TableBody>
       </>
     );
