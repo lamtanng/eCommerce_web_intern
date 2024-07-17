@@ -1,35 +1,43 @@
 import { Stack } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
-import { useCallback, useMemo, useState } from 'react';
+import { useState } from 'react';
 import PerPageSelector from '../../../components/elements/PerPageSelector';
 import SearchBar from '../../../components/elements/SearchBar';
 import useDebounce from '../../../hooks/useDebounce';
+import ColumnLayout from './components/ColumnLayout';
 import ProductList from './components/ProductList';
+import { defaultColumns, defaultPerPage } from './UserProduct.constants';
 
 export default function UserProduct() {
   const { handleDebouncedSearch, searchQuery } = useDebounce();
-  const [perPage, setPerPage] = useState(6);
+  const [perPage, setPerPage] = useState(defaultPerPage);
+  const [columns, setColumns] = useState(defaultColumns);
+
+  const handleColumnsChange = (columns: number) => {
+    setColumns(columns);
+  };
   const handlePerPageChange = (perPage: number) => {
-    setPerPage(() => perPage);
+    setPerPage(perPage);
   };
 
   return (
     <Grid2
       container
-      maxWidth="lg"
+      maxWidth="xl"
       rowSpacing={{ lg: 4, md: 2 }}
       columnSpacing={{ lg: 3, md: 2 }}
       columns={{ lg: 12, md: 12 }}
     >
-      <Grid2 lg={12}>
+      <Grid2  lg={12}>
         <Stack direction="row" spacing={2} justifyContent="space-between" alignItems="center">
           <PerPageSelector perPage={perPage} setPerPage={handlePerPageChange} />
-          <SearchBar onSearch={handleDebouncedSearch} />
+          <Stack direction="row" spacing={2} justifyContent="space-between" alignItems="center">
+            <ColumnLayout handleColumnsChange={handleColumnsChange} />
+            <SearchBar onSearch={handleDebouncedSearch} />
+          </Stack>
         </Stack>
       </Grid2>
-      <Grid2 lg={12}>
-        <ProductList searchQuery={searchQuery} perPage={perPage} />
-      </Grid2>
+      <ProductList searchQuery={searchQuery} perPage={perPage} columns={columns} />
     </Grid2>
   );
 }

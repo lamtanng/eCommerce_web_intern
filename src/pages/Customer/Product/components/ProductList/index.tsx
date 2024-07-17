@@ -1,43 +1,46 @@
+import { Typography } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
-import InfiniteScroll from 'react-infinite-scroll-component';
-import { useProductPage } from './useProductList';
 import { memo } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import ProductCardItem from '../../../../../components/elements/ProductCardItem';
+import PageSkeleton from '../../../../../components/elements/skeletons/PageSkeleton';
+import { ProductListProps } from '../../UserProduct.type';
+import { useProductPage } from './useProductList';
 
-export interface ProductListProps {
-  searchQuery?: string;
-  perPage?: number;
-}
-
-function ProductList({ searchQuery, perPage }: ProductListProps) {
-  const { productList, hasMore, fetchMoreProducts } = useProductPage({ searchQuery, perPage });
+function ProductList({ searchQuery, perPage, columns }: ProductListProps) {
+  const { hasMore, products, fetchMoreProducts } = useProductPage({ searchQuery, perPage });
   return (
-    <>
-      {/* <InfiniteScroll
-        dataLength={productList.length} 
+    <Grid2 className="w-full overflow-hidden px-0">
+      <InfiniteScroll
+        dataLength={products.length > Number(perPage) ? products.length : Number(perPage)}
         next={fetchMoreProducts}
         hasMore={hasMore}
-        loader={<h4>Loading...</h4>}
-        endMessage={
-          <p style={{ textAlign: 'center' }}>
-            <b>Yay! You have seen it all</b>
-          </p>
+        loader={
+          <div className="relative py-20">
+            <PageSkeleton />
+          </div>
         }
-      > */}
-      <Grid2
-        container
-        lg={12}
-        maxWidth="lg"
-        rowSpacing={{ lg: 5, md: 2 }}
-        columnSpacing={{ lg: 3, md: 2 }}
-        columns={{ lg: 12, md: 12 }}
+        endMessage={
+          <Typography variant="body2" className="mt-10 text-center text-gray-600">
+            e-Commerce Website
+          </Typography>
+        }
       >
-        {productList.map((product) => (
-          <ProductCardItem key={product.id} product={product} />
-        ))}
-      </Grid2>
-      {/* </InfiniteScroll> */}
-    </>
+        <Grid2
+          container
+          lg={12}
+          maxWidth="xl"
+          rowSpacing={{ lg: 5, md: 2 }}
+          columnSpacing={{ lg: 3, md: 2 }}
+          columns={{ lg: 12, md: 12 }}
+          sx={{ marginX: 0 }}
+        >
+          {products.map((product) => (
+            <ProductCardItem key={product.id} product={product} columns={columns} />
+          ))}
+        </Grid2>
+      </InfiniteScroll>
+    </Grid2>
   );
 }
 

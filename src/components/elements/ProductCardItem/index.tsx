@@ -1,6 +1,8 @@
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
 import { Button, Card, CardActions, CardContent, Stack, Typography } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
+import { useEffect } from 'react';
+import useStateRef from 'react-usestateref';
 import ProductPrice from '../../../pages/Customer/components/ProductPrice';
 import { ProductProps } from '../../../types/product.type';
 import { getProductUrl } from '../../../ultils/getProductUrl';
@@ -9,12 +11,18 @@ import ProductCardImage from '../CardImage';
 
 export interface ProductCardItemProps {
   product: ProductProps;
+  columns?: number;
 }
 
-export default function ProductCardItem({ product }: ProductCardItemProps) {
+export default function ProductCardItem({ product, columns = 4 }: ProductCardItemProps) {
+  const [gridColumns, setGridColumns] = useStateRef<number>(columns);
+  useEffect(() => {
+    setGridColumns(12 / columns);
+  }, [columns]);
+
   const productUrl = getProductUrl(product.urlName);
   return (
-    <Grid2 xs={4} display="flex" justifyContent="center" alignItems="center">
+    <Grid2 xs={gridColumns} display="flex" justifyContent="center" alignItems="center">
       <Card sx={{ height: '100%', width: '100%', paddingBottom: '8px' }}>
         <Stack direction="column" spacing={1} justifyContent="space-between" alignItems="start">
           <Stack

@@ -4,7 +4,7 @@ const MenuProps = {
   PaperProps: {
     style: {
       maxHeight: itemHeight * 4.5 + itemPaddingTop,
-      width: 250,
+      width: 100,
     },
   },
 };
