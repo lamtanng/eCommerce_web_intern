@@ -1,28 +1,26 @@
 import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
-import { PageBreadcrumbs } from '../../../components/elements/Breadcrumbs';
-import PageSkeleton from '../../../components/elements/skeletons/PageSkeleton';
-import Error from '../../Error';
-import NoItemsFounded from '../../NoItemsFounded';
-import useProductDetails from './hooks';
 import { Button, Stack, Typography } from '@mui/material';
-import ProductCardImage from '../../../components/elements/CardImage';
-import ProductPrice from '../components/ProductPrice';
-import QuantityInput from './components/QuantityRange';
-import FavoriteButton from '../../../components/elements/buttons/FavoriteButton';
-import ProductCarousel from './components/ProductCarousel';
+import { PageBreadcrumbs } from '../../../components/elements/Breadcrumbs';
 import DialogFormButton from '../../../components/elements/buttons/DialogFormButton';
+import FavoriteButton from '../../../components/elements/buttons/FavoriteButton';
+import ProductCardImage from '../../../components/elements/CardImage';
+import SpinnerSkeleton from '../../../components/elements/skeletons/SpinnerSkeleton';
+import Error from '../../Error';
 import LoginModal from '../../Login/components/LoginModal';
-import { useLocation } from 'react-router-dom';
+import NoItemsFounded from '../../NoItemsFounded';
+import ProductPrice from '../components/ProductPrice';
+import ProductCarousel from './components/ProductCarousel';
+import QuantityInput from './components/QuantityRange';
+import useProductDetails from './hooks';
+import ProductDetailsSkeleton from '../../../components/elements/skeletons/ProductDetailsSkeleton';
 
 export default function ProductDetails() {
   const { productUrl, error, loading, handleCreatePurchase, handleAmountChange, auth, amount, productList } =
     useProductDetails();
-  const location = useLocation();
-  console.log(location);
 
   if (!productUrl) return <NoItemsFounded />;
   if (error) return <Error errorMsg={error} />;
-  if (loading === 'loading') return <PageSkeleton />;
+  if (loading === 'loading') return <ProductDetailsSkeleton />;
   if (loading == 'succeeded') {
     const { basePrice, name, description, stock, discountPercentage, urlName, categories, picture } = productList[0];
 

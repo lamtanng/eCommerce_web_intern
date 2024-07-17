@@ -18,9 +18,11 @@ const setWishList = (wishList: ProductURLsProps) => {
 };
 
 //related products
-const getRelatedProducts = () => getDataFromStorageKeys(relatedProductsKey);
+const getRelatedProducts = () =>
+  JSON.parse(localStorage.getItem(relatedProductsKey) || '[]') as ProductURLsProps;
+
 const setRelatedProducts = (relatedProducts: ProductURLsProps) => {
-  localStorage.setItem(getLocalStorageKey(relatedProductsKey), JSON.stringify(uniq(relatedProducts)));
+  localStorage.setItem(relatedProductsKey, JSON.stringify(uniq(relatedProducts)));
 };
 
 export const storedWishList = { getWishList, setWishList };

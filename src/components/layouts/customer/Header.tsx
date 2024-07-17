@@ -67,7 +67,7 @@ export default function Header() {
               [
                 isActive
                   ? 'header-btn leading-header_height text-gray-900'
-                  : 'leading-header_height header-btn text-gray-700',
+                  : 'header-btn leading-header_height text-gray-700',
               ].join(' ')
             }
           >
@@ -80,7 +80,7 @@ export default function Header() {
                 [
                   isActive
                     ? 'header-btn leading-header_height text-gray-900'
-                    : 'leading-header_height header-btn text-gray-700',
+                    : 'header-btn leading-header_height text-gray-700',
                 ].join(' ')
               }
             >
@@ -91,7 +91,7 @@ export default function Header() {
 
         <div className="flex flex-row items-center gap-4">
           {/* Wish list */}
-          <Suspense fallback={<>loading...</>}>
+          <Suspense>
             <Wishlist />
           </Suspense>
 

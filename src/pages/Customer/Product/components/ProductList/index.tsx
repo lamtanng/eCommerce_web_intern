@@ -3,12 +3,22 @@ import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 import { memo } from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import ProductCardItem from '../../../../../components/elements/ProductCardItem';
-import PageSkeleton from '../../../../../components/elements/skeletons/PageSkeleton';
+import SpinnerSkeleton from '../../../../../components/elements/skeletons/SpinnerSkeleton';
 import { ProductListProps } from '../../UserProduct.type';
 import { useProductPage } from './useProductList';
+import CardsSkeleton from '../../../../../components/elements/skeletons/CardsSkeleton';
+import NoItemsFounded from '../../../../NoItemsFounded';
 
 function ProductList({ searchQuery, perPage, columns }: ProductListProps) {
-  const { hasMore, products, fetchMoreProducts } = useProductPage({ searchQuery, perPage });
+  const { hasMore, products, fetchMoreProducts, isLoading } = useProductPage({ searchQuery, perPage });
+
+  if (isLoading) return <CardsSkeleton />;
+  if (products.length === 0)
+    return (
+      <div className="h-svh">
+        <NoItemsFounded />
+      </div>
+    );
   return (
     <Grid2 className="w-full overflow-hidden px-0">
       <InfiniteScroll
@@ -17,7 +27,7 @@ function ProductList({ searchQuery, perPage, columns }: ProductListProps) {
         hasMore={hasMore}
         loader={
           <div className="relative py-20">
-            <PageSkeleton />
+            <SpinnerSkeleton />
           </div>
         }
         endMessage={

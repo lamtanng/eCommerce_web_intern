@@ -1,10 +1,11 @@
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
 import { Badge, Button, Stack, Tooltip, Typography } from '@mui/material';
-import { lazy } from 'react';
+import { lazy, Suspense } from 'react';
 import { productFeature } from '../../../constants/features/publicFeatures';
 import { useAppSelector } from '../../../redux/hooks';
 import { wishlistSelector } from '../../../redux/slices/wishlist.slice';
-import WishListCard from './WishlistCard';
+import ProductListSkeleton from '../skeletons/ProductListSkeleton';
+const WishListCard = lazy(() => import('./WishlistCard'));
 const Drawer = lazy(() => import('../Drawer'));
 
 export default function Wishlist() {
@@ -28,12 +29,15 @@ export default function Wishlist() {
           My Wishlist <br />
           <Typography variant="body1">{count ? `${count}` : 0} items </Typography>
         </Typography>
+
         <Stack direction="column" spacing={3} alignItems="center">
           {count ? (
             <>
               <Stack direction="column" spacing={3} alignItems="start">
                 {wishlist.map((productUrl) => (
-                  <WishListCard key={productUrl} productUrl={productUrl} />
+                  <Suspense fallback={<ProductListSkeleton />} key={productUrl}>
+                    <WishListCard productUrl={productUrl} />
+                  </Suspense>
                 ))}
               </Stack>
             </>

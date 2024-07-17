@@ -75,7 +75,7 @@ export default function useProductDetails() {
 
   const handleAmountChange = (value: string) => {
     const amountNumber = getNumbersFromString(value);
-    setAmount((prev) => amountNumber);
+    setAmount(amountNumber);
   };
 
   useCallback(() => handleCreatePurchase, []);

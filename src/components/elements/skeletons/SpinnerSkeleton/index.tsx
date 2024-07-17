@@ -1,5 +1,5 @@
 import { MutatingDots } from 'react-loader-spinner';
-export default function PageSkeleton() {
+export default function SpinnerSkeleton() {
   return (
     <MutatingDots
       visible={true}
