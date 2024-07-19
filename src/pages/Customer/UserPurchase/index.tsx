@@ -1,8 +1,6 @@
 import { Stack, Typography } from '@mui/material';
-import SearchBar from '../../../components/elements/SearchBar';
 import useDebounce from '../../../hooks/useDebounce';
 import PurchaseTable from '../../Purchase/components/Table';
-import { userPurchaseColumns } from './UserPurchase.constant';
 import { purchaseFormColumns } from '../../Purchase/Purchase.constants';
 
 export default function UserPurchase() {

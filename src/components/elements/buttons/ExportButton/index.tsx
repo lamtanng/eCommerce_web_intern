@@ -8,7 +8,7 @@ interface ExportButtonProps<TData extends RowData> extends Omit<ReactTableProps<
 
 export default function ExportButton<TData extends RowData>({ data, fileName = 'table' }: ExportButtonProps<TData>) {
   return (
-    <CSVLink data={data} filename={`${fileName}.csv`} className="" target="_blank">
+    <CSVLink data={data} filename={`${fileName}.csv`} target="_blank">
       <Button variant="outlined" startIcon={<GetAppRoundedIcon />}>
         Export
       </Button>

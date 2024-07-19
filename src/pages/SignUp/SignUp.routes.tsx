@@ -1,13 +1,13 @@
 import { Suspense, lazy } from 'react';
 import { RouteObject } from 'react-router-dom';
-import PageSkeleton from '../../components/elements/skeletons/PageSkeleton';
+import SpinnerSkeleton from '../../components/elements/skeletons/SpinnerSkeleton';
 import { signupFeature } from '../../constants/features/publicFeatures';
 const SignUp = lazy(() => import('.'));
 
 export const SignUpRoutes: RouteObject = {
   path: signupFeature.path,
   element: (
-    <Suspense fallback={<PageSkeleton />}>
+    <Suspense fallback={<SpinnerSkeleton />}>
       <SignUp />
     </Suspense>
   ),

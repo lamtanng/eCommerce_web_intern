@@ -48,8 +48,6 @@ export default function QuantityInput({
   handleAmountChange,
   amount,
 }: QuantityInputProps) {
-  console.log(amount);
-
   return (
     <NumberInput
       aria-label="Quantity Input"

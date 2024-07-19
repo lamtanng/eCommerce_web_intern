@@ -6,21 +6,26 @@ import NoItemsFounded from '../../../../pages/NoItemsFounded';
 interface ReactTableBodyProps<TData extends RowData> extends ReactTableProps<TData> {}
 
 function ReactTableBody<TData extends RowData>({ table }: ReactTableBodyProps<TData>) {
-  return (
-    <TableBody>
-      {table.getRowModel().rows.length <= 0 ? (
-        <NoItemsFounded />
-      ) : (
-        table.getRowModel().rows.map((row) => (
+  if (table.getRowModel().rows.length <= 0)
+    return (
+      <>
+        <TableBody className="relative h-56">
+          <NoItemsFounded />
+        </TableBody>
+      </>
+    );
+  else
+    return (
+      <TableBody>
+        {table.getRowModel().rows.map((row) => (
           <TableRow key={row.id}>
             {row.getVisibleCells().map((cell) => (
               <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())} </TableCell>
             ))}
           </TableRow>
-        ))
-      )}
-    </TableBody>
-  );
+        ))}
+      </TableBody>
+    );
 }
 
 export default ReactTableBody as typeof ReactTableBody;

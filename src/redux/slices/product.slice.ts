@@ -8,6 +8,7 @@ import { getCreateSuccessMsg, getRemovedSuccessMsg, getUpdateSuccessMsg } from '
 import {
   createProduct,
   fetchProductList,
+  fetchUserProductList,
   getProductById,
   getProductByURL,
   removeProduct,
@@ -37,6 +38,10 @@ const productSlice = createSlice({
       .addCase(fetchProductList.fulfilled, (state, action) => {
         state.loading = 'succeeded';
         state.productList = action.payload;
+      })
+      .addCase(fetchUserProductList.fulfilled, (state, action) => {
+        state.loading = 'succeeded';
+        state.productList = state.productList.concat(...action.payload);
       })
       .addCase(fetchProductList.pending, (state) => {
         state.loading = 'loading';

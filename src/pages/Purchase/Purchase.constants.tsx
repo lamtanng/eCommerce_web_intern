@@ -52,14 +52,16 @@ const purchaseFormColumns = [
       </Link>
     ),
   }),
-  {
-    accessorKey: 'userId',
-    header: 'User',
-  },
-  {
-    accessorKey: 'productId',
+  columnHelper.accessor((row) => row.user.email, {
+    id: 'userEmail',
+    header: 'User Email',
+    cell: ({ row }) => <span>{row.original.user.email} </span>,
+  }),
+  columnHelper.accessor((row) => row.product.name, {
+    id: 'productName',
     header: 'Product',
-  },
+    cell: ({ row }) => <span className="capitalize">{row.original.product.name} </span>,
+  }),
   {
     accessorKey: 'amount',
     header: 'Amount',
@@ -79,10 +81,9 @@ const purchaseFormColumns = [
     header: 'Comment',
     cell: ({ row }) => <span className="line-clamp-2">{row.original.reviewComment}</span>,
   }),
-  columnHelper.accessor((row) => row.createdAt, {
+  columnHelper.accessor((row) => `${formatDate(row.createdAt)}`, {
     id: 'createdAt',
     header: 'Created At',
-    cell: ({ row }) => `${formatDate(row.original.createdAt)}`,
   }),
   columnHelper.display({
     id: 'actions',

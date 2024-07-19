@@ -50,9 +50,9 @@ export function useTable<TData extends RowData>({ columnDefs, data, localStorage
     pageCount: -1,
     autoResetPageIndex: false,
     sortDescFirst: false,
-    debugTable: true,
-    debugHeaders: true,
-    debugColumns: true,
+    // debugTable: true,
+    // debugHeaders: true,
+    // debugColumns: true,
   });
 
   let { currentPageIndex, pageSize, resetPageIndex } = usePagination<TData>(table);

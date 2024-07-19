@@ -18,7 +18,6 @@ export default function QuantityPicker({ minValue = 3, maxValue = 10 }: Quantity
       setCount((prev) => prev + 1);
       setInputValue((prev) => prev + 1);
     }
-    console.log('increment', count);
   };
 
   const handleDecrement = () => {
@@ -26,7 +25,6 @@ export default function QuantityPicker({ minValue = 3, maxValue = 10 }: Quantity
       setCount((prev) => prev - 1);
       setInputValue((prev) => prev - 1);
     }
-    console.log('decre', count);
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {

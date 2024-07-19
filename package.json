@@ -39,6 +39,8 @@
     "react-select": "^5.8.0",
     "react-simple-star-rating": "^5.1.7",
     "react-toastify": "^10.0.5",
+    "react-usestateref": "^1.0.9",
+    "swiper": "^11.1.4",
     "xlsx": "^0.18.5",
     "yup": "^1.4.0"
   },

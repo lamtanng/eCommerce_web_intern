@@ -1,12 +1,13 @@
 import { Suspense, lazy } from 'react';
 import { RouteObject } from 'react-router-dom';
-import PageSkeleton from '../../../components/elements/skeletons/PageSkeleton';
-const ProductDetails = lazy(() => import('.'));
+import ProductDetailsSkeleton from '../../../components/elements/skeletons/ProductDetailsSkeleton';
+const ProductDetails = lazy(() => import('./index'));
 
 export const ProductDetailsRoutes: RouteObject = {
   path: '/products/:productUrl',
+
   element: (
-    <Suspense fallback={<PageSkeleton />}>
+    <Suspense fallback={<ProductDetailsSkeleton />}>
       <ProductDetails />
     </Suspense>
   ),

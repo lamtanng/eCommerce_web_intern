@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 import { FeaturesProps } from '../../../../constants/features/features.type';
 
@@ -17,10 +17,15 @@ export default function SideBarButton({ title, path, icon }: FeaturesProps) {
         };
       }}
     >
-      <div className="mx-auto flex w-full flex-row items-center gap-4 px-4 py-3">
+      <Stack
+        direction="row"
+        alignItems="center"
+        spacing={2}
+        sx={{ width: '100%', paddingX: '16px', paddingY: '12px', marginX: 'auto' }}
+      >
         {!!icon && <div className="pt-1 text-blue-500">{icon}</div>}
         <Typography variant="subtitle1">{title}</Typography>
-      </div>
+      </Stack>
     </NavLink>
   );
 }

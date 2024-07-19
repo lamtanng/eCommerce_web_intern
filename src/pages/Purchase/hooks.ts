@@ -37,7 +37,7 @@ export const usePurchaseForm = ({ defaultValues, action }: PurchaseFormProps<Pur
   });
 
   useEffect(() => {
-    dispatch(fetchProductList());
+    productList.length === 0 && dispatch(fetchProductList());
   }, []);
 
   const onSubmit = async (data: PurchaseFormSchema) => {
@@ -67,7 +67,7 @@ export const usePurchaseForm = ({ defaultValues, action }: PurchaseFormProps<Pur
 
 export const usePurchaseTable = ({ searchQuery = undefined, columnDefs }: PurchaseTableProps<PurchaseProps>) => {
   const dispatch = useAppDispatch();
-  const { purchaseList, error, loading } = useAppSelector(purchaseSelector);
+  const { purchaseList} = useAppSelector(purchaseSelector);
   const [searchParams, setSearchParams] = useSearchParams({});
   const role = getStoredAuth()?.userRole;
 

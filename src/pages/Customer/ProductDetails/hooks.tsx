@@ -1,46 +1,56 @@
 import { Link, Typography } from '@mui/material';
 import { unwrapResult } from '@reduxjs/toolkit';
-import { useCallback, useEffect, useState } from 'react';
+import { lazy, useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { loginFeature } from '../../../constants/features/publicFeatures';
 import { getProductByURL } from '../../../redux/actions/product.actions';
 import { createPurchase } from '../../../redux/actions/purchase.action';
 import { useAppDispatch, useAppSelector } from '../../../redux/hooks';
 import { productSelector } from '../../../redux/slices/product.slice';
 import { ProductProps } from '../../../types/product.type';
 import { PurchaseFormSchema } from '../../../types/purchase.type';
+import { ProductURLsProps } from '../../../types/wishList.type';
 import { getStoredAuth } from '../../../ultils/authToken';
 import { displayInfo, displaySuccess } from '../../../ultils/displayToast';
 import { getNumbersFromString } from '../../../ultils/getNumbersFromString';
 import { handleError } from '../../../ultils/handleError';
+import { storedRelatedProducts } from '../../../ultils/storeWishList';
+import useStateRef from 'react-usestateref';
+
+export interface StoredUser {
+  wishlist: ProductURLsProps;
+  relatedProducts: ProductURLsProps;
+}
 
 export default function useProductDetails() {
   const { productUrl } = useParams<{ productUrl: string }>();
+  const { error, loading, productList } = useAppSelector(productSelector);
   const dispatch = useAppDispatch();
-  const { error, loading } = useAppSelector(productSelector);
-  const [product, setProduct] = useState<ProductProps>({} as ProductProps);
-  const [amount, setAmount] = useState<number>(0);
-  const [reLoading, setReLoading] = useState<boolean>(false);
+  const [amount, setAmount] = useStateRef<number>(1);
+  const { getRelatedProducts, setRelatedProducts } = storedRelatedProducts;
   const auth = getStoredAuth();
-  const navigate = useNavigate();
+  const [product, setProduct] = useState<ProductProps>(
+    (productList.find((product) => product.urlName === productUrl) as ProductProps) ?? {},
+  );
 
   useEffect(() => {
     const getProductDetails = async () => {
-      const res = await dispatch(getProductByURL(productUrl));
-      const product = unwrapResult(res);
-      setProduct((pre) => ({ ...pre, ...product }));
-      // setAmount((pre) => (Number(product.stock) > 0 ? 1 : 0));
+      try {
+        await dispatch(getProductByURL(productUrl));
+        setAmount(Number(product.stock) > 0 ? 1 : 0);
+      } catch (error) {
+        handleError(error);
+      }
     };
-
     getProductDetails();
-    return () => setReLoading(false);
-  }, [reLoading]);
+    return () => {
+      //prevent displayed product details before exit page
+      !!productUrl && setRelatedProducts([...getRelatedProducts(), productUrl]); //set related products to local storage
+    };
+  }, [productUrl]);
 
   const handleCreatePurchase = async () => {
     let data = { id: '', amount: amount, productId: String(product.id) } as PurchaseFormSchema;
-    if (!auth.accessToken) {
-      navigate(loginFeature.path);
-    } else if (data.amount > Number(product.stock)) {
+    if (data.amount > Number(product.stock)) {
       displayInfo('Out of stock');
     } else if (data.amount < 1) {
       displayInfo('Please select at least 1 product');
@@ -57,7 +67,6 @@ export default function useProductDetails() {
             </Link>
           </div>,
         );
-        setReLoading(() => true);
       } catch (rejectedValueOrSerializedError) {
         handleError(rejectedValueOrSerializedError);
       }
@@ -66,10 +75,9 @@ export default function useProductDetails() {
 
   const handleAmountChange = (value: string) => {
     const amountNumber = getNumbersFromString(value);
-    setAmount((prev) => amountNumber);
-    console.log('value', amount);
+    setAmount(amountNumber);
   };
 
   useCallback(() => handleCreatePurchase, []);
-  return { productUrl, error, loading, handleCreatePurchase, product, handleAmountChange, amount };
+  return { productUrl, error, loading, handleCreatePurchase, handleAmountChange, amount, productList, auth };
 }

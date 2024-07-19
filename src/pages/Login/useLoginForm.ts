@@ -3,13 +3,18 @@ import { AxiosError } from 'axios';
 import { useForm } from 'react-hook-form';
 import { login } from '../../apis/auth.api';
 import { usePrevLocation } from '../../hooks/usePrevLocation';
+import { getUser } from '../../redux/actions/user.actions';
+import { useAppDispatch } from '../../redux/hooks';
+import { resetWishlist } from '../../redux/slices/wishlist.slice';
 import LoginProps from '../../types/login.type';
-import { getStoredAuth, removeAuth, setStoredAuth } from '../../ultils/authToken';
+import { removeAuth, setStoredAuth } from '../../ultils/authToken';
 import { handleError } from '../../ultils/handleError';
 import { loginSchema } from './Login.constants';
 
 const useLoginForm = () => {
+  const dispatch = useAppDispatch();
   const { toPrevLocation } = usePrevLocation();
+
   const {
     handleSubmit,
     control,
@@ -21,6 +26,8 @@ const useLoginForm = () => {
   const handleLogin = async (account: LoginProps) => {
     try {
       await verifyAccount(account);
+      await dispatch(getUser());
+      await dispatch(resetWishlist());
     } catch (error: AxiosError | any) {
       handleError(error);
     }
@@ -30,8 +37,6 @@ const useLoginForm = () => {
     const response = await login(account);
     removeAuth();
     setStoredAuth(response.data);
-    console.log('>>> ', getStoredAuth());
-
     toPrevLocation();
   };
 

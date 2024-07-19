@@ -1,17 +1,17 @@
+import PublicIcon from '@mui/icons-material/Public';
+import { IconButton, Link } from '@mui/material';
 import { Row } from '@tanstack/react-table';
 import { lazy } from 'react';
-import { Drawer } from '../../../../components/elements/Drawer';
+import ConfirmButton from '../../../../components/elements/buttons/ConfirmButton';
+import DialogFormButton from '../../../../components/elements/buttons/DialogFormButton';
+import Drawer from '../../../../components/elements/Drawer';
+import { purchaseFeature } from '../../../../constants/features/customerFeatures';
 import { removePurchase } from '../../../../redux/actions/purchase.action';
 import { useAppDispatch } from '../../../../redux/hooks';
 import { PurchaseProps, PurchaseReviewFormSchema } from '../../../../types/purchase.type';
-import { ReviewForm } from '../ReviewForm';
-import DialogFormButton from '../../../../components/elements/buttons/DialogFormButton';
-import ConfirmButton from '../../../../components/elements/buttons/ConfirmButton';
 import { getStoredAuth } from '../../../../ultils/authToken';
+import { ReviewForm } from '../ReviewForm';
 const PurchaseForm = lazy(() => import('../PurchaseForm'));
-import PublicIcon from '@mui/icons-material/Public';
-import { IconButton, Link } from '@mui/material';
-import { purchaseFeature } from '../../../../constants/features/customerFeatures';
 
 export default function PurchaseTableAction({ row }: { row: Row<PurchaseProps> }) {
   const dispatch = useAppDispatch();
@@ -47,7 +47,7 @@ export default function PurchaseTableAction({ row }: { row: Row<PurchaseProps> }
         className="text-black"
         href={`http://localhost:5173${purchaseFeature.path}/${row.original.id}`}
       >
-        <IconButton color="primary" aria-label="add to shopping cart">
+        <IconButton color="primary">
           <PublicIcon />
         </IconButton>
       </Link>

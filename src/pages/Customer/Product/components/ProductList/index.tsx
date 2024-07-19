@@ -1,35 +1,57 @@
-import { CircularProgress, Stack } from '@mui/material';
+import { Typography } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
-import ProductItem from '../ProductItem';
-import useProductList from './useProductList';
+import { memo } from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import ProductCardItem from '../../../../../components/elements/ProductCardItem';
+import SpinnerSkeleton from '../../../../../components/elements/skeletons/SpinnerSkeleton';
+import { ProductListProps } from '../../UserProduct.type';
+import { useProductPage } from './useProductList';
+import CardsSkeleton from '../../../../../components/elements/skeletons/CardsSkeleton';
+import NoItemsFounded from '../../../../NoItemsFounded';
 
-export interface ProductListProps {
-  searchQuery?: string;
-  perPage?: number;
-}
+function ProductList({ searchQuery, perPage, columns }: ProductListProps) {
+  const { hasMore, products, fetchMoreProducts, isLoading } = useProductPage({ searchQuery, perPage });
 
-export default function ProductList({ searchQuery, perPage }: ProductListProps) {
-  const { productListDisplay, spinnerRef, hasMore, loading } = useProductList({ searchQuery: searchQuery, perPage });
-
+  if (isLoading) return <CardsSkeleton />;
+  if (products.length === 0)
+    return (
+      <div className="h-svh">
+        <NoItemsFounded />
+      </div>
+    );
   return (
-    <>
-      <Grid2
-        container
-        lg={12}
-        maxWidth="lg"
-        rowSpacing={{ lg: 5, md: 2 }}
-        columnSpacing={{ lg: 3, md: 2 }}
-        columns={{ lg: 12, md: 12 }}
+    <Grid2 className="w-full overflow-hidden px-0">
+      <InfiniteScroll
+        dataLength={products.length > Number(perPage) ? products.length : Number(perPage)}
+        next={fetchMoreProducts}
+        hasMore={hasMore}
+        loader={
+          <div className="relative py-20">
+            <SpinnerSkeleton />
+          </div>
+        }
+        endMessage={
+          <Typography variant="body2" className="mt-10 text-center text-gray-600">
+            e-Commerce Website
+          </Typography>
+        }
       >
-        {productListDisplay.map((product) => (
-          <ProductItem key={product.id} product={product} />
-        ))}
-      </Grid2>
-      {hasMore && (
-        <Stack width="100%" ref={spinnerRef} alignItems="center">
-          <CircularProgress sx={{ margin: 10 }} />
-        </Stack>
-      )}
-    </>
+        <Grid2
+          container
+          lg={12}
+          maxWidth="xl"
+          rowSpacing={{ lg: 5, md: 2 }}
+          columnSpacing={{ lg: 3, md: 2 }}
+          columns={{ lg: 12, md: 12 }}
+          sx={{ marginX: 0 }}
+        >
+          {products.map((product) => (
+            <ProductCardItem key={product.id} product={product} columns={columns} />
+          ))}
+        </Grid2>
+      </InfiniteScroll>
+    </Grid2>
   );
 }
+
+export default memo(ProductList);

@@ -8,9 +8,9 @@ function create(data: SignUpProps) {
   return axiosClient.post(url, data);
 }
 
-function getProfile() {
+function getUser() {
   const url = '/user';
   return axiosPrivate.get<UserProps>(url);
 }
 
-export const userApi = { create, getProfile };
+export const userApi = { create, getUser };

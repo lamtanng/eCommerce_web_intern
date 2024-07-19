@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 import { calculateDiscountedPrice } from '../../../../ultils/calcProductPrice';
 
 export interface ProductPriceProps {
@@ -9,9 +9,9 @@ export interface ProductPriceProps {
 export default function ProductPrice({ basePrice, discountPercentage }: ProductPriceProps) {
   const price = calculateDiscountedPrice({ basePrice, discountPercentage });
   return (
-    <>
+    <Stack direction="row" alignItems="center" spacing="8px">
       <Typography
-        variant="body1"
+        variant={discountPercentage ? `body1` : `h6`}
         component="div"
         className={discountPercentage ? 'font-normal italic text-gray-500 line-through' : 'font-medium no-underline'}
       >
@@ -22,6 +22,6 @@ export default function ProductPrice({ basePrice, discountPercentage }: ProductP
           ${price}
         </Typography>
       )}
-    </>
+    </Stack>
   );
 }
