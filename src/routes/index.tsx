@@ -11,6 +11,8 @@ import { LoginRoutes } from '../pages/Login/Login.routes';
 import { ProductRoutes } from '../pages/Product/Product.routes';
 import { PurchaseRoutes } from '../pages/Purchase/Purchase.routes';
 import { SignUpRoutes } from '../pages/SignUp/SignUp.routes';
+import { productFeature } from '../constants/features/publicFeatures';
+import { ImportProductRoutes } from '../pages/ImportProduct/Product.routes';
 
 const routes = createBrowserRouter([
   {
@@ -20,7 +22,7 @@ const routes = createBrowserRouter([
       LoginRoutes,
       SignUpRoutes,
       {
-        path: '/',
+        path: productFeature.path,
         element: <PublicRoute />,
         children: [UserProductRoutes, ProductDetailsRoutes],
       },
@@ -36,6 +38,7 @@ const routes = createBrowserRouter([
         children: [
           { path: dashboardFeature.path, element: <>Dashboard</> },
           ProductRoutes,
+          ImportProductRoutes,
           PurchaseRoutes,
           CategoryRoutes,
         ],

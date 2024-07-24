@@ -1,1 +1,1 @@
-export type VisibleColumnStorageKey = 'cateCols' | 'productCols' | "purchaseCols";
+export type VisibleColumnStorageKey = 'cateCols' | 'productCols' | 'purchaseCols' | 'importProductCols';

@@ -20,7 +20,7 @@ function ProductList({ searchQuery, perPage, columns }: ProductListProps) {
       </div>
     );
   return (
-    <Grid2 className="w-full overflow-hidden px-0">
+    <Grid2 className="w-full overflow-hidden px-0 mt-5 md:mt-2">
       <InfiniteScroll
         dataLength={products.length > Number(perPage) ? products.length : Number(perPage)}
         next={fetchMoreProducts}
@@ -40,8 +40,8 @@ function ProductList({ searchQuery, perPage, columns }: ProductListProps) {
           container
           lg={12}
           maxWidth="xl"
-          rowSpacing={{ lg: 5, md: 2 }}
-          columnSpacing={{ lg: 3, md: 2 }}
+          rowSpacing={{ lg: 5, md: 5, sm: 2, xs: 2 }}
+          columnSpacing={{ lg: 3, md: 2, sm: 1, xs: 1 }}
           columns={{ lg: 12, md: 12 }}
           sx={{ marginX: 0 }}
         >

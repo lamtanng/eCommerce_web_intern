@@ -38,6 +38,8 @@ export default function InputFileUpload({ id, oldPicture, discountPercentage, ur
         oldPicture={oldPicture}
         discountPercentage={discountPercentage}
         url={url}
+        width={64}
+        height={464}
       />
       <Stack spacing={4} direction="row" alignItems="center" justifyContent="center" marginTop={3}>
         <Button component="label" variant="outlined" startIcon={<CloudUploadIcon />}>

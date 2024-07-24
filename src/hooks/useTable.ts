@@ -1,5 +1,6 @@
 import {
   ColumnDef,
+  ColumnFiltersState,
   getCoreRowModel,
   getPaginationRowModel,
   PaginationState,
@@ -8,11 +9,9 @@ import {
   VisibilityState,
 } from '@tanstack/react-table';
 import { useMemo, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { defaultPaginationParams, getPaginationParams } from '../constants/pagination';
+import { defaultPaginationParams } from '../constants/pagination';
 import { VisibleColumnStorageKey } from '../types/visibleColumnStorageKey.type';
 import { usePagination } from './usePagination';
-import { TableProps } from '../types/table.type';
 
 interface UseTableProps<TData extends RowData> {
   columnDefs: ColumnDef<TData, any>[];
@@ -20,13 +19,12 @@ interface UseTableProps<TData extends RowData> {
   localStorageKey: VisibleColumnStorageKey;
 }
 
-const urlParamsDefaults = getPaginationParams({});
-
 export function useTable<TData extends RowData>({ columnDefs, data, localStorageKey }: UseTableProps<TData>) {
   const visibleColumnsDefaults: VisibilityState = getVisibleColumns(localStorageKey);
   const [columnVisibility, setColumnVisibility] = useState(visibleColumnsDefaults);
   const [columns] = useState<typeof columnDefs>(() => [...columnDefs]);
   const [pagination, setPagination] = useState<PaginationState>(defaultPaginationParams);
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
   const table = useReactTable<TData>({
     data,
@@ -36,8 +34,10 @@ export function useTable<TData extends RowData>({ columnDefs, data, localStorage
     state: {
       columnVisibility,
       pagination,
-      // sorting,
+      columnFilters,
     },
+    manualFiltering: true,
+    onColumnFiltersChange: setColumnFilters,
     onColumnVisibilityChange: (updaterOrValue) => {
       setColumnVisibility((prev) => {
         const newColumnVisibility = typeof updaterOrValue === 'function' ? updaterOrValue(prev) : updaterOrValue;
@@ -50,13 +50,10 @@ export function useTable<TData extends RowData>({ columnDefs, data, localStorage
     pageCount: -1,
     autoResetPageIndex: false,
     sortDescFirst: false,
-    // debugTable: true,
-    // debugHeaders: true,
-    // debugColumns: true,
   });
 
   let { currentPageIndex, pageSize, resetPageIndex } = usePagination<TData>(table);
-  useMemo(() => table, []);
+  useMemo(() => table, [data]);
 
   return {
     table,
@@ -64,6 +61,7 @@ export function useTable<TData extends RowData>({ columnDefs, data, localStorage
     resetPageIndex,
     currentPageIndex,
     pageSize,
+    columnFilters,
   };
 }
 

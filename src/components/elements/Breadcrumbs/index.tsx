@@ -17,5 +17,9 @@ export function PageBreadcrumbs() {
       </Link>
     );
   });
-  return <Breadcrumbs aria-label="breadcrumb">&#60; {crumbs}</Breadcrumbs>;
+  return (
+    <Breadcrumbs className="line-clamp-1 sm" aria-label="breadcrumb">
+      &#60; {crumbs}
+    </Breadcrumbs>
+  );
 }

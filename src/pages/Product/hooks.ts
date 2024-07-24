@@ -1,18 +1,19 @@
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useSearchParams } from 'react-router-dom';
 import { useTable } from '../../hooks/useTable';
 import { fetchCategory } from '../../redux/actions/category.actions';
-import { createProduct, fetchProductList, updateProduct } from '../../redux/actions/product.actions';
+import { createProduct, fetchProductList, importProduct, updateProduct } from '../../redux/actions/product.actions';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { categorySelector } from '../../redux/slices/category.slice';
-import { productSelector } from '../../redux/slices/product.slice';
+import { productSelector, updateImportedProducts } from '../../redux/slices/product.slice';
 import { ProductFormSchema, ProductProps } from '../../types/product.type';
 import { SelectData } from '../../types/selector.type';
 import convertToSelectData from '../../ultils/convertToSelectData';
 import { getCategoryParams } from '../Category/Category.constants';
-import { columnDefs, getProductURLParams, productSchema } from './Product.constants';
+import { deleteEmptyFilters, setSearchFilterParams } from '../Purchase/hooks';
+import { columnDefs, productFilterColumns, productSchema } from './Product.constants';
 import { ProductFormProps, ProductTableProps } from './Product.type';
 
 export function useProductForm({ defaultValues, action }: ProductFormProps<ProductFormSchema>) {
@@ -32,11 +33,13 @@ export function useProductForm({ defaultValues, action }: ProductFormProps<Produ
 
   useEffect(() => {
     let params = getCategoryParams();
-    dispatch(fetchCategory(params));
+    categoryList.length === 0 && dispatch(fetchCategory(params));
   }, []);
 
   const onSubmit = async (data: ProductFormSchema) => {
-    action === 'UPDATE' ? handleUpdateProduct(data) : handleCreateProduct(data);
+    if (action === 'UPDATE') handleUpdateProduct(data);
+    else if (action === 'CREATE') handleCreateProduct(data);
+    else handleUpdateImportedProduct(data);
   };
 
   const handleUpdateProduct = async (data: ProductFormSchema) => {
@@ -45,6 +48,10 @@ export function useProductForm({ defaultValues, action }: ProductFormProps<Produ
 
   const handleCreateProduct = async (data: ProductFormSchema) => {
     dispatch(createProduct(data));
+  };
+  const handleUpdateImportedProduct = async (data: ProductFormSchema) => {
+    console.log(data);
+    dispatch(updateImportedProducts(data));
   };
 
   const onReset = () => reset(defaultValues);
@@ -73,26 +80,28 @@ export function useProductTable({ searchQuery = undefined }: ProductTableProps) 
   const dispatch = useAppDispatch();
   const { productList } = useAppSelector(productSelector);
   const [searchParams, setSearchParams] = useSearchParams({});
-  const { table, pagination, currentPageIndex, pageSize } = useTable<ProductProps>({
+  const { table, pagination, columnFilters, currentPageIndex, pageSize, resetPageIndex } = useTable<ProductProps>({
     columnDefs,
     data: productList,
     localStorageKey: 'productCols',
   });
-  // const [proParams, setProParams] = useState(
-  //   getProductURLParams({ productName: searchQuery, page: currentPageIndex, offset: pageSize }),
-  // );
+
+  useEffect(() => {
+    columnFilters.length > 0
+      ? setSearchFilterParams({ searchParams, columnFilters })
+      : deleteEmptyFilters<ProductProps>({ searchParams, filterColumns: productFilterColumns });
+  }, [columnFilters]);
+
+  useEffect(() => {
+    resetPageIndex();
+  }, [searchQuery]);
 
   useEffect(() => {
     setPaginateURLParams();
     dispatch(fetchProductList(searchParams));
-  }, [pagination, searchQuery]);
+  }, [pagination]);
 
   const setPaginateURLParams = () => {
-    setSearchParams({
-      productName: searchQuery || '',
-      page: currentPageIndex,
-      offset: pageSize,
-    });
     searchParams.set('productName', searchQuery || '');
     searchParams.set('page', currentPageIndex);
     searchParams.set('offset', pageSize);

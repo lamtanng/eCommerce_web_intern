@@ -1,13 +1,12 @@
 import { Stack } from '@mui/material';
 import { memo } from 'react';
 import ResetButton from '../../../../components/elements/buttons/ResetButton';
-import { ControlledSelector } from '../../../../components/elements/controlledComponents/ControlledSelector';
+import SubmitButton from '../../../../components/elements/buttons/SubmitButton';
+import ControlledInput from '../../../../components/elements/controlledComponents/ControlledInput';
+import ControlledSelector from '../../../../components/elements/controlledComponents/ControlledSelector';
 import { ProductFormSchema } from '../../../../types/product.type';
 import { ProductFormProps } from '../../Product.type';
 import { useProductForm } from '../../hooks';
-import ControlledInput from '../../../../components/elements/controlledComponents/ControlledInput';
-import SubmitButton from '../../../../components/elements/buttons/SubmitButton';
-import InputFileUpload from '../../../../components/elements/buttons/FileUploadButton';
 
 function ProductForm({ defaultValues, action }: ProductFormProps<ProductFormSchema>) {
   const { handleSubmit, onSubmit, control, isSubmitting, cateSelectData, isDirty, onReset } = useProductForm({
@@ -18,7 +17,6 @@ function ProductForm({ defaultValues, action }: ProductFormProps<ProductFormSche
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="form !gap-2">
       {action === 'UPDATE' && <ControlledInput name="id" control={control} label="ID" disabled={true} />}
-      {/* <InputFileUpload control={control}/> */}
       <ControlledInput name="name" control={control} label="Name" isRequired />
       <ControlledInput name="basePrice" control={control} label="Price" isRequired />
       <ControlledSelector

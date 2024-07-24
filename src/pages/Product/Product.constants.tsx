@@ -1,6 +1,7 @@
 import { Link } from '@mui/material';
 import { createColumnHelper } from '@tanstack/react-table';
 import * as yup from 'yup';
+import { ReactTableProps } from '../../components/elements/reactTable/ReactTable.type';
 import { productFeature } from '../../constants/features/publicFeatures';
 import { getPaginationParams } from '../../constants/pagination';
 import { GetAllProductParams, ProductFormSchema, ProductProps } from '../../types/product.type';
@@ -18,8 +19,12 @@ const productSchema: yup.ObjectSchema<ProductFormSchema> = yup.object({
   id: yup.string(),
   name: yup.string().required(getRequiredMsg('Name')),
   basePrice: yup.number().required(getRequiredMsg('Price')),
-  stock: yup.number(),
-  discountPercentage: yup.number(),
+  stock: yup.number().min(0, 'Stock must be greater than or equal to 0').default(0),
+  discountPercentage: yup
+    .number()
+    .min(0, 'Discount percentage must be between 0 and 100')
+    .max(100, 'Discount percentage must be between 0 and 100')
+    .default(0),
   categories: yup.array(),
   description: yup.string(),
 });
@@ -93,4 +98,7 @@ const columnDefs = [
   }),
 ];
 
-export { columnDefs, getProductURLParams, productDefaultValue, productSchema };
+const productFilterColumns: ReactTableProps<ProductProps>['filterColumns'] = ['id'];
+const productFileName = 'products';
+
+export { columnDefs, getProductURLParams, productDefaultValue, productFileName, productFilterColumns, productSchema };

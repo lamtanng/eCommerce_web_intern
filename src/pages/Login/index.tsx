@@ -13,7 +13,7 @@ function Login() {
           </Link>
 
           <div className="w-full">
-            <p className="text-[54px] font-extrabold">Getting Started</p>
+            <p className="w-full text-[46px] font-extrabold">Getting Started</p>
             <p className="-mt-4 text-base text-gray-600">
               Don't have account?{' '}
               <Link href={signupFeature.path} className="font-medium no-underline">

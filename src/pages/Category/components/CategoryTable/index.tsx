@@ -18,7 +18,7 @@ function CategoryTable({ searchQuery = undefined }: CategoryTableProps) {
   if (loading === 'loading') return <TableSkeleton />;
   return (
     <>
-      <ReactTable<CategoryProps> table={table} data={categoryList} fileName='categories'/>;
+      <ReactTable<CategoryProps> table={table} data={categoryList} fileName='categories'/>
     </>
   );
 }

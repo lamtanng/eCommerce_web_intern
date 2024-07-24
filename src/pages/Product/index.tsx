@@ -13,7 +13,7 @@ export default function Product() {
     <>
       <Stack spacing={2} direction="row" justifyContent="flex-end">
         <SearchBar onSearch={handleDebouncedSearch} />
-        <DialogFormButton variant="contained" dialogButton="Create category">
+        <DialogFormButton variant="contained" dialogButton="Create product">
           <ProductForm defaultValues={productDefaultValue} action="CREATE" />
         </DialogFormButton>
       </Stack>

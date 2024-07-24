@@ -9,7 +9,7 @@ interface SearchBarProps {
 function SearchBar({ onSearch, placeholder = 'Searching' }: SearchBarProps) {
   return (
     <>
-      <Paper sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: 400 }}>
+      <Paper className='py-[2px] px-[4px] flex flex-row items-center w-full md:w-[300px]'>
         <IconButton sx={{ p: '2px' }} aria-label="menu"></IconButton>
         <InputBase
           sx={{ ml: 1, flex: 1 }}

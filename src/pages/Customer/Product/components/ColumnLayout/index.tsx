@@ -7,7 +7,7 @@ export default function ColumnLayout({ handleColumnsChange }: ColumnLayoutProps)
   const [activeIndex, setActiveIndex] = useState(defaultColumns);
   return (
     <>
-      <Stack direction="row" spacing={1} justifyContent="flex-end" alignItems="center">
+      <Stack direction="row" spacing={1} justifyContent="flex-end" alignItems="center" className="hidden md:flex">
         {columnsIconList.map((column) => (
           <Tooltip title={`${column.value} Columns`} key={column.value}>
             <img

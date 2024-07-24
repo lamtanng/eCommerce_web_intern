@@ -5,6 +5,8 @@
 @layer base {
   :root {
     --page-gutter-lg: 10rem;
+    --page-gutter-md: 5rem;
+    --page-gutter-sm: 1rem;
     --header: 56px;
   }
 }

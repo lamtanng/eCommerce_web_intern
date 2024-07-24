@@ -16,16 +16,20 @@ export function useCategoryTable({ searchQuery }: CategoryTableProps) {
   const { categoryList, error, loading } = useAppSelector(categorySelector);
   const [searchParams, setSearchParams] = useSearchParams({});
 
-  const { table, pagination, currentPageIndex, pageSize } = useTable<CategoryProps>({
+  const { table, pagination, currentPageIndex, pageSize, resetPageIndex } = useTable<CategoryProps>({
     columnDefs,
     data: categoryList,
     localStorageKey: 'cateCols',
   });
 
   useEffect(() => {
+    resetPageIndex();
+  }, [searchQuery]);
+
+  useEffect(() => {
     setPaginateURLParams();
     dispatch(fetchCategory(getSearchParams(searchParams)));
-  }, [searchQuery, pagination]);
+  }, [pagination]);
 
   const setPaginateURLParams = () => {
     setSearchParams({

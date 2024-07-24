@@ -24,7 +24,7 @@ export const PrivateRoute = () => {
   const accessToken = auth?.accessToken;
   const location = useLocation();
 
-  return accessToken ? <CustomerLayout /> : <Navigate to={loginFeature.path} state={{ from: location }} replace />;
+  return accessToken ? <CustomerLayout /> : <Navigate to={productFeature.path} state={{ from: location }} replace />;
 };
 
 export const PublicRoute = () => {

@@ -10,6 +10,8 @@ export default {
       },
       spacing: {
         page_gutter_lg: 'var(--page-gutter-lg)',
+        page_gutter_md: 'var(--page-gutter-md)',
+        page_gutter_sm: 'var(--page-gutter-sm)',
         header_height: 'var(--header)',
       },
       lineHeight: {

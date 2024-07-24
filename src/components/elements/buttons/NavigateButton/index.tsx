@@ -1,9 +1,11 @@
 import { Button } from '@mui/material';
 import { RowData } from '@tanstack/react-table';
-import { ReactTableProps } from '../../reactTable/ReactTable.type';
 import { usePagination } from '../../../../hooks/usePagination';
+import { ReactTableProps } from '../../reactTable/ReactTable.type';
 
-interface PreviousButtonProps<TData extends RowData> extends ReactTableProps<TData> {}
+interface PreviousButtonProps<TData extends RowData> extends ReactTableProps<TData> {
+  disabled?: boolean;
+}
 
 function PreviousButton<TData>({ table }: PreviousButtonProps<TData>) {
   const { currentPageIndex } = usePagination<TData>(table);
@@ -16,11 +18,11 @@ function PreviousButton<TData>({ table }: PreviousButtonProps<TData>) {
   );
 }
 
-function NextButton<TData>({ table }: PreviousButtonProps<TData>) {
+function NextButton<TData>({ table, disabled }: PreviousButtonProps<TData>) {
   return (
     <Button
       variant="outlined"
-      disabled={!table.getCanNextPage()}
+      disabled={disabled}
       onClick={() => {
         table.nextPage();
       }}
@@ -31,3 +33,4 @@ function NextButton<TData>({ table }: PreviousButtonProps<TData>) {
 }
 
 export { NextButton, PreviousButton };
+

@@ -16,11 +16,13 @@ import { productSelector } from '../../redux/slices/product.slice';
 import { purchaseSelector } from '../../redux/slices/purchase.slice';
 import { PurchaseFormSchema, PurchaseProps, PurchaseReviewFormSchema } from '../../types/purchase.type';
 import { SelectData } from '../../types/selector.type';
+import { getStoredAuth } from '../../ultils/authToken';
 import convertToSelectData from '../../ultils/convertToSelectData';
 import getSearchParams from '../../ultils/getSearchParams';
-import { purchaseFormColumns, purchaseSchema, reviewSchema } from './Purchase.constants';
+import { purchaseFilterColumns, purchaseSchema, reviewSchema } from './Purchase.constants';
 import { PurchaseFormProps, PurchaseReviewFormProps, PurchaseTableProps } from './Purchase.type';
-import { getStoredAuth } from '../../ultils/authToken';
+import { ColumnFiltersState, RowData } from '@tanstack/react-table';
+import { ReactTableProps } from '../../components/elements/reactTable/ReactTable.type';
 
 export const usePurchaseForm = ({ defaultValues, action }: PurchaseFormProps<PurchaseFormSchema>) => {
   const dispatch = useAppDispatch();
@@ -67,37 +69,60 @@ export const usePurchaseForm = ({ defaultValues, action }: PurchaseFormProps<Pur
 
 export const usePurchaseTable = ({ searchQuery = undefined, columnDefs }: PurchaseTableProps<PurchaseProps>) => {
   const dispatch = useAppDispatch();
-  const { purchaseList} = useAppSelector(purchaseSelector);
+  const { purchaseList } = useAppSelector(purchaseSelector);
   const [searchParams, setSearchParams] = useSearchParams({});
   const role = getStoredAuth()?.userRole;
 
-  const { table, pagination, currentPageIndex, pageSize } = useTable<PurchaseProps>({
+  const { table, pagination, currentPageIndex, pageSize, columnFilters } = useTable<PurchaseProps>({
     columnDefs,
     data: purchaseList,
     localStorageKey: 'purchaseCols',
   });
 
   useEffect(() => {
-    setPaginateURLParams();
+    setURLParams();
     role === 'ADMIN'
       ? dispatch(fetchPurchasesWithAdmin(getSearchParams(searchParams)))
       : dispatch(fetchPurchaseList(getSearchParams(searchParams)));
-  }, [searchQuery, pagination]);
+  }, [searchQuery, pagination, columnFilters]);
 
-  // filter data by userId
-  const setPaginateURLParams = () => {
-    setSearchParams({
-      userId: searchQuery || '',
-      page: currentPageIndex,
-      offset: pageSize,
-    });
-    searchParams.set('userId', searchQuery || '');
+  const setURLParams = () => {
+    columnFilters.length > 0
+      ? setSearchFilterParams({ searchParams, columnFilters })
+      : deleteEmptyFilters<PurchaseProps>({ searchParams, filterColumns: purchaseFilterColumns });
     searchParams.set('page', currentPageIndex);
     searchParams.set('offset', pageSize);
   };
 
   return { table, purchaseList };
 };
+
+//
+
+export function deleteEmptyFilters<TData extends RowData>({
+  searchParams,
+  filterColumns,
+}: {
+  searchParams: URLSearchParams;
+  filterColumns: ReactTableProps<TData>['filterColumns'];
+}) {
+  return (
+    filterColumns && filterColumns.length > 0 && filterColumns.map((ColumnId) => searchParams.delete(String(ColumnId)))
+  );
+}
+
+export const setSearchFilterParams = ({
+  searchParams,
+  columnFilters,
+}: {
+  searchParams: URLSearchParams;
+  columnFilters: ColumnFiltersState;
+}) => {
+  columnFilters.map((el) => {
+    searchParams.set(el.id, String(el.value));
+  });
+};
+//
 
 export function useReviewForm({ defaultValues }: PurchaseReviewFormProps<PurchaseReviewFormSchema>) {
   const dispatch = useAppDispatch();

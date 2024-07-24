@@ -7,13 +7,16 @@ import { getUser } from '../../redux/actions/user.actions';
 import { useAppDispatch } from '../../redux/hooks';
 import { resetWishlist } from '../../redux/slices/wishlist.slice';
 import LoginProps from '../../types/login.type';
-import { removeAuth, setStoredAuth } from '../../ultils/authToken';
+import { getStoredAuth, removeAuth, setStoredAuth } from '../../ultils/authToken';
 import { handleError } from '../../ultils/handleError';
 import { loginSchema } from './Login.constants';
+import { useNavigate } from 'react-router-dom';
+import { adminPath } from '../../constants/features/adminFeatures';
 
 const useLoginForm = () => {
   const dispatch = useAppDispatch();
   const { toPrevLocation } = usePrevLocation();
+  const navigate = useNavigate();
 
   const {
     handleSubmit,
@@ -37,7 +40,8 @@ const useLoginForm = () => {
     const response = await login(account);
     removeAuth();
     setStoredAuth(response.data);
-    toPrevLocation();
+    if (getStoredAuth().userRole === 'ADMIN') navigate(adminPath);
+    else toPrevLocation();
   };
 
   return {

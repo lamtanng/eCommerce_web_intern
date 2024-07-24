@@ -22,7 +22,7 @@ export default function ProductCardItem({ product, columns = 4 }: ProductCardIte
 
   const productUrl = getProductUrl(product.urlName);
   return (
-    <Grid2 xs={gridColumns} display="flex" justifyContent="center" alignItems="center">
+    <Grid2 md={gridColumns} xs={12} display="flex" justifyContent="center" alignItems="center">
       <Card sx={{ height: '100%', width: '100%', paddingBottom: '8px' }}>
         <Stack direction="column" spacing={1} justifyContent="space-between" alignItems="start">
           <Stack
@@ -64,7 +64,7 @@ export default function ProductCardItem({ product, columns = 4 }: ProductCardIte
               </Typography>
             </CardContent>
           </Stack>
-          <Stack direction="row" spacing={0} alignItems="center" justifyContent="flex-end" className="w-full px-4">
+          <Stack direction="row" spacing={0} alignItems="center" justifyContent="right" className="w-full px-4">
             <ProductPrice basePrice={product.basePrice} discountPercentage={product.discountPercentage} />
           </Stack>
 

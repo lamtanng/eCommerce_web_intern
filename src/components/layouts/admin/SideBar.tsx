@@ -20,11 +20,10 @@ import { loginFeature } from '../../../constants/features/publicFeatures';
 export default function SideBar({ open, handleDrawerClose }: SideBarProps) {
   const theme = useTheme();
   const auth = getStoredAuth();
-  const { toPrevLocation, navigate } = usePrevLocation();
+  const { navigate } = usePrevLocation();
   const doLogout = async () => {
     await logout({ refreshToken: auth.refreshToken });
     removeAuth();
-    // toPrevLocation();
     navigate(loginFeature.path);
   };
   return (

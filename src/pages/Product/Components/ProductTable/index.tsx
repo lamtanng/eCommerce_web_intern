@@ -7,6 +7,7 @@ import { ProductProps } from '../../../../types/product.type';
 import Error from '../../../Error';
 import { ProductTableProps } from '../../Product.type';
 import { useProductTable } from '../../hooks';
+import { productFileName, productFilterColumns } from '../../Product.constants';
 
 export default function ProductTable({ searchQuery = undefined }: ProductTableProps) {
   const { table, productList } = useProductTable({ searchQuery });
@@ -17,7 +18,12 @@ export default function ProductTable({ searchQuery = undefined }: ProductTablePr
   if (loading === 'succeeded')
     return (
       <>
-        <ReactTable<ProductProps> table={table} data={productList} fileName="products" />;
+        <ReactTable<ProductProps>
+          table={table}
+          data={productList}
+          fileName={productFileName}
+          // filterColumns={productFilterColumns}
+        />
       </>
     );
 }

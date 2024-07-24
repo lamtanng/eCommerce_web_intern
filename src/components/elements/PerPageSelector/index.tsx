@@ -13,7 +13,7 @@ interface PerPageSelectorProps {
 export default function PerPageSelector({ perPage, setPerPage }: PerPageSelectorProps): JSX.Element {
   return (
     <div>
-      <FormControl sx={{ width: 100 }}>
+      <FormControl sx={{ width: 100 }} size="small" className="hidden md:flex">
         <InputLabel id="demo-multiple-name-label">Items</InputLabel>
         <Select
           labelId="demo-multiple-name-label"

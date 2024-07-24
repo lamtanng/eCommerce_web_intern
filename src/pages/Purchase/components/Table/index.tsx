@@ -4,6 +4,7 @@ import { useAppSelector } from '../../../../redux/hooks';
 import { purchaseSelector } from '../../../../redux/slices/purchase.slice';
 import { PurchaseProps } from '../../../../types/purchase.type';
 import Error from '../../../Error';
+import { purchaseFileName, purchaseFilterColumns } from '../../Purchase.constants';
 import { PurchaseTableProps } from '../../Purchase.type';
 import { usePurchaseTable } from '../../hooks';
 
@@ -13,5 +14,13 @@ export default function PurchaseTable({ searchQuery = undefined, columnDefs }: P
 
   if (error) return <Error errorMsg={error} />;
   if (loading === 'loading') return <TableSkeleton />;
-  if (loading === 'succeeded') return <ReactTable<PurchaseProps> table={table} data={purchaseList} fileName='purchases'/>;
+  if (loading === 'succeeded')
+    return (
+      <ReactTable<PurchaseProps>
+        table={table}
+        data={purchaseList}
+        fileName={purchaseFileName}
+        filterColumns={purchaseFilterColumns}
+      />
+    );
 }

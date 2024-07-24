@@ -11,6 +11,7 @@ import {
   fetchUserProductList,
   getProductById,
   getProductByURL,
+  createImportedProduct,
   removeProduct,
   updateProduct,
   uploadProductImage,
@@ -32,7 +33,18 @@ const initialState: ProductSliceProps = {
 const productSlice = createSlice({
   name: 'product',
   initialState,
-  reducers: {},
+  reducers: {
+    importProducts: (state, action) => {
+      state.productList = action.payload;
+      state.loading = 'succeeded';
+    },
+    updateImportedProducts: (state, action) => {
+      state.productList = state.productList.map((product) =>
+        product.id == action.payload.id ? action.payload : product,
+      );
+      state.loading = 'succeeded';
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchProductList.fulfilled, (state, action) => {
@@ -57,6 +69,13 @@ const productSlice = createSlice({
       .addCase(createProduct.fulfilled, (state, action) => {
         state.loading = 'succeeded';
         state.productList.push(action.payload);
+        displaySuccess(getCreateSuccessMsg('Product'));
+      })
+      .addCase(createImportedProduct.fulfilled, (state, action) => {
+        remove(state.productList, (product) => {
+          return product.name.toLowerCase() === action.payload.name.toLowerCase();
+        });
+        state.loading = 'succeeded';
         displaySuccess(getCreateSuccessMsg('Product'));
       })
       .addCase(removeProduct.fulfilled, (state, action) => {
@@ -96,4 +115,5 @@ const productSlice = createSlice({
 });
 
 export const productSelector = (state: RootState) => state.product;
+export const { importProducts, updateImportedProducts } = productSlice.actions;
 export default productSlice.reducer;

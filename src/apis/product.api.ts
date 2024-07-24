@@ -20,7 +20,7 @@ function getByURL(urlName?: ProductProps['urlName']) {
 
 function create(data: ProductFormSchema) {
   const url = '/product';
-  return axiosPrivate.post<ProductProps>(url, data);
+  return axiosPrivate.post<ProductProps>(url, { ...omit(data, ['id']) });
 }
 
 function remove(id: ProductProps['id']) {
@@ -38,4 +38,4 @@ function uploadImage({ id, formData }: UploadImageRequestProps) {
   return axiosPrivate.patch<ProductFormSchema>(url, formData, { headers: { 'Content-Type': 'multipart/form-data' } });
 }
 
-export const productApi = { getAll, create, remove, update, getById, getByURL, uploadImage };
+export const productApi = { getAll, create, import: create, remove, update, getById, getByURL, uploadImage };

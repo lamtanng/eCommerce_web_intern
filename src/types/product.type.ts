@@ -6,13 +6,13 @@ interface ProductProps {
   id?: string;
   name: string;
   urlName: string;
-  picture?: string | undefined;
+  picture?: string;
   basePrice: number;
   discountPercentage: number;
-  stock?: number ;
-  description?: string | undefined;
-  createdAt?: string | undefined;
-  categories?: { name: CategoryProps['name'] }[] | CategoryProps['id'][];
+  stock?: number;
+  description?: string;
+  createdAt?: string;
+  categories: { name: CategoryProps['name'] }[];
 }
 interface GetAllProductParams extends PaginationParams {
   productName?: string;

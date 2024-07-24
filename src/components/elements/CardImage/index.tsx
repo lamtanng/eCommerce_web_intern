@@ -7,7 +7,7 @@ import { getProductUrl } from '../../../ultils/getProductUrl';
 export default function ProductCardImage({
   selectedFile = undefined,
   oldPicture = undefined,
-  height = 280,
+  height,
   width = '100%',
   url,
   discountPercentage,
@@ -24,15 +24,15 @@ export default function ProductCardImage({
     }
   };
 
-  const productUrl = getProductUrl(url);
+  const productUrl = getProductUrl(url ? url : '');
 
   return (
-    <Link to={productUrl} className={`relative w-full`}>
+    <Link to={productUrl} className={`relative w-full h-[${height}px] w-[${width}px] overflow-hidden`}>
       <CardMedia
-        component="img"
         width={width}
         height={height}
-        className="transform object-cover object-top transition-transform duration-200 ease-in-out hover:scale-110"
+        component="img"
+        className={`h-[${height}px] w-[${width}px] transform object-cover object-top transition-transform duration-200 ease-in-out hover:scale-125`}
         alt={alt}
         image={getDefaultImage()}
         ref={(img) => (img = img)}

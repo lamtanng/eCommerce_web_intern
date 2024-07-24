@@ -1,4 +1,5 @@
 import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import Logout from '@mui/icons-material/Logout';
 import {
   AppBar,
@@ -7,7 +8,6 @@ import {
   Button,
   Divider,
   IconButton,
-  Link,
   ListItemIcon,
   Menu,
   MenuItem,
@@ -15,12 +15,13 @@ import {
   Tooltip,
 } from '@mui/material';
 import { lazy, Suspense, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { logout } from '../../../apis/auth.api';
 import Logo from '../../../assets/react.svg';
+import { adminPath } from '../../../constants/features/adminFeatures';
 import { purchaseFeature } from '../../../constants/features/customerFeatures';
 import { productFeature, signupFeature } from '../../../constants/features/publicFeatures';
-import { usePrevLocation } from '../../../hooks/usePrevLocation';
+import { userIDKey } from '../../../constants/localStorageKeys';
 import LoginModal from '../../../pages/Login/components/LoginModal';
 import { useAppDispatch } from '../../../redux/hooks';
 import { resetWishlist } from '../../../redux/slices/wishlist.slice';
@@ -31,15 +32,16 @@ const Wishlist = lazy(() => import('../../elements/Wishlist'));
 
 export default function Header() {
   const dispatch = useAppDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
   const auth = getStoredAuth();
-  const { toPrevLocation } = usePrevLocation();
 
   const doLogout = async () => {
     await logout({ refreshToken: auth.refreshToken });
-    localStorage.removeItem('userId');
     await dispatch(resetWishlist());
+    localStorage.removeItem(userIDKey);
     removeAuth();
-    toPrevLocation();
+    navigate(location, { replace: true, state: { from: location } });
   };
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -52,10 +54,13 @@ export default function Header() {
   };
 
   return (
-    <AppBar position="fixed" className="h-header_height bg-white px-page_gutter_lg shadow-md">
+    <AppBar
+      position="fixed"
+      className="md:px-page_gutter_md px-page_gutter_sm h-header_height bg-white shadow-md lg:px-page_gutter_lg"
+    >
       <Stack direction="row" spacing={10} justifyContent="space-between" alignItems="center" className="h-full">
         <Box>
-          <Link href={productFeature.path} underline="none">
+          <Link to={productFeature.path} state={{ from: location }}>
             <img src={Logo} alt="" />
           </Link>
         </Box>
@@ -63,6 +68,7 @@ export default function Header() {
         <Stack direction="row" spacing={3} className="h-full align-middle">
           <NavLink
             to={productFeature.path}
+            state={{ from: location }}
             className={({ isActive }) =>
               [
                 isActive
@@ -76,6 +82,7 @@ export default function Header() {
           {auth.accessToken && (
             <NavLink
               to={purchaseFeature.path}
+              state={{ from: location }}
               className={({ isActive }) =>
                 [
                   isActive
@@ -102,7 +109,7 @@ export default function Header() {
                 <LoginModal />
               </DialogFormButton>
 
-              <Link href={signupFeature.path} underline="none">
+              <Link to={signupFeature.path} state={{ from: location }} replace>
                 <Button variant="contained" size="medium">
                   Sign Up
                 </Button>
@@ -173,6 +180,11 @@ export default function Header() {
                       icon={purchaseFeature.icon}
                     />
                   </div>
+                  {auth.userRole === 'ADMIN' && (
+                    <div onClick={handleClose} className="w-full">
+                      <SideBarButton path={adminPath} title="Administration" icon={<AdminPanelSettingsIcon />} />
+                    </div>
+                  )}
                   <Divider />
 
                   <MenuItem onClick={doLogout}>

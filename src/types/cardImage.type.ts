@@ -4,6 +4,6 @@ export interface ProductCardImageProps {
   height?: number | string;
   width?: number | string;
   alt?: string;
-  url: string;
-  discountPercentage: number;
+  url?: string;
+  discountPercentage?: number;
 }

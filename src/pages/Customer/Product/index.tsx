@@ -24,14 +24,14 @@ export default function UserProduct() {
     <Grid2
       container
       maxWidth="xl"
-      rowSpacing={{ lg: 4, md: 2 }}
+      rowSpacing={{ lg: 4, md: 2, sm: 2, xs: 5 }}
       columnSpacing={{ lg: 3, md: 2 }}
       columns={{ lg: 12, md: 12 }}
     >
-      <Grid2  lg={12}>
+      <Grid2 lg={12} className="w-full">
         <Stack direction="row" spacing={2} justifyContent="space-between" alignItems="center">
           <PerPageSelector perPage={perPage} setPerPage={handlePerPageChange} />
-          <Stack direction="row" spacing={2} justifyContent="space-between" alignItems="center">
+          <Stack className="mx-0 flex w-full flex-row items-center justify-end gap-5">
             <ColumnLayout handleColumnsChange={handleColumnsChange} />
             <SearchBar onSearch={handleDebouncedSearch} />
           </Stack>

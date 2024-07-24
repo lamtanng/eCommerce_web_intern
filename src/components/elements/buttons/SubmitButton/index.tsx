@@ -1,8 +1,10 @@
 import LoadingButton from '@mui/lab/LoadingButton';
+import { MouseEventHandler } from 'react';
 import ButtonProps from '../../../../types/button.type';
 
-interface SubmitButtonProps extends ButtonProps {
+export interface SubmitButtonProps extends ButtonProps {
   isSubmitting?: boolean;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
 export default function SubmitButton({
@@ -10,6 +12,7 @@ export default function SubmitButton({
   variant = 'contained',
   isSubmitting,
   isDirty = true,
+  onClick,
 }: SubmitButtonProps) {
   return (
     <LoadingButton
@@ -20,6 +23,7 @@ export default function SubmitButton({
       className="group"
       loading={isSubmitting}
       disabled={isDirty ? false : true}
+      onClick={onClick}
       // loadingPosition='start'
     >
       <span>{text}</span>

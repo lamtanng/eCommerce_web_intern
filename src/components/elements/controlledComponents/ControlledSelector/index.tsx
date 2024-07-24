@@ -9,7 +9,7 @@ import { MenuProps } from '../../../../constants/menuProps';
 import { ControlledSelectorProps } from '../../../../types/selector.type';
 import SelectedItem from './SelectedItem';
 
-export function ControlledSelector<FormValues extends FieldValues>({
+export default function ControlledSelector<FormValues extends FieldValues>({
   name,
   control,
   data,

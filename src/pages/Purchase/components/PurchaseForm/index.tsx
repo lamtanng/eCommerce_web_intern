@@ -1,7 +1,7 @@
 import { Stack } from '@mui/material';
 import { memo } from 'react';
 import ResetButton from '../../../../components/elements/buttons/ResetButton';
-import { ControlledSelector } from '../../../../components/elements/controlledComponents/ControlledSelector';
+import  ControlledSelector from '../../../../components/elements/controlledComponents/ControlledSelector';
 import { PurchaseFormSchema } from '../../../../types/purchase.type';
 import { PurchaseFormProps } from '../../Purchase.type';
 import { usePurchaseForm } from '../../hooks';

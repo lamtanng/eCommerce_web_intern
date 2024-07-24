@@ -1,3 +1,4 @@
+import { Link, Rating } from '@mui/material';
 import { createColumnHelper } from '@tanstack/react-table';
 import * as yup from 'yup';
 import {
@@ -9,8 +10,7 @@ import {
 import { formatDate } from '../../ultils/formatDate';
 import { getRequiredMsg } from '../../ultils/getMessage';
 import PurchaseTableAction from './components/Table/PurchaseTableAction';
-import { Link, Rating } from '@mui/material';
-import { ControlledStarRating } from '../../components/elements/controlledComponents/ControlledStarRating';
+import { ReactTableProps } from '../../components/elements/reactTable/ReactTable.type';
 
 const purchaseSchema: yup.ObjectSchema<PurchaseFormSchema> = yup.object({
   id: yup.string(),
@@ -52,6 +52,14 @@ const purchaseFormColumns = [
       </Link>
     ),
   }),
+  {
+    accessorKey: 'userId',
+    header: 'User ID',
+  },
+  {
+    accessorKey: 'productId',
+    header: 'ProductID',
+  },
   columnHelper.accessor((row) => row.user.email, {
     id: 'userEmail',
     header: 'User Email',
@@ -94,5 +102,15 @@ const purchaseFormColumns = [
     },
   }),
 ];
+const purchaseFileName = 'purchases';
+const purchaseFilterColumns: ReactTableProps<PurchaseProps>['filterColumns'] = ['userId', 'productId'];
 
-export { getPurchaseParams, purchaseDefault, purchaseFormColumns, purchaseSchema, reviewSchema };
+export {
+  getPurchaseParams,
+  purchaseDefault,
+  purchaseFormColumns,
+  purchaseSchema,
+  reviewSchema,
+  purchaseFilterColumns,
+  purchaseFileName,
+};

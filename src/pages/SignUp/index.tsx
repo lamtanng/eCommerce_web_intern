@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link } from '@mui/material';
 import { loginFeature } from '../../constants/features/publicFeatures';
 import SignUpForm from './components/SignUpForm';
 
@@ -8,10 +8,10 @@ function App() {
       <div className="mx-auto flex items-start justify-between font-sans text-base">
         <div className="mx-auto flex w-full flex-col items-start justify-start gap-8 px-52 py-20">
           <div className="w-full">
-            <p className="text-[54px] font-extrabold">Getting Started</p>
-            <p className="text-base text-gray-600">
+            <p className="text-[46px] font-extrabold">Getting Started</p>
+            <p className="-mt-4 text-base text-gray-600">
               Already have an account?{' '}
-              <Link to={loginFeature.path} className="font-medium">
+              <Link href={loginFeature.path} className="font-medium" underline="none">
                 {loginFeature.title}
               </Link>
             </p>

@@ -3,6 +3,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
 import ReceiptRoundedIcon from '@mui/icons-material/ReceiptRounded';
 import DnsRoundedIcon from '@mui/icons-material/DnsRounded';
+
 const adminPath = '/admin';
 
 const dashboardFeature: FeaturesProps = {
@@ -20,12 +21,31 @@ const productFeature: FeaturesProps = {
   path: `${adminPath}/products`,
   icon: <ShoppingCartRoundedIcon />,
 };
+const importProductFeature: FeaturesProps = {
+  title: 'Import Products',
+  path: `${adminPath}/products/import`,
+  icon: <ShoppingCartRoundedIcon />,
+};
 const categoryFeature: FeaturesProps = {
   title: 'Categories',
   path: `${adminPath}/categories`,
   icon: <DnsRoundedIcon />,
 };
 
-const adminFeatures: FeaturesProps[] = [dashboardFeature, purchaseFeature, productFeature, categoryFeature];
+const adminFeatures: FeaturesProps[] = [
+  dashboardFeature,
+  purchaseFeature,
+  productFeature,
+  importProductFeature,
+  categoryFeature,
+];
 
-export { adminFeatures, adminPath, categoryFeature, dashboardFeature, productFeature, purchaseFeature };
+export {
+  adminFeatures,
+  adminPath,
+  categoryFeature,
+  dashboardFeature,
+  productFeature,
+  importProductFeature,
+  purchaseFeature,
+};
