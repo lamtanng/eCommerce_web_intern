@@ -3,6 +3,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import ShoppingCartRoundedIcon from '@mui/icons-material/ShoppingCartRounded';
 import ReceiptRoundedIcon from '@mui/icons-material/ReceiptRounded';
 import DnsRoundedIcon from '@mui/icons-material/DnsRounded';
+import PublishIcon from '@mui/icons-material/Publish';
 
 const adminPath = '/admin';
 
@@ -24,7 +25,7 @@ const productFeature: FeaturesProps = {
 const importProductFeature: FeaturesProps = {
   title: 'Import Products',
   path: `${adminPath}/products/import`,
-  icon: <ShoppingCartRoundedIcon />,
+  icon: <PublishIcon />,
 };
 const categoryFeature: FeaturesProps = {
   title: 'Categories',

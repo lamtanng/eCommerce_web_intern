@@ -27,10 +27,6 @@ const createProduct = createAsyncThunk('product/createProduct', async (data: Pro
   const resp = await productApi.create(data);
   return resp.data;
 });
-const createImportedProduct = createAsyncThunk('product/createImportedProduct', async (data: ProductFormSchema) => {
-  const resp = await productApi.import(data);
-  return resp.data;
-});
 const removeProduct = createAsyncThunk('product/removeProduct', async (id: ProductProps['id']) => {
   const resp = await productApi.remove(id);
   return resp.data;
@@ -56,5 +52,4 @@ export {
   removeProduct,
   updateProduct,
   fetchUserProductList,
-  createImportedProduct,
 };

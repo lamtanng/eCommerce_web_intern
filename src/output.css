@@ -572,10 +572,6 @@
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
-#root :is(.bg-red-50\/50) {
-  background-color: rgb(254 242 242 / 0.5);
-}
-
 #root :is(.object-cover) {
   -o-object-fit: cover;
      object-fit: cover;
@@ -764,6 +760,11 @@
   color: rgb(59 130 246 / var(--tw-text-opacity));
 }
 
+#root :is(.text-gray-200) {
+  --tw-text-opacity: 1;
+  color: rgb(229 231 235 / var(--tw-text-opacity));
+}
+
 #root :is(.text-gray-500) {
   --tw-text-opacity: 1;
   color: rgb(107 114 128 / var(--tw-text-opacity));
@@ -807,6 +808,11 @@
 #root :is(.text-white) {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+#root :is(.text-gray-300) {
+  --tw-text-opacity: 1;
+  color: rgb(209 213 219 / var(--tw-text-opacity));
 }
 
 #root :is(.underline) {

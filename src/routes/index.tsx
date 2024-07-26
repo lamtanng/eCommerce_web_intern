@@ -12,7 +12,7 @@ import { ProductRoutes } from '../pages/Product/Product.routes';
 import { PurchaseRoutes } from '../pages/Purchase/Purchase.routes';
 import { SignUpRoutes } from '../pages/SignUp/SignUp.routes';
 import { productFeature } from '../constants/features/publicFeatures';
-import { ImportProductRoutes } from '../pages/ImportProduct/Product.routes';
+import { ImportProductRoutes } from '../pages/ImportProduct/ImportProduct.routes';
 
 const routes = createBrowserRouter([
   {

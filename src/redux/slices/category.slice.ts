@@ -47,13 +47,13 @@ const categorySlice = createSlice({
         displaySuccess(getUpdateSuccessMsg('Category'));
       })
       .addMatcher(
-        (action) => action.type.endsWith('/pending'),
+        (action) => action.type.endsWith('/pending') && action.type.startsWith('category'),
         (state) => {
           state.loading = 'loading';
         },
       )
       .addMatcher<RejectedAction>(
-        (action) => action.type.endsWith('/rejected'),
+        (action) => action.type.endsWith('/rejected') && action.type.startsWith('category'),
         (state, action) => {
           state.loading = 'failed';
           state.error = action.error.message || undefined;

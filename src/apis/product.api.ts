@@ -20,7 +20,7 @@ function getByURL(urlName?: ProductProps['urlName']) {
 
 function create(data: ProductFormSchema) {
   const url = '/product';
-  return axiosPrivate.post<ProductProps>(url, { ...omit(data, ['id']) });
+  return axiosPrivate.post<ProductProps>(url, { ...omit(data, ['id', 'triggered']) });
 }
 
 function remove(id: ProductProps['id']) {

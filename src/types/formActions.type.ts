@@ -1,1 +1,1 @@
-export type FormActions = 'CREATE' | 'UPDATE' | 'IMPORT';
+export type FormActions = 'CREATE' | 'UPDATE';

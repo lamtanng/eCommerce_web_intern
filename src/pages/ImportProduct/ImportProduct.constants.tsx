@@ -1,8 +1,9 @@
 import { createColumnHelper } from '@tanstack/react-table';
-import currency from 'currency.js';
 import { difference, every, isNaN, isString, map, split, trim } from 'lodash';
 import { ProductProps } from '../../types/product.type';
 import { displayInfo } from '../../ultils/displayToast';
+import { getMaxImportMsg, getMinImportMsg } from '../../ultils/getMessage';
+import { formatToUSD } from '../../ultils/formatToUSD';
 
 const requiredFields = ['name', 'basePrice'];
 const columnHelper = createColumnHelper<ProductProps>();
@@ -10,10 +11,12 @@ export const importProductColumnDefs = [
   {
     accessorKey: 'name',
     header: 'Product Name',
+    enableHiding: false,
   },
   {
     accessorKey: 'basePrice',
     header: 'Price($)',
+    enableHiding: false,
   },
   {
     accessorKey: 'discountPercentage',
@@ -28,11 +31,19 @@ export const importProductColumnDefs = [
     header: 'Categories',
     cell: ({ row }) => `${row.original.categories?.map(({ name }) => name).join(', ')}`,
   }),
+  {
+    accessorKey: 'description',
+    header: 'Description',
+  },
   columnHelper.display({
     id: 'actions',
     header: 'Actions',
   }),
 ];
+
+const formatToNumber = (value: any) => (+value ? +value : 0);
+const formatToCategories = (categoryString: string) =>
+  map(split(categoryString, ','), (category) => ({ name: trim(category) }));
 
 export const isNumberField = (fieldValue: string, index: number, fieldName: string) => {
   const value = fieldValue ? fieldValue : '0';
@@ -50,16 +61,7 @@ export const isStringField = (fieldValue: string, index: number, fieldName: stri
   } else return true;
 };
 
-const formatToNumber = (value: any) => (+value ? +value : 0);
-
-const formatToUSD = (value: any) => {
-  return currency(+value, { separator: '.', errorOnInvalid: true, pattern: `#` }).dollars();
-};
-
-const formatToCategories = (categoryString: string) =>
-  map(split(categoryString, ','), (category) => ({ name: trim(category) }));
-
-//format data
+//format product data
 export const formatProductData = (data: any[]) => {
   const result = map(data, (product: any, index) => {
     return {
@@ -96,11 +98,11 @@ export const hasRequiredHeaders = (headerArray: string[]) => {
 //check min-max items
 export const isValidAmount = (valueArray: any[]) => {
   if (valueArray.length < 1) {
-    displayInfo('Please import at least 1 item');
+    displayInfo(getMinImportMsg(1));
     return false;
   }
   if (valueArray.length > 10) {
-    displayInfo('Please import at most 10 items');
+    displayInfo(getMaxImportMsg(10));
     return false;
   }
   return true;

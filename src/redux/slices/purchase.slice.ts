@@ -73,14 +73,14 @@ const purchaseSlice = createSlice({
         remove(state.purchaseList, (purchase) => purchase.id === action.meta.arg);
         displaySuccess(getRemovedSuccessMsg('Purchase'));
       })
-      // .addMatcher(
-      //   (action) => action.type.endsWith('/pending'),
-      //   (state) => {
-      //     state.loading = 'loading';
-      //   },
-      // )
+      .addMatcher(
+        (action) => action.type.endsWith('/pending') && action.type.startsWith('purchase'),
+        (state) => {
+          state.loading = 'loading';
+        },
+      )
       .addMatcher<RejectedAction>(
-        (action) => action.type.endsWith('/rejected'),
+        (action) => action.type.endsWith('/rejected') && action.type.startsWith('purchase'),
         (state, action) => {
           state.loading = 'failed';
           state.error = action.error.message || null;

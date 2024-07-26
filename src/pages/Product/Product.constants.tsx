@@ -18,7 +18,7 @@ const getProductURLParams = ({ productName }: GetAllProductParams): GetAllProduc
 const productSchema: yup.ObjectSchema<ProductFormSchema> = yup.object({
   id: yup.string(),
   name: yup.string().required(getRequiredMsg('Name')),
-  basePrice: yup.number().required(getRequiredMsg('Price')),
+  basePrice: yup.number().required(getRequiredMsg('Price')).min(0, 'Price must be greater than or equal to 0'),
   stock: yup.number().min(0, 'Stock must be greater than or equal to 0').default(0),
   discountPercentage: yup
     .number()

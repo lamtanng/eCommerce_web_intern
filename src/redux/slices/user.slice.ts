@@ -34,7 +34,7 @@ const userSlice = createSlice({
         },
       )
       .addMatcher<RejectedAction>(
-        (action) => action.type.endsWith('/rejected'),
+        (action) => action.type.endsWith('/rejected') && action.type.startsWith('user'),
         (state, action) => {
           state.loading = 'failed';
           state.error = action.error.message || undefined;

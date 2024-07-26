@@ -1,40 +1,33 @@
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import BorderColorRoundedIcon from '@mui/icons-material/BorderColorRounded';
-import { Button } from '@mui/material';
-import { Row } from '@tanstack/react-table';
+import { Button, Tooltip } from '@mui/material';
 import { lazy } from 'react';
-import { UseFormTrigger } from 'react-hook-form';
 import DialogFormButton from '../../../../components/elements/buttons/DialogFormButton';
-import { SubmitButtonProps } from '../../../../components/elements/buttons/SubmitButton';
-import { createImportedProduct } from '../../../../redux/actions/product.actions';
-import { useAppDispatch, useAppSelector } from '../../../../redux/hooks';
-import { categorySelector } from '../../../../redux/slices/category.slice';
-import { ProductFormSchema, ProductProps } from '../../../../types/product.type';
-import { getProductWithCateID } from '../../../../ultils/getIDfromCateNames';
-const ImportProductForm = lazy(() => import('../ImportProductForm'));
+import { ImportProductTableActionProps } from '../../ImportProduct.types';
+const ImportProductForm = lazy(() => import('../UpdateForm'));
 
-interface ImportProductTableActionProps extends SubmitButtonProps {
-  row: Row<ProductProps>;
-  trigger: UseFormTrigger<ProductFormSchema>;
-}
-
-export default function ImportProductTableAction({ row, trigger }: ImportProductTableActionProps) {
-  const dispatch = useAppDispatch();
-  const { categoryList } = useAppSelector(categorySelector);
-  let productDefaults = getProductWithCateID({ categoryList, productWithCateName: row.original });
-
-  const handleAddProduct = async () => {
-    const isValidate = await trigger();
-    isValidate && dispatch(createImportedProduct(productDefaults));
-  };
+export default function ImportProductTableAction({ row, handleAddProduct, hasError }: ImportProductTableActionProps) {
   return (
     <>
       <DialogFormButton dialogButton={<BorderColorRoundedIcon />}>
-        <ImportProductForm defaultValues={productDefaults} action="IMPORT" />
+        <ImportProductForm row={row} />
       </DialogFormButton>
-      <Button variant="text" onClick={handleAddProduct} className="text-green-500">
+      <CreateProductButton row={row} handleAddProduct={handleAddProduct} hasError={hasError} />
+    </>
+  );
+}
+
+function CreateProductButton({ handleAddProduct, hasError }: ImportProductTableActionProps) {
+  return (
+    <Tooltip title="Create product" arrow>
+      <Button
+        variant="text"
+        onClick={handleAddProduct}
+        className={`${hasError ? 'text-gray-300' : 'text-green-500'}`}
+        disabled={hasError ? true : false}
+      >
         <AddCircleRoundedIcon />
       </Button>
-    </>
+    </Tooltip>
   );
 }

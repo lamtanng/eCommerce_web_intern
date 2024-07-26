@@ -11,7 +11,6 @@ import {
   fetchUserProductList,
   getProductById,
   getProductByURL,
-  createImportedProduct,
   removeProduct,
   updateProduct,
   uploadProductImage,
@@ -33,18 +32,7 @@ const initialState: ProductSliceProps = {
 const productSlice = createSlice({
   name: 'product',
   initialState,
-  reducers: {
-    importProducts: (state, action) => {
-      state.productList = action.payload;
-      state.loading = 'succeeded';
-    },
-    updateImportedProducts: (state, action) => {
-      state.productList = state.productList.map((product) =>
-        product.id == action.payload.id ? action.payload : product,
-      );
-      state.loading = 'succeeded';
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchProductList.fulfilled, (state, action) => {
@@ -71,13 +59,6 @@ const productSlice = createSlice({
         state.productList.push(action.payload);
         displaySuccess(getCreateSuccessMsg('Product'));
       })
-      .addCase(createImportedProduct.fulfilled, (state, action) => {
-        remove(state.productList, (product) => {
-          return product.name.toLowerCase() === action.payload.name.toLowerCase();
-        });
-        state.loading = 'succeeded';
-        displaySuccess(getCreateSuccessMsg('Product'));
-      })
       .addCase(removeProduct.fulfilled, (state, action) => {
         state.loading = 'succeeded';
         remove(state.productList, (product) => product.id === action.meta.arg);
@@ -97,14 +78,14 @@ const productSlice = createSlice({
         );
         displaySuccess(getUpdateSuccessMsg('Product'));
       })
-      // .addMatcher(
-      //   (action) => action.type.endsWith('/pending'),
-      //   (state) => {
-      //     state.loading = 'loading';
-      //   },
-      // )
+      .addMatcher(
+        (action) => action.type.endsWith('/pending') && action.type.startsWith('product'),
+        (state) => {
+          state.loading = 'loading';
+        },
+      )
       .addMatcher<RejectedAction>(
-        (action) => action.type.endsWith('/rejected'),
+        (action) => action.type.endsWith('/rejected') && action.type.startsWith('product'),
         (state, action) => {
           state.loading = 'failed';
           state.error = action.error.message || undefined;
@@ -115,5 +96,4 @@ const productSlice = createSlice({
 });
 
 export const productSelector = (state: RootState) => state.product;
-export const { importProducts, updateImportedProducts } = productSlice.actions;
 export default productSlice.reducer;

@@ -1,18 +1,18 @@
 import { filter, map } from 'lodash';
 import Papa from 'papaparse';
-import { ImportCSVButtonProps } from '.';
 import { useAppDispatch } from '../../../../redux/hooks';
-import { importProducts } from '../../../../redux/slices/product.slice';
+import { importProducts } from '../../../../redux/slices/importedProduct.slice';
 import { ProductProps } from '../../../../types/product.type';
 import {
-    formatProductData,
-    hasInvalidHeaders,
-    hasRequiredHeaders,
-    isValidAmount,
-    isValidDataType,
-} from '../../Product.constants';
+  formatProductData,
+  hasInvalidHeaders,
+  hasRequiredHeaders,
+  isValidAmount,
+  isValidDataType,
+} from '../../ImportProduct.constants';
+import { ImportCSVButtonProps } from '../../ImportProduct.types';
 
-export default function useImportCSVButton({ table }: ImportCSVButtonProps<ProductProps>) {
+export default function useImportProductButton({ table }: ImportCSVButtonProps<ProductProps>) {
   const dispatch = useAppDispatch();
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -30,9 +30,9 @@ export default function useImportCSVButton({ table }: ImportCSVButtonProps<Produ
           });
 
           if (
+            isValidAmount(valueArray) &&
             !hasInvalidHeaders(headerArray[0], getTableHeaders()) &&
             hasRequiredHeaders(headerArray[0]) &&
-            isValidAmount(valueArray) &&
             isValidDataType(result.data)
           ) {
             const formattedProduct = formatProductData(result.data);

@@ -4,10 +4,10 @@ import { useForm } from 'react-hook-form';
 import { useSearchParams } from 'react-router-dom';
 import { useTable } from '../../hooks/useTable';
 import { fetchCategory } from '../../redux/actions/category.actions';
-import { createProduct, fetchProductList, importProduct, updateProduct } from '../../redux/actions/product.actions';
+import { createProduct, fetchProductList, updateProduct } from '../../redux/actions/product.actions';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { categorySelector } from '../../redux/slices/category.slice';
-import { productSelector, updateImportedProducts } from '../../redux/slices/product.slice';
+import { productSelector } from '../../redux/slices/product.slice';
 import { ProductFormSchema, ProductProps } from '../../types/product.type';
 import { SelectData } from '../../types/selector.type';
 import convertToSelectData from '../../ultils/convertToSelectData';
@@ -19,7 +19,6 @@ import { ProductFormProps, ProductTableProps } from './Product.type';
 export function useProductForm({ defaultValues, action }: ProductFormProps<ProductFormSchema>) {
   const dispatch = useAppDispatch();
   const { categoryList, loading, error } = useAppSelector(categorySelector);
-
   const {
     control,
     handleSubmit,
@@ -38,8 +37,8 @@ export function useProductForm({ defaultValues, action }: ProductFormProps<Produ
 
   const onSubmit = async (data: ProductFormSchema) => {
     if (action === 'UPDATE') handleUpdateProduct(data);
-    else if (action === 'CREATE') handleCreateProduct(data);
-    else handleUpdateImportedProduct(data);
+    else handleCreateProduct(data);
+    reset(defaultValues);
   };
 
   const handleUpdateProduct = async (data: ProductFormSchema) => {
@@ -48,10 +47,6 @@ export function useProductForm({ defaultValues, action }: ProductFormProps<Produ
 
   const handleCreateProduct = async (data: ProductFormSchema) => {
     dispatch(createProduct(data));
-  };
-  const handleUpdateImportedProduct = async (data: ProductFormSchema) => {
-    console.log(data);
-    dispatch(updateImportedProducts(data));
   };
 
   const onReset = () => reset(defaultValues);

@@ -8,7 +8,7 @@ import {
   useReactTable,
   VisibilityState,
 } from '@tanstack/react-table';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { defaultPaginationParams } from '../constants/pagination';
 import { VisibleColumnStorageKey } from '../types/visibleColumnStorageKey.type';
 import { usePagination } from './usePagination';
@@ -51,6 +51,10 @@ export function useTable<TData extends RowData>({ columnDefs, data, localStorage
     autoResetPageIndex: false,
     sortDescFirst: false,
   });
+
+  useEffect(() => {
+    table.reset();
+  }, [data]);
 
   let { currentPageIndex, pageSize, resetPageIndex } = usePagination<TData>(table);
   useMemo(() => table, [data]);
