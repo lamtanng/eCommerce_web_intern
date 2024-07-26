@@ -38,6 +38,12 @@ const importedProductSlice = createSlice({
       state.loading = 'succeeded';
       displaySuccess(getUpdateSuccessMsg(action.payload.name));
     },
+    removeImportedProducts: (state, action) => {
+      remove(state.productList, (product) => {
+        return product.id === action.payload.id;
+      });
+      state.loading = 'succeeded';
+    },
     setTriggeredProduct: (state, action) => {
       state.productList = state.productList.map((product) =>
         product.id == action.payload.id ? (product = { ...product, triggered: action.payload.triggered }) : product,
@@ -67,5 +73,5 @@ const importedProductSlice = createSlice({
 });
 
 export const importedProductSelector = (state: RootState) => state.importedProduct;
-export const { importProducts, updateImportedProducts, setTriggeredProduct } = importedProductSlice.actions;
+export const { importProducts, updateImportedProducts, setTriggeredProduct,removeImportedProducts } = importedProductSlice.actions;
 export default importedProductSlice.reducer;
