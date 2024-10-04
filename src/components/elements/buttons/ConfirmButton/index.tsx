@@ -9,6 +9,7 @@ export interface ConfirmButtonProps {
   cancelText?: string;
   confirmText?: string;
   onConfirm?: Function | undefined;
+  variant?: 'text' | 'outlined' | 'contained';
 }
 
 export default function ConfirmButton({
@@ -17,6 +18,7 @@ export default function ConfirmButton({
   cancelText = 'Cancel',
   confirmText = 'Delete',
   onConfirm,
+  variant = 'text',
 }: ConfirmButtonProps) {
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
@@ -27,7 +29,7 @@ export default function ConfirmButton({
   };
   return (
     <>
-      <Button variant="text" onClick={handleClickOpen} color="error">
+      <Button variant={variant} onClick={handleClickOpen} color="error">
         <DeleteForeverRoundedIcon />
       </Button>
       <Dialog
@@ -44,6 +46,7 @@ export default function ConfirmButton({
         <DialogActions>
           <Button onClick={handleClose}>{cancelText}</Button>
           <Button
+            variant="contained" 
             onClick={() => {
               handleClose();
               onConfirm ? onConfirm() : undefined;

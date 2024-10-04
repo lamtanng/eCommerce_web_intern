@@ -1,13 +1,12 @@
-import ExportButton from '../../../../components/elements/buttons/ExportButton';
 import ReactTable from '../../../../components/elements/reactTable';
 import TableSkeleton from '../../../../components/elements/skeletons/TableSkeleton';
 import { useAppSelector } from '../../../../redux/hooks';
 import { productSelector } from '../../../../redux/slices/product.slice';
 import { ProductProps } from '../../../../types/product.type';
 import Error from '../../../Error';
-import { ProductTableProps } from '../../Product.type';
 import { useProductTable } from '../../hooks';
-import { productFileName, productFilterColumns } from '../../Product.constants';
+import { productFileName } from '../../Product.constants';
+import { ProductTableProps } from '../../Product.type';
 
 export default function ProductTable({ searchQuery = undefined }: ProductTableProps) {
   const { table, productList } = useProductTable({ searchQuery });

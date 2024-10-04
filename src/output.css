@@ -218,6 +218,18 @@
   z-index: 50;
 }
 
+#root :is(.m-4) {
+  margin: 1rem;
+}
+
+#root :is(.m-10) {
+  margin: 2.5rem;
+}
+
+#root :is(.m-6) {
+  margin: 1.5rem;
+}
+
 #root :is(.-mx-8) {
   margin-left: -2rem;
   margin-right: -2rem;
@@ -288,6 +300,10 @@
 
 #root :is(.mt-header_height) {
   margin-top: var(--header);
+}
+
+#root :is(.mt-12) {
+  margin-top: 3rem;
 }
 
 #root :is(.line-clamp-1) {
@@ -672,6 +688,10 @@
   padding-top: 0.25rem;
 }
 
+#root :is(.text-left) {
+  text-align: left;
+}
+
 #root :is(.text-center) {
   text-align: center;
 }
@@ -760,9 +780,9 @@
   color: rgb(59 130 246 / var(--tw-text-opacity));
 }
 
-#root :is(.text-gray-200) {
+#root :is(.text-gray-300) {
   --tw-text-opacity: 1;
-  color: rgb(229 231 235 / var(--tw-text-opacity));
+  color: rgb(209 213 219 / var(--tw-text-opacity));
 }
 
 #root :is(.text-gray-500) {
@@ -808,11 +828,6 @@
 #root :is(.text-white) {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
-}
-
-#root :is(.text-gray-300) {
-  --tw-text-opacity: 1;
-  color: rgb(209 213 219 / var(--tw-text-opacity));
 }
 
 #root :is(.underline) {

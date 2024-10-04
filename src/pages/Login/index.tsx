@@ -12,9 +12,9 @@ function Login() {
             <img src={Logo} alt="Logo" className="w-14" />
           </Link>
 
-          <div className="w-full">
+          <div className="w-full mt-16">
             <p className="w-full text-[46px] font-extrabold">Getting Started</p>
-            <p className="-mt-4 text-base text-gray-600">
+            <p className="mt-6 text-base text-gray-600 text-left">
               Don't have account?{' '}
               <Link href={signupFeature.path} className="font-medium no-underline">
                 {signupFeature.title}

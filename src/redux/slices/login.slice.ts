@@ -11,7 +11,7 @@ export interface LoginSliceProps extends LoginResponseProps {
   loading: LoadingProps;
   error: string | undefined;
 }
-
+  
 const initialState: LoginSliceProps = {
   accessToken: '',
   refreshToken: '',
